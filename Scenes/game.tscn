@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://dceyxh5x0u2fk"]
+
+[ext_resource type="PackedScene" uid="uid://dxmkxspv10em0" path="res://Scenes/Fighters/Fighter.tscn" id="1_ebmjs"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_2poj3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ebmjs"]
+size = Vector3(1, 0.084472656, 1.039917)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2poj3"]
+
+[sub_resource type="Sky" id="Sky_ebmjs"]
+sky_material = SubResource("ProceduralSkyMaterial_2poj3")
+
+[sub_resource type="Environment" id="Environment_qxrlw"]
+background_mode = 2
+sky = SubResource("Sky_ebmjs")
+
+[node name="Main" type="Node3D" unique_id=2051919939]
+
+[node name="Ground" type="StaticBody3D" parent="." unique_id=358180621]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=1294461101]
+transform = Transform3D(23.10559, 0, 0, 0, 0.38924104, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_2poj3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=949362396]
+transform = Transform3D(22.650269, 0, 0, 0, 6, 0, 0, 0, 1.2978201, 0, -0.075853825, 0.019958496)
+shape = SubResource("BoxShape3D_ebmjs")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1999429057]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0028192997, 1.4324604, 5.0496297)
+fov = 50.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1922317289]
+transform = Transform3D(1, 0, 0, 0, 0.9145154, 0.40455112, 0, -0.40455112, 0.9145154, 0, 1.5115843, 2.158609)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=627780193]
+environment = SubResource("Environment_qxrlw")
+
+[node name="Fighter" parent="." unique_id=831552666 node_paths=PackedStringArray("opponent") instance=ExtResource("1_ebmjs")]
+transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -4.3711385e-08, -2, 0.176, 0.013)
+opponent = NodePath("../Fighter2")
+
+[node name="Fighter2" parent="." unique_id=604025971 node_paths=PackedStringArray("opponent") instance=ExtResource("1_ebmjs")]
+transform = Transform3D(-4.3711385e-08, 0, -0.99999994, 0, 1, 0, 0.99999994, 0, -4.3711385e-08, 2, 0.1757029, 0.013)
+player_id = 1
+opponent = NodePath("../Fighter")

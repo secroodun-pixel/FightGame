@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://7iydkda066gt"]
+
+[ext_resource type="PackedScene" uid="uid://dxmkxspv10em0" path="res://Scenes/Fighters/Fighter.tscn" id="1_mfr0k"]
+[ext_resource type="ArrayMesh" uid="uid://cec0rgv8m4agg" path="res://Models/FighterHead/Fighter_0_Head_Face_001.res" id="6_cfgft"]
+[ext_resource type="ArrayMesh" uid="uid://cl3k1a1875ioj" path="res://Models/FighterHead/Fighter_0_Head_Face.res" id="7_kiba7"]
+
+[node name="Fighter" unique_id=202072913 instance=ExtResource("1_mfr0k")]
+
+[node name="MeshInstance3D_Male_Ranger_Armature#Fighter0HeadFace001" type="MeshInstance3D" parent="." index="0" unique_id=349602818]
+mesh = ExtResource("6_cfgft")
+skeleton = NodePath("../GeneralSkeleton")
+
+[node name="MeshInstance3D_Male_Ranger_Armature#Fighter0HeadFace" type="MeshInstance3D" parent="." index="1" unique_id=2125506133]
+mesh = ExtResource("7_kiba7")
+skeleton = NodePath("../GeneralSkeleton")
+
+[editable path="Male_Ranger"]

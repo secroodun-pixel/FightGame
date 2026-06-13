@@ -43,11 +43,13 @@ func update(delta : float):
 	# end dash if on floor
 	if fighter.is_on_floor():
 		state_machine.change_state("Standing")
+		return
 		
 	# fall if dash ended
 	if not fighter.is_on_floor() and local_time >= duration:
 		animation.set_animation("JumpIdle")
 		state_machine.change_state("Falling")
+		return
 		
 func exit():
 	super.exit()

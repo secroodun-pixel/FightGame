@@ -7,7 +7,6 @@ extends MovementState
 
 var jump_direction : float = 0.0
 
-
 func enter():
 	move_speed = 4.0
 	animation.set_animation("JumpIdle")
@@ -16,29 +15,22 @@ func enter():
 
 func update(delta : float):
 	# gravity
-	fighter.move_velocity.y -= gravity * delta
-
-	# direction of air influence
-	var input_direction : float = input_buffer.move_direction()
-	
-	# blend direction into jump trajectory
-	var true_direction = lerp(jump_direction, input_direction, air_influence)
-	var target_x = true_direction * move_speed
-	fighter.move_velocity.x = lerp(
-		fighter.move_velocity.x,
-		target_x,
-		8.0 * delta
-	)
-	
-	fighter.move_velocity.x = true_direction * move_speed
+	fighter.move_velocity.y -= fighter.get_custom_gravity() * delta
 
 	# air dash
 	if input_buffer.is_pressed("dash"):
 		state_machine.change_state("AirDashing")
+		return
+		
+	# air dash
+	if input_buffer.is_pressed("light_attack"):
+		state_machine.change_state("AirLightAttack")
+		return
 	
 	# land if we've landed
 	if fighter.is_on_floor():
 		state_machine.change_state("Standing")
+		return
 		
 func exit():
 	fighter.move_velocity.y = 0

@@ -15,7 +15,7 @@ func can_enter() -> bool:
 		return false
 		
 	# allow dashing if none of the above
-	return true
+	return stamina_controller.current_stamina > stamina_data.dash_cost
 
 func enter():
 	super.enter()
@@ -24,8 +24,14 @@ func enter():
 	fighter.move_velocity = Vector3.ZERO
 	
 	# invulnerability
+	fighter.is_invulnerable = true
+	
+	# dash direction
 	move_dir = input_buffer.move_direction()
 	animation.set_animation("Dash")
+	
+	# take stamina
+	stamina_controller.constume_stamina(stamina_data.dash_cost)
 
 func update(delta : float):
 	super.update(delta)
@@ -40,14 +46,14 @@ func update(delta : float):
 	if move_dir != 0:
 		fighter.move_velocity.x = speed * move_dir
 	elif move_dir == 0:
-		fighter.move_velocity.x = speed * 1
+		fighter.move_velocity.x = speed * fighter.forward_direction 
 
 func exit():
 	super.exit()
 	fighter.move_velocity = Vector3.ZERO
 
-	# set when cooldown is over
+	# set when cooldown is over, turn off invulnerability
 	cooldown_end_time = Time.get_unix_time_from_system() + cooldown
-	
+	fighter.is_invulnerable = false
 	
 		

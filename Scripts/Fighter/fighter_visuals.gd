@@ -18,11 +18,11 @@ func _ready():
 		
 	GlobalEvents.FighterDamaged.connect(_hit_flash)
 	
-	_set_oufit(fighter.player_id)
+	#_set_oufit(fighter.player_id)
 		
-func _hit_flash(fighter : Fighter):
+func _hit_flash(fighter_hit : Fighter):
 	# return if the damaged fighter is not this one
-	if self.fighter != fighter:
+	if self.fighter != fighter_hit:
 		return
 		
 	# flash by applying material overlay
@@ -36,6 +36,6 @@ func _hit_flash(fighter : Fighter):
 	for model : MeshInstance3D in models:
 		model.material_overlay = null
 
-func _set_oufit(outfit_index : int):
-	for model : MeshInstance3D in outfit_models:
-		model.set_surface_override_material(0, outfit_materials[outfit_index])
+#func _set_oufit(outfit_index : int):
+	#for model : MeshInstance3D in outfit_models:
+		#model.set_surface_override_material(0, outfit_materials[outfit_index])

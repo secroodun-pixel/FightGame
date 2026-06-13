@@ -1,5 +1,4 @@
 class_name InputBuffer
-
 extends Node
 
 const BUFFER_SIZE : int = 20

@@ -8,6 +8,8 @@ var inputs: Dictionary[String, bool] = {
 	"dash": false,
 	"light_attack": false,
 	"heavy_attack": false,
+	"block": false,
+	"reset": false
 }
 
 func is_pressed(input_string : String) -> bool:

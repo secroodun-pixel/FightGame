@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://f80h4o5705vt"]
+
+[ext_resource type="PackedScene" uid="uid://dxmkxspv10em0" path="res://Scenes/Fighters/Fighter.tscn" id="1_h7apt"]
+[ext_resource type="Resource" uid="uid://c5ajkkjyfs5ei" path="res://Data/golem_data.tres" id="2_bmfq6"]
+
+[node name="Fighter" unique_id=202072913 instance=ExtResource("1_h7apt")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
+character = ExtResource("2_bmfq6")
+
+[node name="Jumping" parent="StateMachine" parent_id_path=PackedInt32Array(1987695335) index="7" unique_id=362468256]
+jump_force = 5.0
+horizontal_force = 2.0
+
+[node name="GeneralSkeleton" parent="Male_Ranger/Armature" parent_id_path=PackedInt32Array(1681596349, 1869712916) index="0" unique_id=694363214]
+bones/1/position = Vector3(0.004584874, 0.9048727, -0.089390576)
+bones/1/rotation = Quaternion(-0.04612409, -0.11572777, -0.0053725163, 0.99219495)
+bones/3/rotation = Quaternion(0.084602185, 9.670988e-05, 0.00025385272, 0.9964148)
+bones/4/rotation = Quaternion(0.08460267, 0.00027264448, 0.0002720861, 0.9964147)
+bones/5/rotation = Quaternion(-0.084602416, -0.00018729041, -0.00028198588, 0.9964147)
+bones/6/rotation = Quaternion(0.06260425, 0.09529909, 0.010956903, 0.99341774)
+bones/7/rotation = Quaternion(0.4933468, 0.5245736, 0.5281434, -0.44999564)
+bones/8/rotation = Quaternion(-0.04358424, 0.8205724, -0.5697917, 0.009938048)
+bones/9/rotation = Quaternion(0.17079839, -0.6672017, 0.17125294, 0.70451564)
+bones/10/rotation = Quaternion(0.09923425, 0.706851, 0.0630397, 0.6975243)
+bones/31/rotation = Quaternion(0.5454249, -0.47318736, -0.4758262, -0.50219005)
+bones/32/rotation = Quaternion(0.08976704, 0.8247596, -0.55822957, -0.009657298)
+bones/33/rotation = Quaternion(0.29220304, 0.54259306, -0.20459291, 0.76049453)
+bones/34/rotation = Quaternion(0.1201197, -0.69906753, -0.056838155, 0.702599)
+bones/55/rotation = Quaternion(-0.0008119746, 0.13059865, 0.98487455, -0.11386661)
+bones/56/rotation = Quaternion(0.018335603, 0.97937334, -0.16756806, 0.11141216)
+bones/57/rotation = Quaternion(-0.0951202, 0.72352403, -0.68368906, 0.0058668717)
+bones/58/rotation = Quaternion(4.6549903e-08, 1, 5.9565366e-08, 2.780725e-08)
+bones/60/rotation = Quaternion(0.00090690533, -0.100447066, 0.9871239, 0.124483064)
+bones/61/rotation = Quaternion(-0.038349684, 0.92744005, -0.1062338, -0.35650915)
+bones/62/rotation = Quaternion(0.17149979, 0.6367615, -0.7517461, -0.00063912076)
+bones/63/rotation = Quaternion(-1.7803785e-06, 1, 6.787713e-05, -7.351701e-08)
+
+[node name="LeftHand" parent="Male_Ranger/Armature/GeneralSkeleton" index="10" unique_id=1887211997]
+transform = Transform3D(0.46534932, 0.030709803, -0.88459426, -0.41492397, -0.875218, -0.24865931, -0.7818492, 0.48275277, -0.3945399, 0.32310545, 0.95829684, 0.014258862)
+
+[node name="RightHand" parent="Male_Ranger/Armature/GeneralSkeleton" index="11" unique_id=1653126004]
+transform = Transform3D(0.07369335, -0.15313384, 0.985454, 0.51943207, -0.8376319, -0.16900691, 0.8513282, 0.524331, 0.017814742, -0.2783829, 0.98058873, -0.17591026)
+
+[node name="Chest" parent="Male_Ranger/Armature/GeneralSkeleton" index="12" unique_id=786209367]
+transform = Transform3D(0.9732018, -0.018079733, -0.22924106, 0.00052061107, 0.9970751, -0.07642695, 0.2299523, 0.07425949, 0.97036463, -0.0012826675, 1.1369374, -0.06459456)
+
+[node name="Head" parent="Male_Ranger/Armature/GeneralSkeleton" index="13" unique_id=2014610647]
+transform = Transform3D(0.9977801, -0.056474335, -0.03529477, 0.048488148, 0.9793487, -0.19627747, 0.045650527, 0.19413036, 0.979913, -0.012506448, 1.561705, -0.018611288)
+
+[editable path="Male_Ranger"]

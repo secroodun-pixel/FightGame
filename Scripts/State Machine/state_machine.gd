@@ -1,5 +1,4 @@
 class_name StateMachine
-
 extends Node
 
 @export var starting_state: State
@@ -11,6 +10,7 @@ extends Node
 @export var animation : FighterAnimation
 
 # stamina
+@export var stamina_controller : StaminaController
 
 # state variables
 var states : Dictionary[String, State] = { }
@@ -29,6 +29,7 @@ func _ready():
 		change_state(starting_state.name)
 			
 func change_state(state_name : String):
+	
 	if not states.has(state_name):
 		printerr("Cannot change state to ", state_name, " as it doesn't exist")
 		return
@@ -40,9 +41,8 @@ func change_state(state_name : String):
 		current_state.exit()
 		
 	current_state = states[state_name]
+	print(current_state)
 	current_state.enter()
-	
-	print("New State:", state_name)
 	
 func update(delta: float):
 	if not current_state:
@@ -55,9 +55,3 @@ func is_current_state(state_name : String) -> bool:
 		return false
 	
 	return current_state.name == state_name
-	
-	
-	
-	
-	
-	

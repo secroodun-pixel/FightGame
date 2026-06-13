@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CharacterData" format=3 uid="uid://c5ajkkjyfs5ei"]
+
+[ext_resource type="Script" uid="uid://buth750evfh02" path="res://Scripts/Data/character_data.gd" id="1_qp76s"]
+
+[resource]
+script = ExtResource("1_qp76s")
+max_health = 150.0
+base_move_speed = 4.0
+metadata/_custom_type_script = "uid://buth750evfh02"

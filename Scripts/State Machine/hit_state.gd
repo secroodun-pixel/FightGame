@@ -13,3 +13,4 @@ func update(delta : float):
 	
 	if local_time >= duration:
 		state_machine.change_state("Standing")
+		return

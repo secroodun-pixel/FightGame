@@ -1,22 +1,20 @@
 [gd_scene format=3 uid="uid://dxmkxspv10em0"]
 
-[ext_resource type="PackedScene" uid="uid://d6jbw6wmibtg" path="res://Models/Outfits/Male_Ranger.gltf" id="1_4byrt"]
-[ext_resource type="Script" uid="uid://bc5tghih8lw2w" path="res://Scripts/Fighter/fighter.gd" id="1_prmng"]
+[ext_resource type="Resource" uid="uid://do2f58vtpp1r2" path="res://Data/character_data.tres" id="1_pb8fl"]
 [ext_resource type="Script" uid="uid://cs7f7e8qevmtg" path="res://Scripts/Inputs/player_input_handler.gd" id="2_875ig"]
-[ext_resource type="ArrayMesh" uid="uid://dm85wfnj78bd0" path="res://Models/FighterHead/Fighter_0_Head_Sphere_005_Retopology_004.res" id="2_prmng"]
-[ext_resource type="ArrayMesh" uid="uid://cec0rgv8m4agg" path="res://Models/FighterHead/Fighter_0_Head_Face_001.res" id="3_875ig"]
 [ext_resource type="Script" uid="uid://cfk65mmekmwvs" path="res://Scripts/Inputs/input_buffer.gd" id="3_rlrpx"]
+[ext_resource type="Script" uid="uid://ff6bhf8i2v0v" path="res://Scripts/Fighter/HUD_TEST.gd" id="4_pyo11"]
 [ext_resource type="Script" uid="uid://0v7fh8q6lmt7" path="res://Scripts/State Machine/state_machine.gd" id="4_qe18t"]
-[ext_resource type="ArrayMesh" uid="uid://cl3k1a1875ioj" path="res://Models/FighterHead/Fighter_0_Head_Face.res" id="4_rlrpx"]
 [ext_resource type="Script" uid="uid://domwaw8mpbskj" path="res://Scripts/State Machine/standing_state.gd" id="5_qe18t"]
 [ext_resource type="Animation" uid="uid://fhyv8w1tanwe" path="res://Animations/Dash.tres" id="5_vuvrb"]
 [ext_resource type="Script" uid="uid://dirllg7soqtpw" path="res://Scripts/State Machine/jumping_state.gd" id="6_ixfnq"]
 [ext_resource type="Animation" uid="uid://dhukn2h54qvdm" path="res://Animations/Defeat.tres" id="6_qe18t"]
 [ext_resource type="Script" uid="uid://bquv8v5epdgop" path="res://Scripts/State Machine/air_dashing_state.gd" id="6_v417l"]
 [ext_resource type="Animation" uid="uid://d12m862eiuruk" path="res://Animations/HeavyAttack.tres" id="7_ixfnq"]
+[ext_resource type="Script" uid="uid://dkm6adnnljd4o" path="res://Scripts/State Machine/attacks/air_light_attack_state.gd" id="7_mrrik"]
 [ext_resource type="Animation" uid="uid://cl7454r6ltg68" path="res://Animations/HeavyAttackRecovery.tres" id="8_2t77m"]
-[ext_resource type="Script" uid="uid://dvstj8jxprswt" path="res://Scripts/State Machine/light_attack_state.gd" id="8_rnj0f"]
-[ext_resource type="Script" uid="uid://dc8lt3cxh8xod" path="res://Scripts/State Machine/heave_attack_state.gd" id="9_0bjwg"]
+[ext_resource type="Script" uid="uid://dvstj8jxprswt" path="res://Scripts/State Machine/attacks/light_attack_state.gd" id="8_rnj0f"]
+[ext_resource type="Script" uid="uid://dc8lt3cxh8xod" path="res://Scripts/State Machine/attacks/heavy_attack_state.gd" id="9_0bjwg"]
 [ext_resource type="Animation" uid="uid://dne6g4qhinvib" path="res://Animations/Hit_Chest.tres" id="9_rnj0f"]
 [ext_resource type="Animation" uid="uid://b2frugccqmd7i" path="res://Animations/Hit_Head.tres" id="10_0bjwg"]
 [ext_resource type="Script" uid="uid://c6igunbuhyrfs" path="res://Scripts/State Machine/hit_state.gd" id="10_4hbrg"]
@@ -24,27 +22,101 @@
 [ext_resource type="Script" uid="uid://corc8x2grf6ea" path="res://Scripts/State Machine/defeated_state.gd" id="11_wqojl"]
 [ext_resource type="Animation" uid="uid://png5jl5d1e66" path="res://Animations/JumpIdle.tres" id="12_01lk1"]
 [ext_resource type="Script" uid="uid://tf5rjfojspmj" path="res://Scripts/State Machine/dashing_state.gd" id="12_3nd8k"]
-[ext_resource type="Script" uid="uid://xu07h40bp65t" path="res://Scripts/Hitboxes/hit_sender.gd" id="12_4hbrg"]
 [ext_resource type="Animation" uid="uid://xx013mh1uxud" path="res://Animations/JumpLand.tres" id="13_4hbrg"]
-[ext_resource type="Script" uid="uid://c52qtphg0yuyv" path="res://Scripts/Hitboxes/hit_receiver.gd" id="13_wqojl"]
 [ext_resource type="Script" uid="uid://cjffryiuaag0v" path="res://Scripts/State Machine/falling_state.gd" id="14_uxauc"]
 [ext_resource type="Animation" uid="uid://btmv8jpn10svm" path="res://Animations/JumpStart.tres" id="14_wqojl"]
+[ext_resource type="Script" uid="uid://d2nmgdq81jesx" path="res://Scripts/Fighter/stamina_controller.gd" id="15_dqs41"]
 [ext_resource type="Animation" uid="uid://cevaa15fovmw8" path="res://Animations/LightAttack.anim" id="15_rn0e0"]
+[ext_resource type="Resource" uid="uid://cxpjjpq8hp5kf" path="res://Data/stamina_data.tres" id="16_jtuj4"]
 [ext_resource type="Animation" uid="uid://7s13bd5xufsf" path="res://Animations/Walk.tres" id="16_xc2a8"]
 [ext_resource type="Script" uid="uid://cvtcahnx3l01o" path="res://Scripts/Fighter/fighter_visuals.gd" id="18_xc2a8"]
-[ext_resource type="Material" uid="uid://plr6pfe6a3am" path="res://Materials/hit_flash.tres" id="19_mmuvl"]
 [ext_resource type="Material" uid="uid://x50cq3w8m024" path="res://Models/Outfits/Outfit_Red.tres" id="20_lbuyy"]
 [ext_resource type="Material" uid="uid://caqqo6jpo8ss" path="res://Models/Outfits/Outfit_Blue.tres" id="21_3nd8k"]
+[ext_resource type="PackedScene" uid="uid://d6jbw6wmibtg" path="res://Models/Outfits/Male_Ranger.gltf" id="21_pyo11"]
+[ext_resource type="ArrayMesh" uid="uid://dm85wfnj78bd0" path="res://Models/FighterHead/Fighter_0_Head_Sphere_005_Retopology_004.res" id="22_3ny7w"]
 [ext_resource type="Script" uid="uid://cnwomlaechaw3" path="res://Scripts/Fighter/fighter_animation.gd" id="23_2t77m"]
+[ext_resource type="Script" uid="uid://xu07h40bp65t" path="res://Scripts/Hitboxes/hit_sender.gd" id="23_4lkng"]
+[ext_resource type="Script" uid="uid://c52qtphg0yuyv" path="res://Scripts/Hitboxes/hit_receiver.gd" id="24_b6uw4"]
+[ext_resource type="ArrayMesh" uid="uid://cec0rgv8m4agg" path="res://Models/FighterHead/Fighter_0_Head_Face_001.res" id="25_18nke"]
+[ext_resource type="ArrayMesh" uid="uid://cl3k1a1875ioj" path="res://Models/FighterHead/Fighter_0_Head_Face.res" id="26_s1rar"]
+[ext_resource type="Material" uid="uid://dl78kts7cm0x8" path="res://Models/Outfits/MI_Regular_Male.tres" id="28_pyo11"]
+[ext_resource type="Script" uid="uid://2evk0ylauums" path="res://Scripts/Fighter/fighter_hud.gd" id="37_ivhui"]
+[ext_resource type="FontFile" uid="uid://crjsroau7ki57" path="res://Fonts/MetalMania-Regular.ttf" id="37_mrrik"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_0bjwg"]
+[sub_resource type="GDScript" id="GDScript_uxauc"]
+script/source = "class_name Poop
+extends Fighter
+
+func _physics_process(delta: float) -> void:
+	super._physics_process(delta)
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ivhui"]
+bg_color = Color(0.12591082, 0.12591085, 0.12591076, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uxauc"]
+bg_color = Color(0.22094142, 0.22094142, 0.2209414, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mrrik"]
+bg_color = Color(0.74850893, 0.27641964, 0.26324773, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_ivhui"]
+font = ExtResource("37_mrrik")
+font_size = 35
+outline_size = 5
+outline_color = Color(0.3152841, 0, 0.0016577555, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dqs41"]
+bg_color = Color(0, 0.5576274, 0.1755661, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pb8fl"]
+bg_color = Color(0.2583282, 4.4869892e-05, 0.2583262, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pyo11"]
+bg_color = Color(0.81374407, 0, 0.11378663, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_27ji7"]
 radius = 0.1
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_8mssw"]
-size = Vector3(1, 2.0942383, 0.22730923)
+[sub_resource type="BoxShape3D" id="BoxShape3D_dbrw3"]
+size = Vector3(0.7397461, 2.0942383, 0.8151254)
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_01lk1"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_su52t"]
 radius = 0.13
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_35p1i"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lbuyy"]
+radius = 0.28125
+height = 1.5759697
+
+[sub_resource type="Animation" id="Animation_mrrik"]
+length = 1.2
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ivhui"]
+_data = {
+&"RESET": SubResource("Animation_mrrik")
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mmuvl"]
 _data = {
@@ -84,13 +156,19 @@ stretch_time_scale = true
 start_offset = 0.0
 loop_mode = 0
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xc2a8"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mrrik"]
 animation = &"Fighter/HeavyAttack"
-use_custom_timeline = true
-timeline_length = 0.5
-stretch_time_scale = true
-start_offset = 0.0
-loop_mode = 0
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_ivhui"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_dqs41"]
+graph_offset = Vector2(-115.92168, 25.295033)
+nodes/output/position = Vector2(656, 240)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_ivhui")
+nodes/TimeScale/position = Vector2(448, 224)
+nodes/HeavyAttack/node = SubResource("AnimationNodeAnimation_mrrik")
+nodes/HeavyAttack/position = Vector2(176, 240)
+node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"HeavyAttack"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mmuvl"]
 animation = &"Fighter/Hit_Chest"
@@ -117,7 +195,7 @@ loop_mode = 0
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_lbuyy"]
 animation = &"Fighter/LightAttack"
 use_custom_timeline = true
-timeline_length = 0.2
+timeline_length = 0.4
 stretch_time_scale = true
 start_offset = 0.0
 loop_mode = 0
@@ -161,10 +239,6 @@ xfade_time = 0.1
 switch_mode = 2
 advance_mode = 2
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_v417l"]
-switch_mode = 2
-advance_mode = 2
-
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_uxauc"]
 xfade_time = 0.1
 switch_mode = 2
@@ -177,6 +251,10 @@ advance_mode = 2
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ivhui"]
 advance_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dqs41"]
+switch_mode = 2
+advance_mode = 2
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_01lk1"]
 states/Dash/node = SubResource("AnimationNodeAnimation_4hbrg")
 states/Dash/position = Vector2(193, -45)
@@ -185,10 +263,10 @@ states/Defeated/position = Vector2(697, 259)
 states/End/position = Vector2(922, 94)
 states/Fighter_Dash/node = SubResource("AnimationNodeAnimation_uxauc")
 states/Fighter_Dash/position = Vector2(747, 108)
-"states/Heavy Attack/node" = SubResource("AnimationNodeAnimation_xc2a8")
-"states/Heavy Attack/position" = Vector2(-98, 270)
 "states/Heavy Attack Recovery/node" = SubResource("AnimationNodeAnimation_rn0e0")
 "states/Heavy Attack Recovery/position" = Vector2(113, 270)
+states/HeavyAttack/node = SubResource("AnimationNodeBlendTree_dqs41")
+states/HeavyAttack/position = Vector2(-323.16003, 166.16704)
 "states/Hit Chest/node" = SubResource("AnimationNodeAnimation_mmuvl")
 "states/Hit Chest/position" = Vector2(521, 259)
 states/JumpIdle/node = SubResource("AnimationNodeAnimation_0bjwg")
@@ -197,24 +275,114 @@ states/JumpLand/node = SubResource("AnimationNodeAnimation_8mssw")
 states/JumpLand/position = Vector2(411, -45)
 states/JumpStart/node = SubResource("AnimationNodeAnimation_01lk1")
 states/JumpStart/position = Vector2(515, 154)
-"states/Light Attack/node" = SubResource("AnimationNodeAnimation_lbuyy")
-"states/Light Attack/position" = Vector2(324, 270)
+states/LightAttack/node = SubResource("AnimationNodeAnimation_lbuyy")
+states/LightAttack/position = Vector2(324, 270.32)
 states/Standing/node = SubResource("AnimationNodeBlendSpace1D_0bjwg")
 states/Standing/position = Vector2(316, 94)
-states/Start/position = Vector2(62, 100)
-transitions = ["Start", "Standing", SubResource("AnimationNodeStateMachineTransition_8mssw"), "JumpStart", "JumpIdle", SubResource("AnimationNodeStateMachineTransition_4hbrg"), "JumpLand", "Standing", SubResource("AnimationNodeStateMachineTransition_wqojl"), "Dash", "Standing", SubResource("AnimationNodeStateMachineTransition_rn0e0"), "Light Attack", "Standing", SubResource("AnimationNodeStateMachineTransition_3nd8k"), "Heavy Attack", "Heavy Attack Recovery", SubResource("AnimationNodeStateMachineTransition_v417l"), "Heavy Attack Recovery", "Standing", SubResource("AnimationNodeStateMachineTransition_uxauc"), "Hit Chest", "Standing", SubResource("AnimationNodeStateMachineTransition_mrrik"), "Fighter_Dash", "JumpIdle", SubResource("AnimationNodeStateMachineTransition_ivhui")]
-graph_offset = Vector2(-358, -164)
+states/Start/position = Vector2(62, 99.2)
+transitions = ["Start", "Standing", SubResource("AnimationNodeStateMachineTransition_8mssw"), "JumpStart", "JumpIdle", SubResource("AnimationNodeStateMachineTransition_4hbrg"), "JumpLand", "Standing", SubResource("AnimationNodeStateMachineTransition_wqojl"), "Dash", "Standing", SubResource("AnimationNodeStateMachineTransition_rn0e0"), "LightAttack", "Standing", SubResource("AnimationNodeStateMachineTransition_3nd8k"), "Heavy Attack Recovery", "Standing", SubResource("AnimationNodeStateMachineTransition_uxauc"), "Hit Chest", "Standing", SubResource("AnimationNodeStateMachineTransition_mrrik"), "Fighter_Dash", "JumpIdle", SubResource("AnimationNodeStateMachineTransition_ivhui"), "HeavyAttack", "Heavy Attack Recovery", SubResource("AnimationNodeStateMachineTransition_dqs41")]
+graph_offset = Vector2(-207, 49)
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lbuyy"]
-radius = 0.22705078
-height = 2.401123
-
-[node name="Fighter" type="CharacterBody3D" unique_id=831552666 node_paths=PackedStringArray("input_handler", "input_buffer", "state_machine")]
+[node name="Fighter" type="CharacterBody3D" unique_id=202072913 node_paths=PackedStringArray("input_handler", "input_buffer", "state_machine")]
 collision_layer = 2
-script = ExtResource("1_prmng")
+script = SubResource("GDScript_uxauc")
+character = ExtResource("1_pb8fl")
 input_handler = NodePath("PlayerInputHandler")
 input_buffer = NodePath("InputBuffer")
 state_machine = NodePath("StateMachine")
+metadata/_custom_type_script = "uid://bc5tghih8lw2w"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=953429873]
+
+[node name="HUD" type="Panel" parent="CanvasLayer" unique_id=408943093]
+offset_left = 40.0
+offset_top = 42.0
+offset_right = 494.0
+offset_bottom = 149.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ivhui")
+script = ExtResource("37_ivhui")
+
+[node name="HUDElements" type="VBoxContainer" parent="CanvasLayer/HUD" unique_id=844107517]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 13.0
+offset_top = 11.0
+offset_right = -13.0
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HealthBar" type="ProgressBar" parent="CanvasLayer/HUD/HUDElements" unique_id=1699811067]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_uxauc")
+theme_override_styles/fill = SubResource("StyleBoxFlat_mrrik")
+value = 38.12
+show_percentage = false
+
+[node name="HealthText" type="Label" parent="CanvasLayer/HUD/HUDElements/HealthBar" unique_id=1771492450]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 22.0
+offset_top = 94.0
+offset_right = 133.0
+offset_bottom = 94.0
+grow_vertical = 2
+text = "100"
+label_settings = SubResource("LabelSettings_ivhui")
+vertical_alignment = 1
+
+[node name="StaminaBar" type="ProgressBar" parent="CanvasLayer/HUD/HUDElements" unique_id=840331451]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_uxauc")
+theme_override_styles/fill = SubResource("StyleBoxFlat_dqs41")
+value = 38.12
+show_percentage = false
+
+[node name="Player0Pos" type="Control" parent="CanvasLayer" unique_id=1563269709]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 27.0
+offset_top = 25.0
+offset_right = 67.0
+offset_bottom = 65.0
+
+[node name="Player1Pos" type="Control" parent="CanvasLayer" unique_id=779206375]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -480.0
+offset_top = 25.0
+offset_right = -440.0
+offset_bottom = 65.0
+grow_horizontal = 0
+
+[node name="Health" type="Panel" parent="CanvasLayer" unique_id=342016489]
+offset_left = 298.0
+offset_top = 25.0
+offset_right = 503.0
+offset_bottom = 130.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_pb8fl")
+script = ExtResource("4_pyo11")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Health" unique_id=28676311]
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 0
+offset_left = 7.0
+offset_top = 4.0
+offset_right = 202.0
+offset_bottom = 100.0
+alignment = 1
+
+[node name="HealthBlock" type="Panel" parent="CanvasLayer/Health/HBoxContainer" unique_id=676313400]
+custom_minimum_size = Vector2(94.8, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pyo11")
 
 [node name="PlayerInputHandler" type="Node" parent="." unique_id=1835830064 node_paths=PackedStringArray("fighter")]
 script = ExtResource("2_875ig")
@@ -225,17 +393,19 @@ metadata/_custom_type_script = "uid://cs7f7e8qevmtg"
 script = ExtResource("3_rlrpx")
 metadata/_custom_type_script = "uid://cfk65mmekmwvs"
 
-[node name="FighterAnimation" type="Node" parent="." unique_id=988911725 node_paths=PackedStringArray("anim_tree")]
+[node name="FighterAnimation" type="Node" parent="." unique_id=988911725 node_paths=PackedStringArray("anim_tree", "anim_player")]
 script = ExtResource("23_2t77m")
 anim_tree = NodePath("../AnimationTree")
+anim_player = NodePath("../AnimationPlayer")
 metadata/_custom_type_script = "uid://cnwomlaechaw3"
 
-[node name="StateMachine" type="Node" parent="." unique_id=1987695335 node_paths=PackedStringArray("starting_state", "fighter", "input_buffer", "animation")]
+[node name="StateMachine" type="Node" parent="." unique_id=1987695335 node_paths=PackedStringArray("starting_state", "fighter", "input_buffer", "animation", "stamina_controller")]
 script = ExtResource("4_qe18t")
 starting_state = NodePath("Standing")
 fighter = NodePath("..")
 input_buffer = NodePath("../InputBuffer")
 animation = NodePath("../FighterAnimation")
+stamina_controller = NodePath("../StaminaController")
 metadata/_custom_type_script = "uid://0v7fh8q6lmt7"
 
 [node name="AirDashing" type="Node" parent="StateMachine" unique_id=1561329849]
@@ -243,6 +413,15 @@ script = ExtResource("6_v417l")
 distance = 1.5
 duration = 0.15
 metadata/_custom_type_script = "uid://bquv8v5epdgop"
+
+[node name="AirLightAttack" type="Node" parent="StateMachine" unique_id=1160104217 node_paths=PackedStringArray("hit_sender")]
+script = ExtResource("7_mrrik")
+damage = 1
+animation_name = "Heavy Attack"
+cooldown = 2.0
+hit_sender = NodePath("../../Male_Ranger/Armature/GeneralSkeleton/Divekick_Hitsender")
+hit_detect_end_time = 3.0
+metadata/_custom_type_script = "uid://dkm6adnnljd4o"
 
 [node name="Dashing" type="Node" parent="StateMachine" unique_id=1655155397]
 script = ExtResource("12_3nd8k")
@@ -257,16 +436,14 @@ metadata/_custom_type_script = "uid://corc8x2grf6ea"
 
 [node name="Falling" type="Node" parent="StateMachine" unique_id=532584992]
 script = ExtResource("14_uxauc")
-gravity = 30.0
 metadata/_custom_type_script = "uid://cjffryiuaag0v"
 
 [node name="HeavyAttack" type="Node" parent="StateMachine" unique_id=1900766403 node_paths=PackedStringArray("hit_sender")]
 script = ExtResource("9_0bjwg")
-damage = 15
-animation_name = "Heavy Attack"
-duration = 0.8
+damage = 1
+animation_name = "HeavyAttack"
 cooldown = 0.2
-forward_force = 5.0
+forward_force = 1.0
 hit_sender = NodePath("../../Male_Ranger/Armature/GeneralSkeleton/RightHand/RightHand_HitSender")
 hit_detect_end_time = 0.45
 metadata/_custom_type_script = "uid://dc8lt3cxh8xod"
@@ -279,16 +456,12 @@ metadata/_custom_type_script = "uid://c6igunbuhyrfs"
 
 [node name="Jumping" type="Node" parent="StateMachine" unique_id=362468256]
 script = ExtResource("6_ixfnq")
-jump_force = 8.0
-move_speed = 6.0
-gravity = 20.0
 metadata/_custom_type_script = "uid://dirllg7soqtpw"
 
 [node name="LightAttack" type="Node" parent="StateMachine" unique_id=503519583 node_paths=PackedStringArray("hit_sender")]
 script = ExtResource("8_rnj0f")
-damage = 8
-animation_name = "Light Attack"
-duration = 0.2
+damage = 1
+animation_name = "LightAttack"
 cooldown = 0.1
 hit_sender = NodePath("../../Male_Ranger/Armature/GeneralSkeleton/RightHand/RightHand_HitSender")
 hit_detect_end_time = 0.25
@@ -296,23 +469,29 @@ metadata/_custom_type_script = "uid://dvstj8jxprswt"
 
 [node name="Standing" type="Node" parent="StateMachine" unique_id=234309957]
 script = ExtResource("5_qe18t")
-move_speed = 5.0
 blend_position_parameter = "parameters/Standing/blend_position"
 metadata/_custom_type_script = "uid://domwaw8mpbskj"
 
-[node name="Male_Ranger" parent="." unique_id=1681596349 instance=ExtResource("1_4byrt")]
+[node name="StaminaController" type="Node" parent="." unique_id=1377131972]
+script = ExtResource("15_dqs41")
+data = ExtResource("16_jtuj4")
+metadata/_custom_type_script = "uid://d2nmgdq81jesx"
 
-[node name="GeneralSkeleton" parent="Male_Ranger/Armature" parent_id_path=PackedInt32Array(1681596349, 367781029) index="0" unique_id=1440751743]
-bones/1/position = Vector3(0.004034656, 0.9031731, -0.08978323)
-bones/1/rotation = Quaternion(-0.044344738, -0.11570593, -0.005201541, 0.9922795)
-bones/3/rotation = Quaternion(0.085182734, 0.00011060921, 0.00027423425, 0.99636537)
-bones/4/rotation = Quaternion(0.08518278, 0.0003164441, 0.00022823761, 0.99636525)
-bones/5/rotation = Quaternion(-0.08518271, -0.00021228075, -0.00024937745, 0.99636537)
-bones/6/rotation = Quaternion(0.05553401, 0.09519385, 0.0116754845, 0.99384)
-bones/7/rotation = Quaternion(0.49654526, 0.52344716, 0.5291018, -0.44665116)
-bones/8/rotation = Quaternion(-0.03375471, 0.82214785, -0.5681885, 0.009765837)
-bones/9/rotation = Quaternion(0.16412288, -0.67469645, 0.16817023, 0.69969076)
-bones/10/rotation = Quaternion(0.099195644, 0.70685846, 0.06300046, 0.69752586)
+[node name="StaminaRegenTimer" type="Timer" parent="StaminaController" unique_id=381188503]
+
+[node name="Male_Ranger" parent="." unique_id=1858045697 instance=ExtResource("21_pyo11")]
+
+[node name="GeneralSkeleton" parent="Male_Ranger/Armature" parent_id_path=PackedInt32Array(1858045697, 1869712916) index="0" unique_id=694363214]
+bones/1/position = Vector3(0.0052946927, 0.9076275, -0.089359)
+bones/1/rotation = Quaternion(-0.04739302, -0.11567976, -0.005567768, 0.99213964)
+bones/3/rotation = Quaternion(0.089610375, 0.00011963582, 0.0002768729, 0.9959769)
+bones/4/rotation = Quaternion(0.08961097, 0.00034495688, 0.00021385617, 0.99597675)
+bones/5/rotation = Quaternion(-0.08961069, -0.00022967525, -0.00023699083, 0.99597687)
+bones/6/rotation = Quaternion(0.07494347, 0.09548986, 0.008756602, 0.99256665)
+bones/7/rotation = Quaternion(0.4882785, 0.5262931, 0.526544, -0.45535848)
+bones/8/rotation = Quaternion(-0.060487855, 0.8179002, -0.5720873, 0.009837243)
+bones/9/rotation = Quaternion(0.18607332, -0.6530894, 0.17993738, 0.7116696)
+bones/10/rotation = Quaternion(0.09913853, 0.7068695, 0.062942915, 0.6975281)
 bones/11/rotation = Quaternion(0.6295969, -4.112516e-08, -4.6188998e-06, 0.77692205)
 bones/12/rotation = Quaternion(0.62334186, 2.9162361e-08, -4.2622414e-06, 0.78194946)
 bones/13/rotation = Quaternion(0.62334144, -2.2329806e-07, -4.470684e-06, 0.7819498)
@@ -329,10 +508,10 @@ bones/27/rotation = Quaternion(-0.12381919, 0.7195234, 0.20183541, 0.6528533)
 bones/28/rotation = Quaternion(0.18180692, 0.11012423, 0.0600633, 0.9753006)
 bones/29/rotation = Quaternion(0.5994299, 0.27396563, 0.19463211, 0.72646064)
 bones/30/scale = Vector3(1.0001454, 1.0004877, 1.0005833)
-bones/31/rotation = Quaternion(0.5485089, -0.4724978, -0.47645903, -0.49886942)
-bones/32/rotation = Quaternion(0.08432503, 0.82392204, -0.5603087, -0.009799857)
-bones/33/rotation = Quaternion(0.29137352, 0.54582953, -0.20582823, 0.7581599)
-bones/34/rotation = Quaternion(0.12015839, -0.6990588, -0.056877036, 0.702598)
+bones/31/rotation = Quaternion(0.5403905, -0.4743657, -0.4748849, -0.50738525)
+bones/32/rotation = Quaternion(0.0918532, 0.8252391, -0.55717796, -0.009803182)
+bones/33/rotation = Quaternion(0.29270187, 0.54142153, -0.20404184, 0.7612853)
+bones/34/rotation = Quaternion(0.12021517, -0.6990459, -0.05693456, 0.70259637)
 bones/35/rotation = Quaternion(0.6295971, 3.6673434e-08, 4.1725643e-06, 0.7769218)
 bones/36/rotation = Quaternion(0.62334144, 1.8199208e-07, 4.469913e-06, 0.78194976)
 bones/37/rotation = Quaternion(0.62334156, 9.967596e-08, 4.2318457e-06, 0.7819497)
@@ -353,102 +532,114 @@ bones/51/rotation = Quaternion(-0.12381925, -0.7195233, -0.2018356, 0.65285325)
 bones/52/rotation = Quaternion(0.18180701, -0.11012423, -0.0600633, 0.97530067)
 bones/53/rotation = Quaternion(0.59943014, -0.27396527, -0.1946322, 0.7264605)
 bones/54/scale = Vector3(1.0001454, 1.0004876, 1.0005835)
-bones/55/rotation = Quaternion(-0.0008762632, 0.1390995, 0.98351365, -0.11554897)
-bones/56/rotation = Quaternion(0.019399043, 0.97765213, -0.1776239, 0.11076934)
-bones/57/rotation = Quaternion(-0.095400974, 0.72020257, -0.6871478, 0.005906219)
-bones/58/rotation = Quaternion(4.660066e-08, 1, 5.958833e-08, 2.7793334e-08)
-bones/60/rotation = Quaternion(0.00090070703, -0.0923719, 0.9872634, 0.12952898)
-bones/61/rotation = Quaternion(-0.043594465, 0.9261279, -0.12024476, -0.3548631)
-bones/62/rotation = Quaternion(0.17135133, 0.6310072, -0.7566164, 0.00045586805)
-bones/63/rotation = Quaternion(-4.8812085e-06, 1, 0.00018660951, -5.798786e-07)
+bones/55/rotation = Quaternion(-0.0008257341, 0.12227136, 0.9862239, -0.11140716)
+bones/56/rotation = Quaternion(0.016490541, 0.9820664, -0.15039447, 0.112496175)
+bones/57/rotation = Quaternion(-0.09458027, 0.7284193, -0.67854416, 0.006151347)
+bones/58/rotation = Quaternion(4.662267e-08, 1, 5.959829e-08, 2.77873e-08)
+bones/60/rotation = Quaternion(0.0007887957, -0.110716365, 0.9870984, 0.11566389)
+bones/61/rotation = Quaternion(-0.029347584, 0.92909455, -0.082344666, -0.35936254)
+bones/62/rotation = Quaternion(0.17141436, 0.64628935, -0.743586, -0.0026781985)
+bones/63/rotation = Quaternion(-5.7679235e-06, 1, 0.00021897434, -8.07301e-07)
 
-[node name="Fighter0HeadSphere005Retopology004" type="MeshInstance3D" parent="Male_Ranger/Armature/GeneralSkeleton" index="0" unique_id=1240585253]
-mesh = ExtResource("2_prmng")
+[node name="Fighter0HeadSphere005Retopology004" type="MeshInstance3D" parent="Male_Ranger/Armature/GeneralSkeleton" index="0" unique_id=862924504]
+mesh = ExtResource("22_3ny7w")
 skeleton = NodePath("..")
 
-[node name="LeftHand" type="BoneAttachment3D" parent="Male_Ranger/Armature/GeneralSkeleton" index="10" unique_id=1887211997]
-transform = Transform3D(0.4588337, 0.031698547, -0.88795656, -0.4173492, -0.8745692, -0.24687746, -0.78440505, 0.4838634, -0.3880526, 0.31972584, 0.9534736, 0.018867623)
+[node name="LeftHand" type="BoneAttachment3D" parent="Male_Ranger/Armature/GeneralSkeleton" index="10" unique_id=1485523380]
+transform = Transform3D(0.47897983, 0.029279247, -0.87733763, -0.39571297, -0.88493276, -0.24557109, -0.78357506, 0.46479738, -0.4122789, 0.32837623, 0.96697676, 0.00210277)
 bone_name = "LeftHand"
 bone_idx = 10
 
-[node name="LeftHand_HitSender" type="Area3D" parent="Male_Ranger/Armature/GeneralSkeleton/LeftHand" unique_id=2005581107]
-script = ExtResource("12_4hbrg")
+[node name="LeftHand_HitSender" type="Area3D" parent="Male_Ranger/Armature/GeneralSkeleton/LeftHand" unique_id=2076863306]
+script = ExtResource("23_4lkng")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Male_Ranger/Armature/GeneralSkeleton/LeftHand/LeftHand_HitSender" unique_id=580566192]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Male_Ranger/Armature/GeneralSkeleton/LeftHand/LeftHand_HitSender" unique_id=211377450]
 transform = Transform3D(0.9981723, -0.05924353, 0.011912793, 0.058672428, 0.99732256, 0.04365042, -0.014467329, -0.042871803, 0.99897563, -0.0011240989, 0.06242037, 0.021074623)
-shape = SubResource("SphereShape3D_0bjwg")
-debug_color = Color(0.999901, 0.020556765, 1.92523e-07, 0.41960785)
+shape = SubResource("SphereShape3D_27ji7")
+disabled = true
 
-[node name="RightHand" type="BoneAttachment3D" parent="Male_Ranger/Armature/GeneralSkeleton" index="11" unique_id=1653126004]
-transform = Transform3D(0.06875044, -0.14815405, 0.98657167, 0.52983093, -0.8324992, -0.16193898, 0.84531206, 0.5338494, 0.021261837, -0.27603903, 0.9762235, -0.169144)
+[node name="RightHand" type="BoneAttachment3D" parent="Male_Ranger/Armature/GeneralSkeleton" index="11" unique_id=240872745]
+transform = Transform3D(0.07925492, -0.15634477, 0.98451775, 0.49186033, -0.852898, -0.17503855, 0.86705947, 0.4981179, 0.009303477, -0.28167427, 0.9889239, -0.18634859)
 bone_name = "RightHand"
 bone_idx = 34
 
-[node name="RightHand_HitSender" type="Area3D" parent="Male_Ranger/Armature/GeneralSkeleton/RightHand" unique_id=29012472]
-script = ExtResource("12_4hbrg")
+[node name="RightHand_HitSender" type="Area3D" parent="Male_Ranger/Armature/GeneralSkeleton/RightHand" unique_id=1038785819]
+script = ExtResource("23_4lkng")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Male_Ranger/Armature/GeneralSkeleton/RightHand/RightHand_HitSender" unique_id=348653551]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Male_Ranger/Armature/GeneralSkeleton/RightHand/RightHand_HitSender" unique_id=681989467]
 transform = Transform3D(0.9981723, -0.05924353, 0.011912793, 0.058672428, 0.99732256, 0.04365042, -0.014467329, -0.042871803, 0.99897563, -0.0011240989, 0.06242037, 0.021074623)
-shape = SubResource("SphereShape3D_0bjwg")
-debug_color = Color(0.999901, 0.020556765, 1.92523e-07, 0.41960785)
+shape = SubResource("SphereShape3D_27ji7")
 
-[node name="Chest" type="BoneAttachment3D" parent="Male_Ranger/Armature/GeneralSkeleton" index="12" unique_id=786209367]
-transform = Transform3D(0.9732214, -0.019127272, -0.22907245, 0.00048670248, 0.99670136, -0.08115557, 0.22986911, 0.07887085, 0.9700204, -0.0020054022, 1.1351451, -0.06417494)
+[node name="Chest" type="BoneAttachment3D" parent="Male_Ranger/Armature/GeneralSkeleton" index="12" unique_id=338057755]
+transform = Transform3D(0.97323006, -0.01973536, -0.22898433, 0.00046918218, 0.99647504, -0.08388861, 0.22983272, 0.08153545, 0.9698087, -0.00041167485, 1.1397569, -0.06513755)
 bone_name = "Chest"
 bone_idx = 3
 
-[node name="Chest_HitReceiver" type="Area3D" parent="Male_Ranger/Armature/GeneralSkeleton/Chest" unique_id=484793910]
-script = ExtResource("13_wqojl")
+[node name="Chest_HitReceiver" type="Area3D" parent="Male_Ranger/Armature/GeneralSkeleton/Chest" unique_id=1394570295]
+script = ExtResource("24_b6uw4")
 hit_state_name = "HitChest"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Male_Ranger/Armature/GeneralSkeleton/Chest/Chest_HitReceiver" unique_id=1671934813]
-transform = Transform3D(0.30201134, -0.014821975, 0.004046917, 0.009852438, 0.449484, 0.084165245, -0.0016128868, -0.029696569, 1.2718835, 0.010168854, -0.09914005, 0.04638096)
-shape = SubResource("BoxShape3D_8mssw")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Male_Ranger/Armature/GeneralSkeleton/Chest/Chest_HitReceiver" unique_id=909505806]
+transform = Transform3D(0.9994441, -0.033154972, 0.003490685, 0.033155173, 0.9994502, -1.3788014e-08, -0.0034887653, 0.000115748044, 0.9999939, 0.14049774, -0.08921999, 0.1314832)
+shape = SubResource("BoxShape3D_dbrw3")
 debug_color = Color(0, 0.7372549, 0.7019608, 0.41960785)
 
-[node name="Head" type="BoneAttachment3D" parent="Male_Ranger/Armature/GeneralSkeleton" index="13" unique_id=2014610647]
-transform = Transform3D(0.99772847, -0.057048894, -0.03582178, 0.04939, 0.98113716, -0.18689694, 0.04580836, 0.1847032, 0.9817261, -0.013713653, 1.5596772, -0.015979107)
+[node name="Head" type="BoneAttachment3D" parent="Male_Ranger/Armature/GeneralSkeleton" index="13" unique_id=811631311]
+transform = Transform3D(0.99782354, -0.05688996, -0.033342734, 0.047830828, 0.9725067, -0.22791031, 0.045391724, 0.22581941, 0.9731111, -0.012812132, 1.5640894, -0.013945261)
 bone_name = "Head"
 bone_idx = 6
 
-[node name="Head_HitReceiver" type="Area3D" parent="Male_Ranger/Armature/GeneralSkeleton/Head" unique_id=1953609371]
-script = ExtResource("13_wqojl")
+[node name="Head_HitReceiver" type="Area3D" parent="Male_Ranger/Armature/GeneralSkeleton/Head" unique_id=1865863289]
+script = ExtResource("24_b6uw4")
 hit_state_name = "HitChest"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Male_Ranger/Armature/GeneralSkeleton/Head/Head_HitReceiver" unique_id=181430159]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Male_Ranger/Armature/GeneralSkeleton/Head/Head_HitReceiver" unique_id=65359249]
 transform = Transform3D(1, -9.313226e-10, -1.4901161e-08, -2.8871e-08, 1, -2.3841858e-07, 3.7252903e-09, 0, 1, 0.0044675246, 0.07197511, -0.0025674403)
-shape = SubResource("SphereShape3D_01lk1")
+shape = SubResource("SphereShape3D_su52t")
 
-[node name="Fighter0HeadFace001" type="MeshInstance3D" parent="Male_Ranger/Armature" parent_id_path=PackedInt32Array(1681596349, 367781029) index="1" unique_id=1234329096]
-mesh = ExtResource("3_875ig")
+[node name="Divekick_Hitsender" type="Area3D" parent="Male_Ranger/Armature/GeneralSkeleton" index="14" unique_id=1587129153]
+visible = false
+script = ExtResource("23_4lkng")
+metadata/_custom_type_script = "uid://xu07h40bp65t"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Male_Ranger/Armature/GeneralSkeleton/Divekick_Hitsender" unique_id=82822536]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.015197754, 0.42055517, 0.46299636)
+visible = false
+shape = SubResource("SphereShape3D_35p1i")
+debug_color = Color(0.9766316, 0, 0.41398072, 0.41960785)
+
+[node name="Fighter0HeadFace001" type="MeshInstance3D" parent="Male_Ranger/Armature" parent_id_path=PackedInt32Array(1858045697, 1869712916) index="1" unique_id=887467059]
+mesh = ExtResource("25_18nke")
 skeleton = NodePath("../GeneralSkeleton")
 
-[node name="Fighter0HeadFace" type="MeshInstance3D" parent="Male_Ranger/Armature" parent_id_path=PackedInt32Array(1681596349, 367781029) index="2" unique_id=722700673]
-mesh = ExtResource("4_rlrpx")
+[node name="Fighter0HeadFace" type="MeshInstance3D" parent="Male_Ranger/Armature" parent_id_path=PackedInt32Array(1858045697, 1869712916) index="2" unique_id=1719829984]
+mesh = ExtResource("26_s1rar")
 skeleton = NodePath("../GeneralSkeleton")
+
+[node name="Collision_Capsule" type="CollisionShape3D" parent="." unique_id=1309558085]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.78798485, -0.020837493)
+shape = SubResource("CapsuleShape3D_lbuyy")
 
 [node name="FighterVisual" type="Node" parent="." unique_id=1263362661 node_paths=PackedStringArray("model_root", "outfit_models")]
 script = ExtResource("18_xc2a8")
-hit_material = ExtResource("19_mmuvl")
-model_root = NodePath("../Male_Ranger/Armature/GeneralSkeleton")
-outfit_materials = Array[StandardMaterial3D]([ExtResource("20_lbuyy"), ExtResource("21_3nd8k")])
-outfit_models = [NodePath("../Male_Ranger/Armature/GeneralSkeleton/Male_Ranger_Acc_Pauldron"), NodePath("../Male_Ranger/Armature/GeneralSkeleton/Male_Ranger_Arms"), NodePath("../Male_Ranger/Armature/GeneralSkeleton/Male_Ranger_Arms_Bracer"), NodePath("../Male_Ranger/Armature/GeneralSkeleton/Male_Ranger_Body"), NodePath("../Male_Ranger/Armature/GeneralSkeleton/Male_Ranger_Body_Belt_1"), NodePath("../Male_Ranger/Armature/GeneralSkeleton/Male_Ranger_Body_Belt_2"), NodePath("../Male_Ranger/Armature/GeneralSkeleton/Male_Ranger_Feet_Boots"), NodePath("../Male_Ranger/Armature/GeneralSkeleton/Male_Ranger_Head_Hood"), NodePath("../Male_Ranger/Armature/GeneralSkeleton/Male_Ranger_Legs")]
+hit_material = ExtResource("28_pyo11")
+model_root = NodePath("../Male_Ranger")
+outfit_materials = Array[StandardMaterial3D]([ExtResource("20_lbuyy"), ExtResource("21_3nd8k"), ExtResource("28_pyo11"), ExtResource("28_pyo11"), ExtResource("21_3nd8k")])
+outfit_models = [null, null, null, null, null, null, null, null, null]
 metadata/_custom_type_script = "uid://cvtcahnx3l01o"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1605240310]
 root_node = NodePath("../Male_Ranger")
+libraries/ = SubResource("AnimationLibrary_ivhui")
 libraries/Fighter = SubResource("AnimationLibrary_mmuvl")
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=570330019]
 root_node = NodePath("../Male_Ranger")
 tree_root = SubResource("AnimationNodeStateMachine_01lk1")
 anim_player = NodePath("../AnimationPlayer")
+parameters/HeavyAttack/TimeScale/scale = 1.0
 parameters/Standing/blend_position = -0.0015519857
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1309558085]
-transform = Transform3D(1, 0, 0, 0, 0.718596, 0, 0, 0, 0.59339565, 0, 0.90052986, 0)
-shape = SubResource("CapsuleShape3D_lbuyy")
-
-[node name="LightPunchSpawner" type="Marker3D" parent="." unique_id=1658445853]
+[connection signal="timeout" from="StaminaController/StaminaRegenTimer" to="StaminaController" method="_on_stamina_regen_timer_timeout"]
 
 [editable path="Male_Ranger"]

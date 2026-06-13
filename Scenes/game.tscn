@@ -1,11 +1,121 @@
 [gd_scene format=3 uid="uid://dceyxh5x0u2fk"]
 
-[ext_resource type="PackedScene" uid="uid://dxmkxspv10em0" path="res://Scenes/Fighters/Fighter.tscn" id="1_ebmjs"]
+[ext_resource type="Script" uid="uid://qyu7lh1a8b33" path="res://Scripts/Managers/game_manager.gd" id="1_3dryh"]
+[ext_resource type="Script" uid="uid://xhvftxdn47tq" path="res://Scripts/Camera/camera_controller.gd" id="1_qxrlw"]
+[ext_resource type="FontFile" uid="uid://crjsroau7ki57" path="res://Fonts/MetalMania-Regular.ttf" id="2_wowpa"]
+[ext_resource type="Resource" uid="uid://c5ajkkjyfs5ei" path="res://Data/golem_data.tres" id="3_wrm1d"]
+[ext_resource type="PackedScene" uid="uid://drqcdomurbpda" path="res://Scenes/Fighters/KEROTEST.tscn" id="5_i6g32"]
+[ext_resource type="PackedScene" uid="uid://7iydkda066gt" path="res://Scenes/Fighters/FIGHTERTEST.tscn" id="6_i6g32"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_i6g32"]
+font = ExtResource("2_wowpa")
+font_size = 140
+font_color = Color(0.94632584, 0.5246516, 0.41491064, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_wowpa"]
+font = ExtResource("2_wowpa")
+font_size = 165
+font_color = Color(0.94632584, 0.5246516, 0.41491064, 1)
+
+[sub_resource type="Animation" id="Animation_wowpa"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CountdownText:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["FIGHT"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CountdownText:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CountdownText:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_i6g32"]
+resource_name = "countdown"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CountdownText:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.96666664, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": ["3", "2", "1", "FIGHT!"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CountdownText:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.8, 0.8), Vector2(1.5, 1.5)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CountdownText:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1.9666667, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1l0tm"]
+_data = {
+&"RESET": SubResource("Animation_wowpa"),
+&"countdown": SubResource("Animation_i6g32")
+}
 
 [sub_resource type="BoxMesh" id="BoxMesh_2poj3"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_ebmjs"]
-size = Vector3(1, 0.084472656, 1.039917)
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_ebmjs"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_qxrlw"]
+plane = Plane(1, 0, 0, 0)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_wrm1d"]
+plane = Plane(-1, 0, 0, 0)
+
+[sub_resource type="Curve" id="Curve_qxrlw"]
+_limits = [4.0, 8.0, 2.0, 8.0]
+_data = [Vector2(2, 4), 0.0, 0.38393992, 0, 0, Vector2(8, 8), 0.7798765, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2poj3"]
 
@@ -18,19 +128,94 @@ sky = SubResource("Sky_ebmjs")
 
 [node name="Main" type="Node3D" unique_id=2051919939]
 
+[node name="GameManager" type="Node" parent="." unique_id=923713225]
+script = ExtResource("1_3dryh")
+metadata/_custom_type_script = "uid://qyu7lh1a8b33"
+
+[node name="CountdownCanvasLayer" type="CanvasLayer" parent="GameManager" unique_id=1897505072]
+
+[node name="CountdownText" type="Label" parent="GameManager/CountdownCanvasLayer" unique_id=1677188439]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -100.0
+offset_right = 300.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(300, 100)
+text = "FIGHT"
+label_settings = SubResource("LabelSettings_i6g32")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EndgameText" type="Label" parent="GameManager/CountdownCanvasLayer" unique_id=1841678059]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -427.0
+offset_top = -192.0
+offset_right = 495.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.8, 0.8)
+pivot_offset = Vector2(300, 100)
+text = "Somebody wins"
+label_settings = SubResource("LabelSettings_wowpa")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CountdownAnimation" type="AnimationPlayer" parent="GameManager/CountdownCanvasLayer" unique_id=1910592456]
+libraries/ = SubResource("AnimationLibrary_1l0tm")
+
+[node name="CountdownTimer" type="Timer" parent="GameManager" unique_id=1031480202]
+wait_time = 2.0
+
+[node name="EndgameTimer" type="Timer" parent="GameManager" unique_id=542171324]
+wait_time = 2.0
+
 [node name="Ground" type="StaticBody3D" parent="." unique_id=358180621]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.33, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=1294461101]
-transform = Transform3D(23.10559, 0, 0, 0, 0.38924104, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(23.099, 0, 0, 0, 1, 0, 0, 0, 3.5104089, 0, -0.20315066, 0)
 mesh = SubResource("BoxMesh_2poj3")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=949362396]
-transform = Transform3D(22.650269, 0, 0, 0, 6, 0, 0, 0, 1.2978201, 0, -0.075853825, 0.019958496)
-shape = SubResource("BoxShape3D_ebmjs")
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Ground" unique_id=800545388]
+transform = Transform3D(2.89295, 0, 0, 0, 2.89295, 0, 0, 0, 2.89295, -5.6378145, -0.20315066, -6.6837835)
+mesh = SubResource("BoxMesh_2poj3")
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=1999429057]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0028192997, 1.4324604, 5.0496297)
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Ground" unique_id=1594819501]
+transform = Transform3D(2.89295, 0, 0, 0, 2.89295, 0, 0, 0, 2.89295, 4.464221, -0.20315066, -6.6837835)
+mesh = SubResource("BoxMesh_2poj3")
+
+[node name="GroundLimit" type="CollisionShape3D" parent="Ground" unique_id=166666812]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.33, 0)
+shape = SubResource("WorldBoundaryShape3D_ebmjs")
+
+[node name="LeftLimit" type="CollisionShape3D" parent="Ground" unique_id=951558622]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.33, 0)
+shape = SubResource("WorldBoundaryShape3D_qxrlw")
+
+[node name="RightLimit" type="CollisionShape3D" parent="Ground" unique_id=593285794]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0.33, 0)
+shape = SubResource("WorldBoundaryShape3D_wrm1d")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1999429057 node_paths=PackedStringArray("target_a", "target_b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.432, 5.05)
 fov = 50.0
+script = ExtResource("1_qxrlw")
+target_a = NodePath("../Fighter3")
+target_b = NodePath("../Fighter2")
+smoothing = 5.0
+zoom_curve = SubResource("Curve_qxrlw")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1922317289]
 transform = Transform3D(1, 0, 0, 0, 0.9145154, 0.40455112, 0, -0.40455112, 0.9145154, 0, 1.5115843, 2.158609)
@@ -39,11 +224,15 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=627780193]
 environment = SubResource("Environment_qxrlw")
 
-[node name="Fighter" parent="." unique_id=831552666 node_paths=PackedStringArray("opponent") instance=ExtResource("1_ebmjs")]
-transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -4.3711385e-08, -2, 0.176, 0.013)
+[node name="Fighter2" parent="." unique_id=202072913 node_paths=PackedStringArray("opponent") instance=ExtResource("5_i6g32")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2, 0.004, 0.013)
+character = ExtResource("3_wrm1d")
+player_id = 1
+opponent = NodePath("../Fighter3")
+
+[node name="Fighter3" parent="." unique_id=1762686992 node_paths=PackedStringArray("opponent") instance=ExtResource("6_i6g32")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2, 0, 0.013)
 opponent = NodePath("../Fighter2")
 
-[node name="Fighter2" parent="." unique_id=604025971 node_paths=PackedStringArray("opponent") instance=ExtResource("1_ebmjs")]
-transform = Transform3D(-4.3711385e-08, 0, -0.99999994, 0, 1, 0, 0.99999994, 0, -4.3711385e-08, 2, 0.1757029, 0.013)
-player_id = 1
-opponent = NodePath("../Fighter")
+[connection signal="timeout" from="GameManager/CountdownTimer" to="GameManager" method="_on_countdown_timer_timeout"]
+[connection signal="timeout" from="GameManager/EndgameTimer" to="GameManager" method="_on_endgame_timer_timeout"]

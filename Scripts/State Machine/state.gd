@@ -1,5 +1,4 @@
 class_name State
-
 extends Node
 
 var state_machine : StateMachine
@@ -16,8 +15,14 @@ var input_buffer : InputBuffer:
 var animation : FighterAnimation:
 	get: return state_machine.animation
 
-func initialize( state_machine : StateMachine):
-	self.state_machine = state_machine
+var stamina_controller : StaminaController:
+	get: return state_machine.stamina_controller
+	
+var stamina_data : StaminaData:
+	get: return stamina_controller.data
+
+func initialize( machine : StateMachine):
+	self.state_machine = machine
 	
 func can_enter() -> bool:
 	return true
@@ -25,10 +30,12 @@ func can_enter() -> bool:
 func enter():
 	enter_time = Time.get_unix_time_from_system()
 	
-func exit():
-	pass
-	
 func update(delta : float):
 	var time : float = Time.get_unix_time_from_system()
 	local_time = time - enter_time
+	
+func exit():
+	pass
+	
+
 	

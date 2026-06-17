@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://qyu7lh1a8b33" path="res://Scripts/Managers/game_manager.gd" id="1_3dryh"]
 [ext_resource type="Script" uid="uid://xhvftxdn47tq" path="res://Scripts/Camera/camera_controller.gd" id="1_qxrlw"]
+[ext_resource type="PackedScene" uid="uid://drqcdomurbpda" path="res://Scenes/Fighters/KEROTEST.tscn" id="2_1l0tm"]
+[ext_resource type="PackedScene" uid="uid://dxmkxspv10em0" path="res://Scenes/Fighters/Fighter.tscn" id="2_i6g32"]
 [ext_resource type="FontFile" uid="uid://crjsroau7ki57" path="res://Fonts/MetalMania-Regular.ttf" id="2_wowpa"]
-[ext_resource type="Resource" uid="uid://c5ajkkjyfs5ei" path="res://Data/golem_data.tres" id="3_wrm1d"]
-[ext_resource type="PackedScene" uid="uid://drqcdomurbpda" path="res://Scenes/Fighters/KEROTEST.tscn" id="5_i6g32"]
-[ext_resource type="PackedScene" uid="uid://7iydkda066gt" path="res://Scenes/Fighters/FIGHTERTEST.tscn" id="6_i6g32"]
+[ext_resource type="PackedScene" uid="uid://cyavxik670v52" path="res://Scenes/ground_temp.tscn" id="3_1l0tm"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_i6g32"]
 font = ExtResource("2_wowpa")
@@ -102,16 +102,6 @@ _data = {
 &"countdown": SubResource("Animation_i6g32")
 }
 
-[sub_resource type="BoxMesh" id="BoxMesh_2poj3"]
-
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_ebmjs"]
-
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_qxrlw"]
-plane = Plane(1, 0, 0, 0)
-
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_wrm1d"]
-plane = Plane(-1, 0, 0, 0)
-
 [sub_resource type="Curve" id="Curve_qxrlw"]
 _limits = [4.0, 8.0, 2.0, 8.0]
 _data = [Vector2(2, 4), 0.0, 0.38393992, 0, 0, Vector2(8, 8), 0.7798765, 0.0, 0, 0]
@@ -130,6 +120,8 @@ sky = SubResource("Sky_ebmjs")
 
 [node name="GameManager" type="Node" parent="." unique_id=923713225]
 script = ExtResource("1_3dryh")
+player_fighter_scene = ExtResource("2_1l0tm")
+ai_fighter_scene = ExtResource("2_i6g32")
 metadata/_custom_type_script = "uid://qyu7lh1a8b33"
 
 [node name="CountdownCanvasLayer" type="CanvasLayer" parent="GameManager" unique_id=1897505072]
@@ -177,43 +169,34 @@ libraries/ = SubResource("AnimationLibrary_1l0tm")
 
 [node name="CountdownTimer" type="Timer" parent="GameManager" unique_id=1031480202]
 wait_time = 2.0
+one_shot = true
 
 [node name="EndgameTimer" type="Timer" parent="GameManager" unique_id=542171324]
 wait_time = 2.0
+one_shot = true
 
-[node name="Ground" type="StaticBody3D" parent="." unique_id=358180621]
+[node name="Fighter0SPawn" type="Node3D" parent="GameManager" unique_id=1529301944]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+
+[node name="Fighter1SPawn" type="Node3D" parent="GameManager" unique_id=339212405]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2, 0, 0)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="GameManager" unique_id=2037647105]
+
+[node name="Label" type="Label" parent="GameManager/CanvasLayer" unique_id=683263847]
+offset_left = 484.0
+offset_top = 9.0
+offset_right = 786.0
+offset_bottom = 98.0
+text = "Game State"
+
+[node name="Ground" parent="." unique_id=684873808 instance=ExtResource("3_1l0tm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.33, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=1294461101]
-transform = Transform3D(23.099, 0, 0, 0, 1, 0, 0, 0, 3.5104089, 0, -0.20315066, 0)
-mesh = SubResource("BoxMesh_2poj3")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Ground" unique_id=800545388]
-transform = Transform3D(2.89295, 0, 0, 0, 2.89295, 0, 0, 0, 2.89295, -5.6378145, -0.20315066, -6.6837835)
-mesh = SubResource("BoxMesh_2poj3")
-
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="Ground" unique_id=1594819501]
-transform = Transform3D(2.89295, 0, 0, 0, 2.89295, 0, 0, 0, 2.89295, 4.464221, -0.20315066, -6.6837835)
-mesh = SubResource("BoxMesh_2poj3")
-
-[node name="GroundLimit" type="CollisionShape3D" parent="Ground" unique_id=166666812]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.33, 0)
-shape = SubResource("WorldBoundaryShape3D_ebmjs")
-
-[node name="LeftLimit" type="CollisionShape3D" parent="Ground" unique_id=951558622]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.33, 0)
-shape = SubResource("WorldBoundaryShape3D_qxrlw")
-
-[node name="RightLimit" type="CollisionShape3D" parent="Ground" unique_id=593285794]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0.33, 0)
-shape = SubResource("WorldBoundaryShape3D_wrm1d")
-
-[node name="Camera3D" type="Camera3D" parent="." unique_id=1999429057 node_paths=PackedStringArray("target_a", "target_b")]
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1999429057]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.432, 5.05)
 fov = 50.0
 script = ExtResource("1_qxrlw")
-target_a = NodePath("../Fighter3")
-target_b = NodePath("../Fighter2")
 smoothing = 5.0
 zoom_curve = SubResource("Curve_qxrlw")
 
@@ -223,16 +206,6 @@ shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=627780193]
 environment = SubResource("Environment_qxrlw")
-
-[node name="Fighter2" parent="." unique_id=202072913 node_paths=PackedStringArray("opponent") instance=ExtResource("5_i6g32")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2, 0.004, 0.013)
-character = ExtResource("3_wrm1d")
-player_id = 1
-opponent = NodePath("../Fighter3")
-
-[node name="Fighter3" parent="." unique_id=1762686992 node_paths=PackedStringArray("opponent") instance=ExtResource("6_i6g32")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2, 0, 0.013)
-opponent = NodePath("../Fighter2")
 
 [connection signal="timeout" from="GameManager/CountdownTimer" to="GameManager" method="_on_countdown_timer_timeout"]
 [connection signal="timeout" from="GameManager/EndgameTimer" to="GameManager" method="_on_endgame_timer_timeout"]

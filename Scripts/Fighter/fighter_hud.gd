@@ -18,6 +18,7 @@ func _ready() -> void:
 		position = player_0_pos.position
 	elif fighter.player_id == 1:
 		position = player_1_pos.position
+		scale.x = -1
 	
 	# health bar
 	health_bar.max_value = fighter.character.max_health

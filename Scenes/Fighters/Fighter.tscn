@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://cfk65mmekmwvs" path="res://Scripts/Inputs/input_buffer.gd" id="3_rlrpx"]
 [ext_resource type="Script" uid="uid://ff6bhf8i2v0v" path="res://Scripts/Fighter/HUD_TEST.gd" id="4_pyo11"]
 [ext_resource type="Script" uid="uid://0v7fh8q6lmt7" path="res://Scripts/State Machine/state_machine.gd" id="4_qe18t"]
+[ext_resource type="Script" uid="uid://c1k1t257a7f4b" path="res://Scripts/Fighter/upgrades_menu.gd" id="5_4lkng"]
 [ext_resource type="Script" uid="uid://domwaw8mpbskj" path="res://Scripts/State Machine/standing_state.gd" id="5_qe18t"]
 [ext_resource type="Animation" uid="uid://fhyv8w1tanwe" path="res://Animations/Dash.tres" id="5_vuvrb"]
 [ext_resource type="Script" uid="uid://dirllg7soqtpw" path="res://Scripts/State Machine/jumping_state.gd" id="6_ixfnq"]
@@ -30,6 +31,7 @@
 [ext_resource type="Resource" uid="uid://cxpjjpq8hp5kf" path="res://Data/stamina_data.tres" id="16_jtuj4"]
 [ext_resource type="Animation" uid="uid://7s13bd5xufsf" path="res://Animations/Walk.tres" id="16_xc2a8"]
 [ext_resource type="Script" uid="uid://cvtcahnx3l01o" path="res://Scripts/Fighter/fighter_visuals.gd" id="18_xc2a8"]
+[ext_resource type="Script" uid="uid://lkky83gmrjtl" path="res://Scripts/State Machine/upgrading_state.gd" id="19_3ny7w"]
 [ext_resource type="Material" uid="uid://x50cq3w8m024" path="res://Models/Outfits/Outfit_Red.tres" id="20_lbuyy"]
 [ext_resource type="Material" uid="uid://caqqo6jpo8ss" path="res://Models/Outfits/Outfit_Blue.tres" id="21_3nd8k"]
 [ext_resource type="PackedScene" uid="uid://d6jbw6wmibtg" path="res://Models/Outfits/Male_Ranger.gltf" id="21_pyo11"]
@@ -44,7 +46,7 @@
 [ext_resource type="FontFile" uid="uid://crjsroau7ki57" path="res://Fonts/MetalMania-Regular.ttf" id="37_mrrik"]
 
 [sub_resource type="GDScript" id="GDScript_uxauc"]
-script/source = "class_name Poop
+script/source = "class_name Character
 extends Fighter
 
 func _physics_process(delta: float) -> void:
@@ -94,6 +96,39 @@ corner_radius_top_left = 30
 corner_radius_top_right = 30
 corner_radius_bottom_right = 30
 corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4lkng"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.022147408, 0.099305026, 0.21243486, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b6uw4"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.75)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_27ji7"]
 radius = 0.1
@@ -281,7 +316,7 @@ states/Standing/node = SubResource("AnimationNodeBlendSpace1D_0bjwg")
 states/Standing/position = Vector2(316, 94)
 states/Start/position = Vector2(62, 99.2)
 transitions = ["Start", "Standing", SubResource("AnimationNodeStateMachineTransition_8mssw"), "JumpStart", "JumpIdle", SubResource("AnimationNodeStateMachineTransition_4hbrg"), "JumpLand", "Standing", SubResource("AnimationNodeStateMachineTransition_wqojl"), "Dash", "Standing", SubResource("AnimationNodeStateMachineTransition_rn0e0"), "LightAttack", "Standing", SubResource("AnimationNodeStateMachineTransition_3nd8k"), "Heavy Attack Recovery", "Standing", SubResource("AnimationNodeStateMachineTransition_uxauc"), "Hit Chest", "Standing", SubResource("AnimationNodeStateMachineTransition_mrrik"), "Fighter_Dash", "JumpIdle", SubResource("AnimationNodeStateMachineTransition_ivhui"), "HeavyAttack", "Heavy Attack Recovery", SubResource("AnimationNodeStateMachineTransition_dqs41")]
-graph_offset = Vector2(-207, 49)
+graph_offset = Vector2(-203, 111)
 
 [node name="Fighter" type="CharacterBody3D" unique_id=202072913 node_paths=PackedStringArray("input_handler", "input_buffer", "state_machine")]
 collision_layer = 2
@@ -295,6 +330,7 @@ metadata/_custom_type_script = "uid://bc5tghih8lw2w"
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=953429873]
 
 [node name="HUD" type="Panel" parent="CanvasLayer" unique_id=408943093]
+visible = false
 offset_left = 40.0
 offset_top = 42.0
 offset_right = 494.0
@@ -363,26 +399,132 @@ offset_bottom = 65.0
 grow_horizontal = 0
 
 [node name="Health" type="Panel" parent="CanvasLayer" unique_id=342016489]
-offset_left = 298.0
-offset_top = 25.0
-offset_right = 503.0
-offset_bottom = 130.0
+offset_left = 49.99997
+offset_top = 29.0
+offset_right = 482.0
+offset_bottom = 223.39583
+scale = Vector2(1, 0.571)
 theme_override_styles/panel = SubResource("StyleBoxFlat_pb8fl")
 script = ExtResource("4_pyo11")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Health" unique_id=28676311]
 custom_minimum_size = Vector2(1, 1)
 layout_mode = 0
-offset_left = 7.0
-offset_top = 4.0
-offset_right = 202.0
-offset_bottom = 100.0
+offset_left = 10.00003
+offset_top = 15.761821
+offset_right = 419.00003
+offset_bottom = 178.63402
 alignment = 1
 
 [node name="HealthBlock" type="Panel" parent="CanvasLayer/Health/HBoxContainer" unique_id=676313400]
 custom_minimum_size = Vector2(94.8, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_pyo11")
+
+[node name="Upgrades" type="Panel" parent="CanvasLayer" unique_id=1816542037]
+visible = false
+offset_left = 77.0
+offset_top = 171.0
+offset_right = 464.0
+offset_bottom = 705.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_4lkng")
+script = ExtResource("5_4lkng")
+
+[node name="Upgrade1" type="Panel" parent="CanvasLayer/Upgrades" unique_id=883906673]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -164.5
+offset_top = -204.0
+offset_right = 164.5
+offset_bottom = -133.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Upgrades/Upgrade1" unique_id=1184012437]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -73.5
+offset_top = -11.5
+offset_right = 73.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/focus = SubResource("StyleBoxFlat_b6uw4")
+text = "Option 1, press left"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Upgrade2" type="Panel" parent="CanvasLayer/Upgrades" unique_id=1109630808]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -164.5
+offset_top = -52.0
+offset_right = 164.5
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Upgrades/Upgrade2" unique_id=2106190660]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -73.5
+offset_top = -11.5
+offset_right = 73.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/focus = SubResource("StyleBoxFlat_b6uw4")
+text = "Option 2, press up"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Upgrade3" type="Panel" parent="CanvasLayer/Upgrades" unique_id=1492438832]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -164.5
+offset_top = 102.0
+offset_right = 164.5
+offset_bottom = 173.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Upgrades/Upgrade3" unique_id=1044777109]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -73.5
+offset_top = -11.5
+offset_right = 73.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/focus = SubResource("StyleBoxFlat_b6uw4")
+text = "Option 3, press right"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="PlayerInputHandler" type="Node" parent="." unique_id=1835830064 node_paths=PackedStringArray("fighter")]
 script = ExtResource("2_875ig")
@@ -442,8 +584,8 @@ metadata/_custom_type_script = "uid://cjffryiuaag0v"
 script = ExtResource("9_0bjwg")
 damage = 1
 animation_name = "HeavyAttack"
-cooldown = 0.2
 forward_force = 1.0
+cooldown = 0.2
 hit_sender = NodePath("../../Male_Ranger/Armature/GeneralSkeleton/RightHand/RightHand_HitSender")
 hit_detect_end_time = 0.45
 metadata/_custom_type_script = "uid://dc8lt3cxh8xod"
@@ -472,6 +614,10 @@ script = ExtResource("5_qe18t")
 blend_position_parameter = "parameters/Standing/blend_position"
 metadata/_custom_type_script = "uid://domwaw8mpbskj"
 
+[node name="Upgrading" type="Node" parent="StateMachine" unique_id=1010091342]
+script = ExtResource("19_3ny7w")
+metadata/_custom_type_script = "uid://lkky83gmrjtl"
+
 [node name="StaminaController" type="Node" parent="." unique_id=1377131972]
 script = ExtResource("15_dqs41")
 data = ExtResource("16_jtuj4")
@@ -482,16 +628,16 @@ metadata/_custom_type_script = "uid://d2nmgdq81jesx"
 [node name="Male_Ranger" parent="." unique_id=1858045697 instance=ExtResource("21_pyo11")]
 
 [node name="GeneralSkeleton" parent="Male_Ranger/Armature" parent_id_path=PackedInt32Array(1858045697, 1869712916) index="0" unique_id=694363214]
-bones/1/position = Vector3(0.0052946927, 0.9076275, -0.089359)
-bones/1/rotation = Quaternion(-0.04739302, -0.11567976, -0.005567768, 0.99213964)
-bones/3/rotation = Quaternion(0.089610375, 0.00011963582, 0.0002768729, 0.9959769)
-bones/4/rotation = Quaternion(0.08961097, 0.00034495688, 0.00021385617, 0.99597675)
-bones/5/rotation = Quaternion(-0.08961069, -0.00022967525, -0.00023699083, 0.99597687)
-bones/6/rotation = Quaternion(0.07494347, 0.09548986, 0.008756602, 0.99256665)
-bones/7/rotation = Quaternion(0.4882785, 0.5262931, 0.526544, -0.45535848)
-bones/8/rotation = Quaternion(-0.060487855, 0.8179002, -0.5720873, 0.009837243)
-bones/9/rotation = Quaternion(0.18607332, -0.6530894, 0.17993738, 0.7116696)
-bones/10/rotation = Quaternion(0.09913853, 0.7068695, 0.062942915, 0.6975281)
+bones/1/position = Vector3(0.00045361492, 0.90064454, -0.090510644)
+bones/1/rotation = Quaternion(-0.038838055, -0.11576468, -0.004504112, 0.99250686)
+bones/3/rotation = Quaternion(0.0884229, 0.00010151977, 0.00023746696, 0.9960831)
+bones/4/rotation = Quaternion(0.08842371, 0.0002845556, 0.0002883113, 0.9960829)
+bones/5/rotation = Quaternion(-0.08842328, -0.00019689991, -0.00029048836, 0.99608296)
+bones/6/rotation = Quaternion(0.044996303, 0.09518707, 0.011803252, 0.9943719)
+bones/7/rotation = Quaternion(0.50109506, 0.5218485, 0.53051245, -0.44174033)
+bones/8/rotation = Quaternion(-0.019030558, 0.82461745, -0.56528425, 0.009884261)
+bones/9/rotation = Quaternion(0.15756664, -0.68503845, 0.16634433, 0.691538)
+bones/10/rotation = Quaternion(0.09912831, 0.70687145, 0.062932715, 0.6975284)
 bones/11/rotation = Quaternion(0.6295969, -4.112516e-08, -4.6188998e-06, 0.77692205)
 bones/12/rotation = Quaternion(0.62334186, 2.9162361e-08, -4.2622414e-06, 0.78194946)
 bones/13/rotation = Quaternion(0.62334144, -2.2329806e-07, -4.470684e-06, 0.7819498)
@@ -508,10 +654,10 @@ bones/27/rotation = Quaternion(-0.12381919, 0.7195234, 0.20183541, 0.6528533)
 bones/28/rotation = Quaternion(0.18180692, 0.11012423, 0.0600633, 0.9753006)
 bones/29/rotation = Quaternion(0.5994299, 0.27396563, 0.19463211, 0.72646064)
 bones/30/scale = Vector3(1.0001454, 1.0004877, 1.0005833)
-bones/31/rotation = Quaternion(0.5403905, -0.4743657, -0.4748849, -0.50738525)
-bones/32/rotation = Quaternion(0.0918532, 0.8252391, -0.55717796, -0.009803182)
-bones/33/rotation = Quaternion(0.29270187, 0.54142153, -0.20404184, 0.7612853)
-bones/34/rotation = Quaternion(0.12021517, -0.6990459, -0.05693456, 0.70259637)
+bones/31/rotation = Quaternion(0.5530495, -0.47137803, -0.47726724, -0.49412054)
+bones/32/rotation = Quaternion(0.07119614, 0.82163954, -0.5654599, -0.009736446)
+bones/33/rotation = Quaternion(0.2890377, 0.5534177, -0.20892039, 0.7526874)
+bones/34/rotation = Quaternion(0.120225206, -0.6990436, -0.056944825, 0.70259607)
 bones/35/rotation = Quaternion(0.6295971, 3.6673434e-08, 4.1725643e-06, 0.7769218)
 bones/36/rotation = Quaternion(0.62334144, 1.8199208e-07, 4.469913e-06, 0.78194976)
 bones/37/rotation = Quaternion(0.62334156, 9.967596e-08, 4.2318457e-06, 0.7819497)
@@ -532,21 +678,21 @@ bones/51/rotation = Quaternion(-0.12381925, -0.7195233, -0.2018356, 0.65285325)
 bones/52/rotation = Quaternion(0.18180701, -0.11012423, -0.0600633, 0.97530067)
 bones/53/rotation = Quaternion(0.59943014, -0.27396527, -0.1946322, 0.7264605)
 bones/54/scale = Vector3(1.0001454, 1.0004876, 1.0005835)
-bones/55/rotation = Quaternion(-0.0008257341, 0.12227136, 0.9862239, -0.11140716)
-bones/56/rotation = Quaternion(0.016490541, 0.9820664, -0.15039447, 0.112496175)
-bones/57/rotation = Quaternion(-0.09458027, 0.7284193, -0.67854416, 0.006151347)
-bones/58/rotation = Quaternion(4.662267e-08, 1, 5.959829e-08, 2.77873e-08)
-bones/60/rotation = Quaternion(0.0007887957, -0.110716365, 0.9870984, 0.11566389)
-bones/61/rotation = Quaternion(-0.029347584, 0.92909455, -0.082344666, -0.35936254)
-bones/62/rotation = Quaternion(0.17141436, 0.64628935, -0.743586, -0.0026781985)
-bones/63/rotation = Quaternion(-5.7679235e-06, 1, 0.00021897434, -8.07301e-07)
+bones/55/rotation = Quaternion(-0.0008397827, 0.15015188, 0.9814462, -0.11923537)
+bones/56/rotation = Quaternion(0.020597868, 0.9755425, -0.1892827, 0.109839775)
+bones/57/rotation = Quaternion(-0.097007304, 0.7161873, -0.6910938, 0.007398161)
+bones/58/rotation = Quaternion(1.1749718e-05, 0.99999994, 0.0003068536, 2.3772843e-06)
+bones/60/rotation = Quaternion(0.0010172189, -0.07837106, 0.98768586, 0.13540176)
+bones/61/rotation = Quaternion(-0.051449027, 0.9236484, -0.14127588, -0.3525166)
+bones/62/rotation = Quaternion(0.1701956, 0.6214673, -0.7647248, 0.0028226748)
+bones/63/rotation = Quaternion(-6.688093e-08, 1, 8.935229e-08, 2.2091369e-09)
 
 [node name="Fighter0HeadSphere005Retopology004" type="MeshInstance3D" parent="Male_Ranger/Armature/GeneralSkeleton" index="0" unique_id=862924504]
 mesh = ExtResource("22_3ny7w")
 skeleton = NodePath("..")
 
 [node name="LeftHand" type="BoneAttachment3D" parent="Male_Ranger/Armature/GeneralSkeleton" index="10" unique_id=1485523380]
-transform = Transform3D(0.47897983, 0.029279247, -0.87733763, -0.39571297, -0.88493276, -0.24557109, -0.78357506, 0.46479738, -0.4122789, 0.32837623, 0.96697676, 0.00210277)
+transform = Transform3D(0.45151877, 0.032616906, -0.8916652, -0.41577607, -0.87651265, -0.24260193, -0.78946894, 0.4802723, -0.3822006, 0.31171212, 0.94688237, 0.025952403)
 bone_name = "LeftHand"
 bone_idx = 10
 
@@ -559,7 +705,7 @@ shape = SubResource("SphereShape3D_27ji7")
 disabled = true
 
 [node name="RightHand" type="BoneAttachment3D" parent="Male_Ranger/Armature/GeneralSkeleton" index="11" unique_id=240872745]
-transform = Transform3D(0.07925492, -0.15634477, 0.98451775, 0.49186033, -0.852898, -0.17503855, 0.86705947, 0.4981179, 0.009303477, -0.28167427, 0.9889239, -0.18634859)
+transform = Transform3D(0.058679733, -0.13789193, 0.9887073, 0.53991616, -0.82867336, -0.14761665, 0.8396707, 0.5424813, 0.025823526, -0.27462202, 0.9699793, -0.15735167)
 bone_name = "RightHand"
 bone_idx = 34
 
@@ -571,7 +717,7 @@ transform = Transform3D(0.9981723, -0.05924353, 0.011912793, 0.058672428, 0.9973
 shape = SubResource("SphereShape3D_27ji7")
 
 [node name="Chest" type="BoneAttachment3D" parent="Male_Ranger/Armature/GeneralSkeleton" index="12" unique_id=338057755]
-transform = Transform3D(0.97323006, -0.01973536, -0.22898433, 0.00046918218, 0.99647504, -0.08388861, 0.22983272, 0.08153545, 0.9698087, -0.00041167485, 1.1397569, -0.06513755)
+transform = Transform3D(0.973202, -0.023207841, -0.22877799, 0.0005284291, 0.9951172, -0.09869941, 0.2299515, 0.095933564, 0.9684622, -0.006206072, 1.1323099, -0.062402174)
 bone_name = "Chest"
 bone_idx = 3
 
@@ -585,7 +731,7 @@ shape = SubResource("BoxShape3D_dbrw3")
 debug_color = Color(0, 0.7372549, 0.7019608, 0.41960785)
 
 [node name="Head" type="BoneAttachment3D" parent="Male_Ranger/Armature/GeneralSkeleton" index="13" unique_id=811631311]
-transform = Transform3D(0.99782354, -0.05688996, -0.033342734, 0.047830828, 0.9725067, -0.22791031, 0.045391724, 0.22581941, 0.9731111, -0.012812132, 1.5640894, -0.013945261)
+transform = Transform3D(0.99762356, -0.058597907, -0.03624265, 0.051009253, 0.9817479, -0.18321899, 0.0463174, 0.18093485, 0.9824038, -0.02000068, 1.5558379, -0.005586859)
 bone_name = "Head"
 bone_idx = 6
 

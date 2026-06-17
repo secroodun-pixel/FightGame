@@ -8,5 +8,4 @@ func initialize(fighter_init : Fighter):
 	self.fighter = fighter_init
 
 func hit(damage : int):
-	print("ouchi")
-	fighter.take_damge(self, damage)
+	fighter.take_damage(self, damage)

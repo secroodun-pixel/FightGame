@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://cyavxik670v52"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_2poj3"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_ebmjs"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_qxrlw"]
+plane = Plane(1, 0, 0, 0)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_wrm1d"]
+plane = Plane(-1, 0, 0, 0)
+
+[node name="Ground" type="StaticBody3D" unique_id=684873808]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2029807508]
+transform = Transform3D(23.099, 0, 0, 0, 1, 0, 0, 0, 3.5104089, 0, -0.20315066, 0)
+mesh = SubResource("BoxMesh_2poj3")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=771953963]
+transform = Transform3D(2.89295, 0, 0, 0, 2.89295, 0, 0, 0, 2.89295, -5.6378145, -0.20315066, -6.6837835)
+mesh = SubResource("BoxMesh_2poj3")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=1218824514]
+transform = Transform3D(2.89295, 0, 0, 0, 2.89295, 0, 0, 0, 2.89295, 4.464221, -0.20315066, -6.6837835)
+mesh = SubResource("BoxMesh_2poj3")
+
+[node name="GroundLimit" type="CollisionShape3D" parent="." unique_id=224177076]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.33, 0)
+shape = SubResource("WorldBoundaryShape3D_ebmjs")
+
+[node name="LeftLimit" type="CollisionShape3D" parent="." unique_id=1634668848]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.33, 0)
+shape = SubResource("WorldBoundaryShape3D_qxrlw")
+
+[node name="RightLimit" type="CollisionShape3D" parent="." unique_id=565133799]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0.33, 0)
+shape = SubResource("WorldBoundaryShape3D_wrm1d")

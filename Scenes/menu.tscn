@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://cgttq7sdfg2ic"]
+
+[ext_resource type="PackedScene" uid="uid://cyavxik670v52" path="res://Scenes/ground_temp.tscn" id="1_1rerr"]
+[ext_resource type="Script" uid="uid://b7ht2j3hvb0tm" path="res://Scripts/Menu/main_menu.gd" id="1_cayip"]
+[ext_resource type="FontFile" uid="uid://crjsroau7ki57" path="res://Fonts/MetalMania-Regular.ttf" id="2_xhh6f"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_cayip"]
+font = ExtResource("2_xhh6f")
+font_size = 90
+font_color = Color(1, 0.42560634, 0.38144884, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_158mb"]
+bg_color = Color(0.3696254, 0, 0.044050723, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.502608, 0.40506098, 0.10120138, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xhh6f"]
+bg_color = Color(0.14218092, 0.03994361, 0.0013155518, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.502608, 0.40506098, 0.10120138, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cayip"]
+bg_color = Color(1, 0.28872773, 0.4108068, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.502608, 0.40506098, 0.10120138, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 1
+
+[node name="Menu" type="Node3D" unique_id=1628655358]
+script = ExtResource("1_cayip")
+
+[node name="Ground" parent="." unique_id=684873808 instance=ExtResource("1_1rerr")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1481179225]
+
+[node name="Title" type="Label" parent="CanvasLayer" unique_id=1849702391]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 297.0
+grow_horizontal = 2
+text = "GAME TITLE HERE"
+label_settings = SubResource("LabelSettings_cayip")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayVsPlayerButton" type="Button" parent="CanvasLayer" unique_id=1785647620]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -183.0
+offset_top = -108.0
+offset_right = 185.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_xhh6f")
+theme_override_font_sizes/font_size = 46
+theme_override_styles/normal = SubResource("StyleBoxFlat_158mb")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_xhh6f")
+theme_override_styles/hover = SubResource("StyleBoxFlat_cayip")
+text = "Player vs Player"
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=471274107]
+transform = Transform3D(0.9083696, 0, -0.4181683, 0, 1, 0, 0.4181683, 0, 0.9083696, -6.332495, 2.6382627, 3.2267222)
+fov = 54.9
+
+[connection signal="pressed" from="CanvasLayer/PlayVsPlayerButton" to="." method="_on_play_vs_player_button_pressed"]

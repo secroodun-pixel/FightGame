@@ -4,20 +4,29 @@
 [ext_resource type="PackedScene" uid="uid://misuahcbwj41" path="res://Models/TESTMODELS/KERO_MODEL.fbx" id="2_4wpds"]
 [ext_resource type="Animation" uid="uid://wwoor40g5wes" path="res://Animations/KEROTESTANIM/SOURCES/ATTACK1.tres" id="3_8kvn8"]
 [ext_resource type="Animation" uid="uid://d2kq0xfivovvl" path="res://Animations/KEROTESTANIM/SOURCES/ATTACK2.tres" id="4_cn1jd"]
+[ext_resource type="Animation" uid="uid://cl7454r6ltg68" path="res://Animations/HeavyAttackRecovery.tres" id="4_uj2xc"]
 [ext_resource type="Animation" uid="uid://dymrxx8calord" path="res://Animations/KEROTESTANIM/SOURCES/IDLE.tres" id="5_cs6pc"]
 [ext_resource type="Animation" uid="uid://wflda7cwbtq5" path="res://Animations/KEROTESTANIM/SOURCES/BUFF.tres" id="5_yd8ud"]
 [ext_resource type="Animation" uid="uid://tkmhnpvu36g1" path="res://Animations/KEROTESTANIM/SOURCES/WALK.tres" id="6_yd8ud"]
 [ext_resource type="Animation" uid="uid://c1bav8uycyer3" path="res://Animations/KEROTESTANIM/SOURCES/DEFEATED.tres" id="6_yicve"]
 [ext_resource type="Animation" uid="uid://tu06yfgljnc0" path="res://Animations/KEROTESTANIM/SOURCES/Run.tres" id="7_eh1n5"]
+[ext_resource type="Animation" uid="uid://cfyblvxl6wwte" path="res://Animations/KEROTESTANIM/SOURCES/Kero_HeavyAttackActive.res" id="7_uj2xc"]
+[ext_resource type="Animation" uid="uid://ckhgy7iw71i5e" path="res://Animations/KEROTESTANIM/SOURCES/Kero_HeavyAttackCharge.res" id="8_56fxu"]
+[ext_resource type="Animation" uid="uid://dw546kj30lwxt" path="res://Animations/KEROTESTANIM/SOURCES/Kero_HeavyAttackWindup.res" id="10_mfgq1"]
+[ext_resource type="Script" uid="uid://c3efbt2ilm3gx" path="res://Scripts/State Machine/victorious_state.gd" id="14_56fxu"]
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_yicve"]
 _data = {
 &"Defeated": ExtResource("6_yicve"),
 &"HeavyAttack": ExtResource("4_cn1jd"),
+&"HeavyAttackRecovery": ExtResource("4_uj2xc"),
 &"HitHead": ExtResource("5_yd8ud"),
 &"Idle": ExtResource("5_cs6pc"),
 &"JumpIdle": ExtResource("5_yd8ud"),
 &"JumpLand": ExtResource("6_yd8ud"),
+&"Kero_HeavyAttackActive": ExtResource("7_uj2xc"),
+&"Kero_HeavyAttackCharge": ExtResource("8_56fxu"),
+&"Kero_HeavyAttackWindup": ExtResource("10_mfgq1"),
 &"LightAttack": ExtResource("3_8kvn8"),
 &"Run": ExtResource("7_eh1n5"),
 &"Walk": ExtResource("6_yd8ud")
@@ -32,18 +41,28 @@ animation = &"Fighter/Defeated"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8adef"]
 animation = &"Fighter/Walk"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_erabp"]
+animation = &"Fighter/Kero_HeavyAttackWindup"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_18g6q"]
+animation = &"Fighter/Kero_HeavyAttackActive"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_lwdeg"]
-animation = &"Fighter/HeavyAttack"
+animation = &"Fighter/Kero_HeavyAttackCharge"
 
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_18g6q"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_20mmn"]
-graph_offset = Vector2(-262.4, 3.2)
+graph_offset = Vector2(-288.1769, 5.1401854)
+nodes/output/position = Vector2(320, 128)
 nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_18g6q")
 nodes/TimeScale/position = Vector2(96, 128)
-nodes/HeavyAttack/node = SubResource("AnimationNodeAnimation_lwdeg")
-nodes/HeavyAttack/position = Vector2(-224, 176)
-node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"HeavyAttack"]
+nodes/HeavyAttackCharge/node = SubResource("AnimationNodeAnimation_lwdeg")
+nodes/HeavyAttackCharge/position = Vector2(-224, 176)
+node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"HeavyAttackCharge"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_20mmn"]
+animation = &"Fighter/Kero_HeavyAttackRecoveryres"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_yd8ud"]
 animation = &"Fighter/Defeated"
@@ -106,7 +125,15 @@ break_loop_at_end = true
 switch_mode = 2
 advance_mode = 2
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_erabp"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dcvex"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_g70ln"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ahjco"]
 switch_mode = 2
 advance_mode = 2
 
@@ -116,9 +143,15 @@ states/Dash/position = Vector2(253.79999, -18.2)
 states/Defeated/node = SubResource("AnimationNodeAnimation_cs6pc")
 states/Defeated/position = Vector2(700.04, 260.84)
 states/Fighter_Dash/node = SubResource("AnimationNodeAnimation_8adef")
-states/Fighter_Dash/position = Vector2(776.8, 167.8)
-states/HeavyAttack/node = SubResource("AnimationNodeBlendTree_20mmn")
-states/HeavyAttack/position = Vector2(237, 288.8117)
+states/Fighter_Dash/position = Vector2(777.6, 167.8)
+states/HeavyAttack/node = SubResource("AnimationNodeAnimation_erabp")
+states/HeavyAttack/position = Vector2(-53.799988, 235.8049)
+states/HeavyAttackActive/node = SubResource("AnimationNodeAnimation_18g6q")
+states/HeavyAttackActive/position = Vector2(112.6, 233.56886)
+states/HeavyAttackCharge/node = SubResource("AnimationNodeBlendTree_20mmn")
+states/HeavyAttackCharge/position = Vector2(81.96001, 300.16278)
+states/HeavyAttackRecovery/node = SubResource("AnimationNodeAnimation_20mmn")
+states/HeavyAttackRecovery/position = Vector2(314.4, 236.18787)
 states/Hit_Chest/node = SubResource("AnimationNodeAnimation_yd8ud")
 states/Hit_Chest/position = Vector2(488.40002, 289.06464)
 states/JumpIdle/node = SubResource("AnimationNodeAnimation_56fxu")
@@ -128,11 +161,12 @@ states/JumpLand/position = Vector2(470.18402, -34.929604)
 states/JumpStart/node = SubResource("AnimationNodeAnimation_4fsiv")
 states/JumpStart/position = Vector2(570, 158.6)
 states/LightAttack/node = SubResource("AnimationNodeAnimation_4wpds")
-states/LightAttack/position = Vector2(135.48, 225.55202)
+states/LightAttack/position = Vector2(216.28, 168.3104)
 states/Standing/node = SubResource("AnimationNodeBlendSpace1D_4fsiv")
 states/Standing/position = Vector2(406.8, 99.68)
-transitions = ["Fighter_Dash", "JumpIdle", SubResource("AnimationNodeStateMachineTransition_lwdeg"), "LightAttack", "Standing", SubResource("AnimationNodeStateMachineTransition_cs6pc"), "Hit_Chest", "Standing", SubResource("AnimationNodeStateMachineTransition_yicve"), "Start", "Standing", SubResource("AnimationNodeStateMachineTransition_eh1n5"), "JumpLand", "Standing", SubResource("AnimationNodeStateMachineTransition_uj2xc"), "JumpStart", "JumpIdle", SubResource("AnimationNodeStateMachineTransition_18g6q"), "Dash", "Standing", SubResource("AnimationNodeStateMachineTransition_56fxu"), "HeavyAttack", "Standing", SubResource("AnimationNodeStateMachineTransition_erabp")]
-graph_offset = Vector2(-86, 52)
+states/Start/position = Vector2(200, 100.22401)
+transitions = ["Fighter_Dash", "JumpIdle", SubResource("AnimationNodeStateMachineTransition_lwdeg"), "LightAttack", "Standing", SubResource("AnimationNodeStateMachineTransition_cs6pc"), "Hit_Chest", "Standing", SubResource("AnimationNodeStateMachineTransition_yicve"), "Start", "Standing", SubResource("AnimationNodeStateMachineTransition_eh1n5"), "JumpLand", "Standing", SubResource("AnimationNodeStateMachineTransition_uj2xc"), "JumpStart", "JumpIdle", SubResource("AnimationNodeStateMachineTransition_18g6q"), "Dash", "Standing", SubResource("AnimationNodeStateMachineTransition_56fxu"), "HeavyAttack", "HeavyAttackCharge", SubResource("AnimationNodeStateMachineTransition_dcvex"), "HeavyAttackActive", "HeavyAttackRecovery", SubResource("AnimationNodeStateMachineTransition_g70ln"), "HeavyAttackRecovery", "Standing", SubResource("AnimationNodeStateMachineTransition_ahjco")]
+graph_offset = Vector2(-212, 53)
 
 [node name="Fighter" unique_id=202072913 instance=ExtResource("1_i2g16")]
 
@@ -144,7 +178,7 @@ libraries/Fighter = SubResource("AnimationLibrary_yicve")
 root_node = NodePath("../KEROMESH")
 tree_root = SubResource("AnimationNodeStateMachine_eh1n5")
 anim_player = NodePath("../KEROPLAYER")
-parameters/HeavyAttack/TimeScale/scale = 1.0
+parameters/HeavyAttackCharge/TimeScale/scale = 1.0
 parameters/Standing/blend_position = 0.0
 
 [node name="KEROMESH" parent="." index="2" unique_id=790830604 instance=ExtResource("2_4wpds")]
@@ -158,7 +192,7 @@ bones/33/rotation = Quaternion(-0.07968592, 0.71744573, 0.080332525, 0.68736345)
 bones/34/rotation = Quaternion(-0.07968592, 0.71744573, 0.080332525, 0.68736345)
 
 [node name="model_FKFollowRoot" parent="KEROMESH/model_Group/model_MotionSystem/model_FKSystem" parent_id_path=PackedInt32Array(790830604, 432635711) index="0" unique_id=1109997045]
-transform = Transform3D(1, 0, 0, 0, 0.9777236, 0.20989648, 0, -0.20989648, 0.9777236, 9.582513e-18, 0.091769, -0.021131363)
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 9.582513e-18, 0.091769, -0.021131363)
 
 [node name="Skeleton3D" parent="KEROMESH/model_Group/model_MotionSystem/model_FKSystem/model_FKFollowRoot/model_FKOffsetRoot_M/model_FKExtraRoot_M" parent_id_path=PackedInt32Array(790830604, 1363588606) index="1" unique_id=906008099]
 bones/12/position = Vector3(-2.9546209e-06, 5.742513e-07, 0)
@@ -191,10 +225,10 @@ transform = Transform3D(1, 1.110223e-16, 3.330669e-16, -1.110223e-16, 1, 3.70074
 bone_idx = 0
 
 [node name="model_FKParentConstraintToToes_R" parent="KEROMESH/model_Group/model_MotionSystem/model_FKSystem" parent_id_path=PackedInt32Array(790830604, 432635711) index="1" unique_id=1366170222]
-transform = Transform3D(-0.8683237, -0.26096708, -0.42179406, -0.2501141, 0.9647382, -0.081994765, 0.42831877, 0.03429866, -0.9029766, -0.110776015, 0.015525932, -0.002795196)
+transform = Transform3D(-0.8683237, -0.26096708, -0.42179406, -0.2501141, 0.9647382, -0.081994765, 0.42831877, 0.03429866, -0.9029766, 0, 0, 0)
 
 [node name="model_FKParentConstraintToRoot_M" parent="KEROMESH/model_Group/model_MotionSystem/model_FKSystem" parent_id_path=PackedInt32Array(790830604, 432635711) index="2" unique_id=519607830]
-transform = Transform3D(0, 0, 1, 0.77389306, 0.6333163, 0, -0.6333163, 0.77389306, 0, 9.582513e-18, 0.091769, -0.021131363)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.582513e-18, 0.091769, -0.021131363)
 
 [node name="model_AlignIKToHip_R" parent="KEROMESH/model_Group/model_MotionSystem/model_FKSystem/model_FKParentConstraintToRoot_M/model_FKOffsetHip_R/model_FKGlobalStaticHip_R/model_FKGlobalHip_R/model_FKExtraHip_R/model_FKHip_R/Skeleton3D" parent_id_path=PackedInt32Array(790830604, 1027407015) index="0" unique_id=937903946]
 bone_idx = 0
@@ -278,10 +312,22 @@ transform = Transform3D(1, 9.251859e-18, 0, -9.251859e-18, 1, 0, 0, 0, 1, 0, 0, 
 bone_idx = 0
 
 [node name="model_FKParentConstraintToWrist_R" parent="KEROMESH/model_Group/model_MotionSystem/model_FKSystem" parent_id_path=PackedInt32Array(790830604, 432635711) index="4" unique_id=1979487331]
-transform = Transform3D(0.8271492, 0.08801813, -0.55504686, -0.31008187, -0.7522271, -0.58138084, -0.46869332, 0.65299875, -0.59491116, 0.058536854, 0.21559192, 0.09659317)
+transform = Transform3D(0.8271492, 0.08801812, -0.55504686, -0.31008187, -0.752227, -0.58138084, -0.46869332, 0.6529987, -0.59491116, 0.058536854, 0.21559192, 0.09659317)
+
+[node name="model_FKMiddleFinger1_R" parent="KEROMESH/model_Group/model_MotionSystem/model_FKSystem/model_FKParentConstraintToWrist_R/model_FKOffsetMiddleFinger1_R/model_SDKFKMiddleFinger1_R/model_FKExtraMiddleFinger1_R" parent_id_path=PackedInt32Array(790830604, 1573536403) index="0" unique_id=63078181]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="model_FKIndexFinger1_R" parent="KEROMESH/model_Group/model_MotionSystem/model_FKSystem/model_FKParentConstraintToWrist_R/model_FKOffsetIndexFinger1_R/model_SDKFKIndexFinger1_R/model_FKExtraIndexFinger1_R" parent_id_path=PackedInt32Array(790830604, 1339608436) index="0" unique_id=1682145524]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="model_FKPinkyFinger1_R" parent="KEROMESH/model_Group/model_MotionSystem/model_FKSystem/model_FKParentConstraintToWrist_R/model_FKOffsetPinkyFinger1_R/model_SDKFKPinkyFinger1_R/model_FKExtraPinkyFinger1_R" parent_id_path=PackedInt32Array(790830604, 1627126297) index="0" unique_id=1225274429]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="model_FKParentConstraintToScapula_R" parent="KEROMESH/model_Group/model_MotionSystem/model_FKSystem" parent_id_path=PackedInt32Array(790830604, 432635711) index="5" unique_id=1157900888]
 transform = Transform3D(-0.96757364, -0.25258917, -0.0002481589, -0.06298469, 0.24031888, 0.96864843, -0.24461047, 0.9372543, -0.24843545, -0.05635675, 0.23182383, -0.011934781)
+
+[node name="model_FKShoulder_R" parent="KEROMESH/model_Group/model_MotionSystem/model_FKSystem/model_FKParentConstraintToScapula_R/model_FKOffsetShoulder_R/model_FKGlobalStaticShoulder_R/model_FKGlobalShoulder_R/model_FKExtraShoulder_R" parent_id_path=PackedInt32Array(790830604, 1066114995) index="0" unique_id=1278408360]
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="model_AlignIKToShoulder_R" parent="KEROMESH/model_Group/model_MotionSystem/model_FKSystem/model_FKParentConstraintToScapula_R/model_FKOffsetShoulder_R/model_FKGlobalStaticShoulder_R/model_FKGlobalShoulder_R/model_FKExtraShoulder_R/model_FKShoulder_R/Skeleton3D" parent_id_path=PackedInt32Array(790830604, 1012497991) index="0" unique_id=1804819447]
 bone_idx = 0
@@ -300,23 +346,29 @@ bone_idx = 0
 [node name="model_FKParentConstraintToSpine1_M" parent="KEROMESH/model_Group/model_MotionSystem/model_FKSystem" parent_id_path=PackedInt32Array(790830604, 432635711) index="6" unique_id=1549903225]
 transform = Transform3D(-1.0626457e-08, 4.2400046e-08, 1, 0.96999997, 0.24310501, 0, -0.24310501, 0.96999997, -4.371139e-08, -3.7360797e-17, 0.12227902, -0.046100378)
 
+[node name="model_FKParentConstraintToToes_L" parent="KEROMESH/model_Group/model_MotionSystem/model_FKSystem" parent_id_path=PackedInt32Array(790830604, 432635711) index="7" unique_id=1344421272]
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
+
 [node name="model_FKParentConstraintToWrist_L" parent="KEROMESH/model_Group/model_MotionSystem/model_FKSystem" parent_id_path=PackedInt32Array(790830604, 432635711) index="8" unique_id=84098966]
-transform = Transform3D(0.68757415, 0.05470785, -0.72405005, 0.62341255, 0.46677843, 0.62727535, 0.3722879, -0.8826804, 0.28683922, -0.0845376, 0.21253915, 0.073092386)
+transform = Transform3D(0.6875742, 0.054707855, -0.72405016, 0.6234126, 0.46677846, 0.62727547, 0.37228793, -0.8826805, 0.28683928, -0.0845376, 0.21253915, 0.073092386)
 
 [node name="model_FKMiddleFinger1_L" parent="KEROMESH/model_Group/model_MotionSystem/model_FKSystem/model_FKParentConstraintToWrist_L/model_FKOffsetMiddleFinger1_L/model_SDKFKMiddleFinger1_L/model_FKExtraMiddleFinger1_L" parent_id_path=PackedInt32Array(790830604, 676105194) index="0" unique_id=283909138]
-transform = Transform3D(-0.66384536, 0, -0.74787, 0, 1, 0, 0.74787, 0, -0.66384536, 0, 0, 0)
+transform = Transform3D(-0.6638453, 0, -0.74786997, 0, 1, 0, 0.74786997, 0, -0.6638453, 0, 0, 0)
 
 [node name="model_FKIndexFinger1_L" parent="KEROMESH/model_Group/model_MotionSystem/model_FKSystem/model_FKParentConstraintToWrist_L/model_FKOffsetIndexFinger1_L/model_SDKFKIndexFinger1_L/model_FKExtraIndexFinger1_L" parent_id_path=PackedInt32Array(790830604, 316527795) index="0" unique_id=1528478190]
-transform = Transform3D(-0.66384536, 0, -0.74787, 0, 1, 0, 0.74787, 0, -0.66384536, 0, 0, 0)
+transform = Transform3D(-0.6638453, 0, -0.74786997, 0, 1, 0, 0.74786997, 0, -0.6638453, 0, 0, 0)
 
 [node name="model_FKPinkyFinger1_L" parent="KEROMESH/model_Group/model_MotionSystem/model_FKSystem/model_FKParentConstraintToWrist_L/model_FKOffsetPinkyFinger1_L/model_SDKFKPinkyFinger1_L/model_FKExtraPinkyFinger1_L" parent_id_path=PackedInt32Array(790830604, 1331018047) index="0" unique_id=833125200]
-transform = Transform3D(-0.66384536, 0, -0.74787, 0, 1, 0, 0.74787, 0, -0.66384536, 0, 0, 0)
+transform = Transform3D(-0.6638453, 0, -0.74786997, 0, 1, 0, 0.74786997, 0, -0.6638453, 0, 0, 0)
 
 [node name="model_FKParentConstraintToScapula_L" parent="KEROMESH/model_Group/model_MotionSystem/model_FKSystem" parent_id_path=PackedInt32Array(790830604, 432635711) index="9" unique_id=1845951518]
 transform = Transform3D(-0.9675739, -0.2525891, -0.0002482235, 0.06298468, -0.24031867, -0.9686486, 0.24461044, -0.9372545, 0.24843524, 0.05635675, 0.23182383, -0.011934782)
 
 [node name="model_FKGlobalShoulder_L" parent="KEROMESH/model_Group/model_MotionSystem/model_FKSystem/model_FKParentConstraintToScapula_L/model_FKOffsetShoulder_L/model_FKGlobalStaticShoulder_L" parent_id_path=PackedInt32Array(790830604, 1226765316) index="0" unique_id=177690606]
-transform = Transform3D(0.9999649, 0.0010448933, -0.008293722, 0.0010461776, 0.968713, 0.24818082, 0.008293561, -0.2481808, 0.9686781, 0, 0, -3.5527136e-17)
+transform = Transform3D(0.99996454, 0.0010448928, -0.008293719, 0.0010461772, 0.96871257, 0.24818073, 0.008293558, -0.2481807, 0.96867776, 0, 0, -3.5527136e-17)
+
+[node name="model_FKShoulder_L" parent="KEROMESH/model_Group/model_MotionSystem/model_FKSystem/model_FKParentConstraintToScapula_L/model_FKOffsetShoulder_L/model_FKGlobalStaticShoulder_L/model_FKGlobalShoulder_L/model_FKExtraShoulder_L" parent_id_path=PackedInt32Array(790830604, 1652827268) index="0" unique_id=120786084]
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="model_AlignIKToShoulder_L" parent="KEROMESH/model_Group/model_MotionSystem/model_FKSystem/model_FKParentConstraintToScapula_L/model_FKOffsetShoulder_L/model_FKGlobalStaticShoulder_L/model_FKGlobalShoulder_L/model_FKExtraShoulder_L/model_FKShoulder_L/Skeleton3D" parent_id_path=PackedInt32Array(790830604, 303615453) index="0" unique_id=422052160]
 bone_idx = 0
@@ -333,7 +385,7 @@ bone_idx = 4
 bone_idx = 0
 
 [node name="model_IKParentConstraintHip_R" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKJoints" parent_id_path=PackedInt32Array(790830604, 585629526) index="0" unique_id=1271398521]
-transform = Transform3D(0, 0, 1, 0.77389306, 0.6333163, 0, -0.6333163, 0.77389306, 0, 9.582513e-18, 0.091769, -0.021131363)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.582513e-18, 0.091769, -0.021131363)
 
 [node name="Skeleton3D" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKJoints/model_IKParentConstraintHip_R/model_IKXOffsetHip_R" parent_id_path=PackedInt32Array(790830604, 1710316321) index="0" unique_id=1847882744]
 bones/0/rotation = Quaternion(-0.033546798, -0.056965318, -0.050875347, 0.99651456)
@@ -419,7 +471,7 @@ transform = Transform3D(0.97772354, 0.20989648, 4.4232378e-09, -0.20989648, 0.97
 bone_idx = 0
 
 [node name="model_IKParentConstraintHip_L" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKJoints" parent_id_path=PackedInt32Array(790830604, 585629526) index="3" unique_id=672482576]
-transform = Transform3D(0, 0, 1, 0.77389306, 0.6333163, 0, -0.6333163, 0.77389306, 0, 9.582513e-18, 0.091769, -0.021131363)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.582513e-18, 0.091769, -0.021131363)
 
 [node name="Skeleton3D" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKJoints/model_IKParentConstraintHip_L/model_IKXOffsetHip_L" parent_id_path=PackedInt32Array(790830604, 541329065) index="0" unique_id=1841244049]
 bones/0/rotation = Quaternion(-0.04009084, -0.039060194, -0.03180678, 0.9979255)
@@ -474,16 +526,16 @@ transform = Transform3D(-0.9361459, 0.2998676, 0.18360433, -0.074135646, -0.6787
 bone_idx = 1
 
 [node name="model_IKSpRootPart1FollowOffset_M" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKJoints/model_IKSpSpineOffset_M" parent_id_path=PackedInt32Array(790830604, 295339286) index="1" unique_id=1853273612]
-transform = Transform3D(0.9777236, 0.20989646, 2.570515e-09, -0.20989646, 0.9777236, 1.19737775e-08, 1.110223e-16, -1.2246587e-08, 1, 0.011290208, -0.009159687, -1.1526292e-17)
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0.011290208, -0.009159687, -1.1526292e-17)
 
 [node name="model_IKSpRootPart2FollowOffset_M" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKJoints/model_IKSpSpineOffset_M" parent_id_path=PackedInt32Array(790830604, 295339286) index="2" unique_id=1585787781]
-transform = Transform3D(0.9777236, 0.20989648, 0, -0.20989648, 0.9777236, 0, 0, 0, 1, 0.024139993, -0.011918263, -1.9499253e-17)
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0.024139993, -0.011918263, -1.9499253e-17)
 
 [node name="model_IKSpSpine1FollowOffset_M" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKJoints/model_IKSpSpineOffset_M" parent_id_path=PackedInt32Array(790830604, 295339286) index="3" unique_id=773590857]
-transform = Transform3D(0.96364444, -0.26718792, 0, 0.26718792, 0.96364444, 0, 0, 0, 1, 0.03753753, -0.014680586, -9.084265e-12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.03753753, -0.014680586, -9.084265e-12)
 
 [node name="model_IKSpChestFollowOffset_M" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKJoints/model_IKSpSpineOffset_M" parent_id_path=PackedInt32Array(790830604, 295339286) index="4" unique_id=1037967113]
-transform = Transform3D(0.84956133, -0.52748984, 0, 0.52748984, 0.84956133, 0, 0, 0, 1, 0.10474072, 0.0039060637, -1.1602461e-10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.10474072, 0.0039060637, -1.1602461e-10)
 
 [node name="Skeleton3D" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKJoints/model_IKAcSpineOffset_M" parent_id_path=PackedInt32Array(790830604, 1492384259) index="0" unique_id=9509965]
 bones/0/position = Vector3(-0.0015595761, -0.0064011123, -3.553331e-18)
@@ -508,25 +560,28 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5120235e-18, 0.12371901, -
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.7216326e-17, 0.1910593, -0.06032206)
 
 [node name="model_IKAcRootPart1FollowOffset_M" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKJoints/model_IKAcSpineOffset2_M" parent_id_path=PackedInt32Array(790830604, 1241482560) index="0" unique_id=680185704]
-transform = Transform3D(0.9777236, 0.20989646, 2.570515e-09, -0.20989646, 0.9777236, 1.19737775e-08, 1.110223e-16, -1.2246587e-08, 1, 0.011290208, -0.009159687, -1.2138819e-17)
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0.011290208, -0.009159687, -1.2138819e-17)
 
 [node name="model_IKAcRootPart2FollowOffset_M" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKJoints/model_IKAcSpineOffset2_M" parent_id_path=PackedInt32Array(790830604, 1241482560) index="1" unique_id=1805555068]
-transform = Transform3D(0.9777236, 0.20989648, 0, -0.20989648, 0.9777236, 0, 0, 0, 1, 0.024139993, -0.0119182635, -2.0724307e-17)
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0.024139993, -0.0119182635, -2.0724307e-17)
 
 [node name="model_IKAcSpine1FollowOffset_M" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKJoints/model_IKAcSpineOffset2_M" parent_id_path=PackedInt32Array(790830604, 1241482560) index="2" unique_id=606735984]
-transform = Transform3D(0.96364444, -0.26718792, 0, 0.26718792, 0.96364444, 0, 0, 0, 1, 0.03753753, -0.014680586, -5.509315e-17)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.03753753, -0.014680586, -5.509315e-17)
 
 [node name="model_IKAcChestFollowOffset_M" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKJoints/model_IKAcSpineOffset2_M" parent_id_path=PackedInt32Array(790830604, 1241482560) index="3" unique_id=708315119]
 transform = Transform3D(0.71991795, -0.6940592, 0, 0.6940592, 0.71991795, 0, 0, 0, 1, 0.10466871, 0.0040883743, -3.1776444e-17)
 
+[node name="model_IKLeg_R" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKHandle/model_IKHandleFollowMain/model_IKOffsetLeg_R/model_IKExtraLeg_R" parent_id_path=PackedInt32Array(790830604, 58855134) index="0" unique_id=1249351119]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
 [node name="model_IKArm_R" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKHandle/model_IKHandleFollowMain/model_IKOffsetArm_R/model_IKExtraArm_R" parent_id_path=PackedInt32Array(790830604, 1738377719) index="0" unique_id=867475597]
-transform = Transform3D(-0.72499245, 0.11049699, 0.6798353, 0.49409539, -0.60422736, 0.625123, 0.47984943, 0.7891131, 0.3834643, 0.4952959, -0.008173247, 0.07778172)
+transform = Transform3D(-0.7249925, 0.110497, 0.6798354, 0.4940954, -0.6042274, 0.6251231, 0.47984946, 0.78911316, 0.38346434, 0.4952959, -0.008173247, 0.07778172)
 
 [node name="model_IKArm_L" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKHandle/model_IKHandleFollowMain/model_IKOffsetArm_L/model_IKExtraArm_L" parent_id_path=PackedInt32Array(790830604, 1713725360) index="0" unique_id=453428161]
-transform = Transform3D(-0.55566424, -0.120918974, -0.82256645, -0.77341783, -0.28784084, 0.5647763, -0.30506045, 0.9500137, 0.066421956, -0.51663244, -0.016108967, 0.04928294)
+transform = Transform3D(-0.5556643, -0.12091899, -0.82256657, -0.77341795, -0.28784087, 0.56477636, -0.30506048, 0.9500138, 0.06642196, -0.51663244, -0.016108967, 0.04928294)
 
 [node name="model_PoleOffsetLeg_R" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKHandle" parent_id_path=PackedInt32Array(790830604, 16427976) index="1" unique_id=1258693585]
-transform = Transform3D(0.99964404, 0.026604492, 0.0020064397, -0.02663527, 0.99949545, 0.017303735, -0.0015450703, -0.017351018, 0.9998482, -0.1442764, 0.048340727, 0.05417342)
+transform = Transform3D(0.99964404, 0.026604492, 0.002006439, -0.02663527, 0.99949545, 0.01730373, -0.0015450703, -0.017351018, 0.9998478, -0.1442764, 0.048340727, 0.05417342)
 
 [node name="model_PoleAimLeg_R" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKHandle" parent_id_path=PackedInt32Array(790830604, 16427976) index="2" unique_id=292863999]
 transform = Transform3D(-0.7804144, -0.5689335, -0.25936115, -0.6211456, 0.7529549, 0.21734068, 0.071634874, 0.33071685, -0.9410074, 9.582513e-18, 0.091769, -0.021131363)
@@ -535,31 +590,31 @@ transform = Transform3D(-0.7804144, -0.5689335, -0.25936115, -0.6211456, 0.75295
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.14423528, -0.055623654, 0.41949454)
 
 [node name="model_IKOffsetcvSpine1_M" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKHandle" parent_id_path=PackedInt32Array(790830604, 16427976) index="5" unique_id=248699049]
-transform = Transform3D(1, 0, 0, 0, 0.9777236, 0.20989648, 0, -0.20989648, 0.9777236, 6.905691e-18, 0.101939924, -0.029454757)
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 6.905691e-18, 0.101939924, -0.029454757)
 
 [node name="model_IKOffsetcvSpine2_M" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKHandle" parent_id_path=PackedInt32Array(790830604, 16427976) index="6" unique_id=408577404]
-transform = Transform3D(1, 0, 0, 0, 0.9777236, 0.20989648, 0, -0.20989648, 0.9777236, 4.228869e-18, 0.11211085, -0.03777815)
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 4.228869e-18, 0.11211085, -0.03777815)
 
 [node name="model_IKOffsetcvSpine3_M" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKHandle" parent_id_path=PackedInt32Array(790830604, 16427976) index="7" unique_id=694521950]
-transform = Transform3D(1, 0, 0, 0, 0.9777236, 0.20989648, 0, -0.20989648, 0.9777236, -2.4229227e-17, 0.12228179, -0.04610154)
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, -2.4229227e-17, 0.12228179, -0.04610154)
 
 [node name="model_IKOffsetSpine2_M" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKHandle" parent_id_path=PackedInt32Array(790830604, 16427976) index="8" unique_id=1564799547]
-transform = Transform3D(1, 0, 0, 0, 0.9777236, 0.20989648, 0, -0.20989648, 0.9777236, -8.2658785e-18, 0.13797994, -0.04824779)
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, -8.2658785e-18, 0.13797994, -0.04824779)
 
 [node name="model_IKOffsetConstrainedSpine1_M" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKHandle" parent_id_path=PackedInt32Array(790830604, 16427976) index="9" unique_id=866286898]
-transform = Transform3D(1, 0, 0, 0, 0.9777236, 0.20989648, 0, -0.20989648, 0.9777236, 9.582513e-18, 0.091769, -0.021131363)
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 9.582513e-18, 0.091769, -0.021131363)
 
 [node name="model_IKFollowEndSpine1_M" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKHandle/model_IKFollowEndSpine_M" parent_id_path=PackedInt32Array(790830604, 20825964) index="0" unique_id=257623878]
-transform = Transform3D(1, 0, 0, 0, 0.9777236, 0.20989648, 0, -0.20989648, 0.9777236, 9.582513e-18, 0.091769, -0.021131363)
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 9.582513e-18, 0.091769, -0.021131363)
 
 [node name="model_IKFollowEndSpine3_M" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKHandle/model_IKFollowEndSpine_M" parent_id_path=PackedInt32Array(790830604, 20825964) index="1" unique_id=776480062]
-transform = Transform3D(1, 0, 0, 0, 0.9777236, 0.20989648, 0, -0.20989648, 0.9777236, 2.7573969e-18, 0.1910593, -0.06032206)
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 2.7573969e-18, 0.1910593, -0.06032206)
 
 [node name="model_PoleOffsetLeg_L" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKHandle" parent_id_path=PackedInt32Array(790830604, 16427976) index="11" unique_id=1761577635]
-transform = Transform3D(0.99939305, -0.025707487, -0.023510277, 0.02660417, 0.9988982, 0.03865782, 0.022490581, -0.03925983, 0.9989759, 0.1426002, 0.049950857, 0.058171425)
+transform = Transform3D(0.99939305, -0.025707478, -0.023510277, 0.02660417, 0.99889785, 0.03865782, 0.022490581, -0.039259817, 0.9989759, 0.1426002, 0.049950857, 0.058171425)
 
 [node name="model_PoleAimLeg_L" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKHandle" parent_id_path=PackedInt32Array(790830604, 16427976) index="12" unique_id=938273333]
-transform = Transform3D(-0.77837074, -0.5620756, -0.27966085, 0.6195191, -0.7598145, -0.1971751, -0.10166305, -0.32673052, 0.9396339, 9.582513e-18, 0.091769, -0.021131363)
+transform = Transform3D(-0.77837074, -0.56207544, -0.27966085, 0.6195191, -0.7598142, -0.1971751, -0.10166305, -0.3267304, 0.9396339, 9.582513e-18, 0.091769, -0.021131363)
 
 [node name="model_PoleArm_L" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKHandle/model_PoleOffsetArm_L/model_PoleExtraArm_L" parent_id_path=PackedInt32Array(790830604, 611442753) index="0" unique_id=854593568]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1557652, -0.0675904, 0.4045328)
@@ -568,7 +623,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1557652, -0.0675904, 0.404
 transform = Transform3D(-0.7804144, -0.5689335, -0.25936115, -0.6211456, 0.7529549, 0.21734068, 0.071634874, 0.33071685, -0.9410074, 9.582513e-18, 0.091769, -0.021131363)
 
 [node name="model_PoleOffsetLeg_RFollow" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKFollow/model_PoleOffsetLeg_RFollowOffset" parent_id_path=PackedInt32Array(790830604, 1059871228) index="0" unique_id=42298898]
-transform = Transform3D(0.99964404, 0.026604492, 0.0020064397, -0.02663527, 0.99949545, 0.017303735, -0.0015450703, -0.017351018, 0.9998482, -0.0010917314, 0.0008118872, -0.003929581)
+transform = Transform3D(0.99964404, 0.026604492, 0.002006439, -0.02663527, 0.99949545, 0.01730373, -0.0015450703, -0.017351018, 0.9998478, -0.0010917314, 0.0008118872, -0.003929581)
 
 [node name="model_IKOffsetArm_RFollowNoScaleOffset" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKFollow" parent_id_path=PackedInt32Array(790830604, 2005007858) index="2" unique_id=1502392554]
 transform = Transform3D(-0.96757364, -0.25258917, -0.0002481589, -0.06298469, 0.24031888, 0.96864843, -0.24461047, 0.9372543, -0.24843545, -0.05635675, 0.23182383, -0.011934781)
@@ -577,22 +632,22 @@ transform = Transform3D(-0.96757364, -0.25258917, -0.0002481589, -0.06298469, 0.
 transform = Transform3D(1, 6.3425762e-09, 1.3653222e-08, -9.534275e-09, 0.96867824, 0.24831939, -1.1650593e-08, -0.24831939, 0.96867824, 9.570902e-10, 0.0025586484, -0.038112942)
 
 [node name="model_PoleOffsetArm_RFollowNoScaleOffset" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKFollow" parent_id_path=PackedInt32Array(790830604, 2005007858) index="4" unique_id=901657878]
-transform = Transform3D(-0.72499245, 0.11049699, 0.6798353, 0.49409539, -0.60422736, 0.625123, 0.47984943, 0.7891131, 0.3834643, 0.06319885, 0.2204751, 0.10158999)
+transform = Transform3D(-0.7249923, 0.110496975, 0.6798352, 0.49409524, -0.6042273, 0.6251229, 0.47984928, 0.78911304, 0.38346422, 0.06319885, 0.2204751, 0.10158999)
 
 [node name="model_PoleOffsetArm_RFollow" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKFollow/model_PoleOffsetArm_RFollowOffset" parent_id_path=PackedInt32Array(790830604, 981595038) index="0" unique_id=1434227677]
-transform = Transform3D(-0.72499245, 0.11049699, 0.6798353, 0.49409539, -0.60422736, 0.625123, 0.47984943, 0.7891131, 0.3834643, -0.0659236, -0.12859343, 0.38048577)
+transform = Transform3D(-0.7249923, 0.110496975, 0.6798352, 0.49409524, -0.6042273, 0.6251229, 0.47984928, 0.78911304, 0.38346422, -0.0659236, -0.12859343, 0.38048577)
 
 [node name="model_IKhybridFollowSpine1_MFollowNoScaleOffset" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKFollow" parent_id_path=PackedInt32Array(790830604, 2005007858) index="6" unique_id=1159828807]
-transform = Transform3D(1, 0, 0, 0, 0.9777236, 0.20989648, 0, -0.20989648, 0.9777236, 9.582513e-18, 0.091769, -0.021131363)
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 9.582513e-18, 0.091769, -0.021131363)
 
 [node name="model_IKhybridFollowSpine1_MFollow" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKFollow/model_IKhybridFollowSpine1_MFollowOffset" parent_id_path=PackedInt32Array(790830604, 156660411) index="0" unique_id=672224012]
-transform = Transform3D(0.9777236, 0.20989648, 1.17170316e-17, -0.20989648, 0.9777236, 1.1040229e-16, 1.17170316e-17, -1.1040229e-16, 1, -0.0015595761, -0.0064011123, -1.9859639e-18)
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, -0.0015595761, -0.0064011123, -1.9859639e-18)
 
 [node name="model_PoleOffsetLeg_LFollowNoScaleOffset" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKFollow" parent_id_path=PackedInt32Array(790830604, 2005007858) index="8" unique_id=1779644980]
-transform = Transform3D(-0.77837074, -0.5620756, -0.27966085, 0.6195191, -0.7598145, -0.1971751, -0.10166305, -0.32673052, 0.9396339, 9.582513e-18, 0.091769, -0.021131363)
+transform = Transform3D(-0.77837074, -0.56207544, -0.27966085, 0.6195191, -0.7598142, -0.1971751, -0.10166305, -0.3267304, 0.9396339, 9.582513e-18, 0.091769, -0.021131363)
 
 [node name="model_PoleOffsetLeg_LFollow" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKFollow/model_PoleOffsetLeg_LFollowOffset" parent_id_path=PackedInt32Array(790830604, 1643209511) index="0" unique_id=1087686864]
-transform = Transform3D(0.99939305, -0.025707487, -0.023510277, 0.02660417, 0.9988982, 0.03865782, 0.022490581, -0.03925983, 0.9989759, -0.0005844723, 0.002422019, 6.842157e-05)
+transform = Transform3D(0.99939305, -0.025707478, -0.023510277, 0.02660417, 0.99889785, 0.03865782, 0.022490581, -0.039259817, 0.9989759, -0.0005844723, 0.002422019, 6.842157e-05)
 
 [node name="model_IKOffsetArm_LFollowNoScaleOffset" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKFollow" parent_id_path=PackedInt32Array(790830604, 2005007858) index="10" unique_id=327085380]
 transform = Transform3D(-0.9675739, -0.2525891, -0.0002482235, 0.06298468, -0.24031867, -0.9686486, 0.24461044, -0.9372545, 0.24843524, 0.05635675, 0.23182383, -0.011934782)
@@ -601,10 +656,10 @@ transform = Transform3D(-0.9675739, -0.2525891, -0.0002482235, 0.06298468, -0.24
 transform = Transform3D(1, 6.3425767e-09, 1.36532226e-08, -9.534276e-09, 0.96867824, 0.24831939, -1.1650594e-08, -0.24831939, 0.96867824, 9.570901e-10, 0.00255864, -0.038112953)
 
 [node name="model_PoleOffsetArm_LFollowNoScaleOffset" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKFollow" parent_id_path=PackedInt32Array(790830604, 2005007858) index="12" unique_id=1075455784]
-transform = Transform3D(-0.55566424, -0.120918974, -0.82256645, -0.77341783, -0.28784084, 0.5647763, -0.30506045, 0.9500137, 0.066421956, -0.084535405, 0.21253937, 0.07309122)
+transform = Transform3D(-0.55566424, -0.120918974, -0.8225664, -0.77341783, -0.28784084, 0.56477624, -0.30506045, 0.9500137, 0.06642195, -0.084535405, 0.21253937, 0.07309122)
 
 [node name="model_PoleOffsetArm_LFollow" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKFollow/model_PoleOffsetArm_LFollowOffset" parent_id_path=PackedInt32Array(790830604, 412600879) index="0" unique_id=1383151921]
-transform = Transform3D(-0.55566424, -0.120918795, -0.8225665, -0.7734179, -0.28784075, 0.56477624, -0.3050603, 0.95001364, 0.06642206, 0.061345123, -0.06272155, 0.42749184)
+transform = Transform3D(-0.55566424, -0.12091875, -0.8225665, -0.7734179, -0.28784066, 0.5647762, -0.3050603, 0.9500133, 0.06642205, 0.061345123, -0.06272155, 0.42749184)
 
 [node name="model_IKmessureLoc1Leg_R" parent="KEROMESH/model_Group/model_MotionSystem/model_IKSystem/model_IKMessure" parent_id_path=PackedInt32Array(790830604, 551778196) index="0" unique_id=1661695344]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07574111, 0.09473374, -0.0062787444)
@@ -631,43 +686,46 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09372174, 0.22939153, -0.02
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.17825717, -0.016852157, 0.09447217)
 
 [node name="model_FKIKParentConstraintLeg_R" parent="KEROMESH/model_Group/model_MotionSystem/model_FKIKSystem" parent_id_path=PackedInt32Array(790830604, 1318643961) index="0" unique_id=1302525096]
-transform = Transform3D(0, 0, 1, 0.77389306, 0.6333163, 0, -0.6333163, 0.77389306, 0, 9.582513e-18, 0.091769, -0.021131363)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.582513e-18, 0.091769, -0.021131363)
 
 [node name="model_FKIKParentConstraintArm_R" parent="KEROMESH/model_Group/model_MotionSystem/model_FKIKSystem" parent_id_path=PackedInt32Array(790830604, 1318643961) index="1" unique_id=7913649]
 transform = Transform3D(-0.96757364, -0.25258917, -0.0002481589, -0.06298469, 0.24031888, 0.96864843, -0.24461047, 0.9372543, -0.24843545, -0.05635675, 0.23182383, -0.011934781)
 
 [node name="model_FKIKArm_R" parent="KEROMESH/model_Group/model_MotionSystem/model_FKIKSystem/model_FKIKParentConstraintArm_R" index="0" unique_id=557994838]
-transform = Transform3D(0.9363296, 0.2523274, -0.24416707, 0.24414492, -0.96764195, -0.06373684, -0.2523488, 6.654486e-05, -0.96763635, 0.07404164, 0.007995562, 0.038876448)
+transform = Transform3D(0.93632925, 0.2523274, -0.24416707, 0.24414483, -0.96764195, -0.06373684, -0.25234872, 6.654486e-05, -0.96763635, 0.07404164, 0.007995562, 0.038876448)
 
 [node name="model_FKIKParentConstraintSpine_M" parent="KEROMESH/model_Group/model_MotionSystem/model_FKIKSystem" parent_id_path=PackedInt32Array(790830604, 1318643961) index="2" unique_id=147229080]
-transform = Transform3D(0, 5.9604645e-08, 1, 0.7738931, 0.6333163, -5.9604645e-08, -0.6333163, 0.7738931, 0, 9.582513e-18, 0.091769, -0.021131363)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.582513e-18, 0.091769, -0.021131363)
 
 [node name="model_FKIKParentConstraintLeg_L" parent="KEROMESH/model_Group/model_MotionSystem/model_FKIKSystem" parent_id_path=PackedInt32Array(790830604, 1318643961) index="3" unique_id=1090392834]
-transform = Transform3D(0, 0, 1, 0.77389306, 0.6333163, 0, -0.6333163, 0.77389306, 0, 9.582513e-18, 0.091769, -0.021131363)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.582513e-18, 0.091769, -0.021131363)
 
 [node name="model_FKIKParentConstraintArm_L" parent="KEROMESH/model_Group/model_MotionSystem/model_FKIKSystem" parent_id_path=PackedInt32Array(790830604, 1318643961) index="4" unique_id=1583475807]
 transform = Transform3D(-0.9675739, -0.2525891, -0.0002482235, 0.06298468, -0.24031867, -0.9686486, 0.24461044, -0.9372545, 0.24843524, 0.05635675, 0.23182383, -0.011934782)
 
 [node name="model_BendParentConstraintElbow_R" parent="KEROMESH/model_Group/model_MotionSystem/model_BendSystem/model_BendParentConstraintOffsetElbow_R" parent_id_path=PackedInt32Array(790830604, 1267639017) index="0" unique_id=1805154590]
-transform = Transform3D(0.986904, -0.125169, 0.10175003, 0.14235388, 0.9724834, -0.1844209, -0.07586645, 0.19649023, 0.9775662, 0.0074888617, 0.009689532, 0.018699553)
+transform = Transform3D(0.986904, -0.12516892, 0.101749994, 0.14235388, 0.97248286, -0.18442084, -0.07586645, 0.19649012, 0.9775658, 0.0074888617, 0.009689532, 0.018699553)
 
 [node name="model_BendElbow1_R" parent="KEROMESH/model_Group/model_MotionSystem/model_BendSystem/model_BendParentConstraintOffsetElbow_R/model_BendParentConstraintElbow_R/model_BendOffsetElbow1_R/model_BendExtraElbow1_R" parent_id_path=PackedInt32Array(790830604, 770148428) index="0" unique_id=11004034]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00014469404, -0.00015503536, -0.00035264558)
 
 [node name="model_ElbowBendTangent_R" parent="KEROMESH/model_Group/model_MotionSystem/model_BendSystem/model_BendParentConstraintOffsetElbow_R/model_BendParentConstraintElbow_R/model_BendOffsetElbow1_R/model_BendExtraElbow1_R/model_BendElbow1_R" index="2" unique_id=450101870]
-transform = Transform3D(0.9959421, -0.016072063, 0.088547565, 0.016008914, 0.99987084, 0.001423326, -0.088559, 1.1641532e-10, 0.99607086, 0, 0, 0)
+transform = Transform3D(0.99594176, -0.016072063, 0.088547565, 0.016008908, 0.99987084, 0.001423326, -0.088558964, 1.1641532e-10, 0.99607086, 0, 0, 0)
+
+[node name="model_ElbowBendStatic_R" parent="KEROMESH/model_Group/model_MotionSystem/model_BendSystem/model_BendParentConstraintOffsetElbow_R/model_BendParentConstraintElbow_R/model_BendOffsetElbow1_R/model_BendExtraElbow1_R/model_BendElbow1_R" index="3" unique_id=509217293]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="model_BendElbowLocator1_R" parent="KEROMESH/model_Group/model_MotionSystem/model_BendSystem/model_BendParentConstraintOffsetElbow_R/model_BendParentConstraintElbow_R" index="1" unique_id=420474558]
 transform = Transform3D(-0.99807835, 7.2419643e-06, 0.061966658, 0.061966658, 7.5399876e-05, 0.9980783, 2.5480986e-06, 1.0000001, -7.581711e-05, 0.036503766, 0.00043405712, -0.00361142)
 
 [node name="model_BendOffsetElbow2_R" parent="KEROMESH/model_Group/model_MotionSystem/model_BendSystem/model_BendParentConstraintOffsetElbow_R/model_BendParentConstraintElbow_R" index="2" unique_id=283790411]
-transform = Transform3D(0.9959421, -0.016072063, 0.088547565, 0.016008914, 0.99987084, 0.0014233261, -0.088559, 0, 0.99607086, 0.085123226, 0.001215573, -0.007934654)
+transform = Transform3D(0.99594176, -0.016072063, 0.088547565, 0.016008908, 0.99987084, 0.0014233261, -0.088558964, 0, 0.99607086, 0.085123226, 0.001215573, -0.007934654)
 
 [node name="model_BendElbowLocator3_R" parent="KEROMESH/model_Group/model_MotionSystem/model_BendSystem/model_BendParentConstraintOffsetElbow_R/model_BendParentConstraintElbow_R" index="4" unique_id=1664142307]
 transform = Transform3D(-0.99807835, 7.2419643e-06, 0.061966658, 0.061966658, 7.5399876e-05, 0.9980783, 2.5480986e-06, 1.0000001, -7.581711e-05, 0.13374268, 0.001997089, -0.012257887)
 
 [node name="model_BendElbowLocator4_R" parent="KEROMESH/model_Group/model_MotionSystem/model_BendSystem/model_BendParentConstraintOffsetElbow_R/model_BendParentConstraintElbow_R" index="5" unique_id=900572980]
-transform = Transform3D(0.6739192, -0.19372351, -0.71295434, 0.20079967, -0.8806559, 0.429097, -0.7109938, -0.43233767, -0.5545914, 0.17039114, 0.0025861815, -0.015516662)
+transform = Transform3D(0.6739192, -0.19372351, -0.71295434, 0.20079967, -0.8806559, 0.429097, -0.7109938, -0.43233767, -0.5545914, 0, 0, 0)
 
 [node name="model_ElbowPointOnCurveXform1_R" parent="KEROMESH/model_Group/model_MotionSystem/model_BendSystem" parent_id_path=PackedInt32Array(790830604, 529667539) index="2" unique_id=477438823]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.053820815, 0.1829246, 0.10441185)
@@ -676,10 +734,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.053820815, 0.1829246, 0.10
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.006838241, 0.20056085, 0.100190744)
 
 [node name="model_BendParentConstraintShoulder_R" parent="KEROMESH/model_Group/model_MotionSystem/model_BendSystem/model_BendParentConstraintOffsetShoulder_R" parent_id_path=PackedInt32Array(790830604, 777798905) index="0" unique_id=948824687]
-transform = Transform3D(0.05203366, -0.95079195, 0.3054295, 0.9034234, 0.17515418, 0.3913399, -0.42558008, 0.25556937, 0.8680817, 0.0012652816, -0.037862584, 0.0007474766)
+transform = Transform3D(0.05203364, -0.95079195, 0.3054295, 0.90342313, 0.17515418, 0.3913399, -0.42557994, 0.25556937, 0.8680817, 0.0012652816, -0.037862584, 0.0007474766)
 
 [node name="model_ShoulderBendTangent_R" parent="KEROMESH/model_Group/model_MotionSystem/model_BendSystem/model_BendParentConstraintOffsetShoulder_R/model_BendParentConstraintShoulder_R/model_BendOffsetShoulder1_R/model_BendExtraShoulder1_R/model_BendShoulder1_R" parent_id_path=PackedInt32Array(790830604, 1073126925) index="2" unique_id=1365371252]
-transform = Transform3D(0.9999967, 0.0015874481, 0.0020022653, -0.00071459194, 0.9260789, -0.37732896, -0.0024532462, 0.3773263, 0.92607707, 0, 0, 0)
+transform = Transform3D(0.9999967, 0.0015874475, 0.0020022653, -0.00071459194, 0.9260786, -0.37732896, -0.0024532462, 0.3773262, 0.92607707, 0, 0, 0)
+
+[node name="model_ShoulderBendStatic_R" parent="KEROMESH/model_Group/model_MotionSystem/model_BendSystem/model_BendParentConstraintOffsetShoulder_R/model_BendParentConstraintShoulder_R/model_BendOffsetShoulder1_R/model_BendExtraShoulder1_R/model_BendShoulder1_R" parent_id_path=PackedInt32Array(790830604, 1073126925) index="3" unique_id=345340429]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="model_BendShoulderLocator1_R" parent="KEROMESH/model_Group/model_MotionSystem/model_BendSystem/model_BendParentConstraintOffsetShoulder_R/model_BendParentConstraintShoulder_R" index="1" unique_id=1731591723]
 transform = Transform3D(-0.99944216, -1.2365635e-06, -0.033398844, -0.033398844, 7.5936914e-05, 0.9994421, 1.3003591e-06, 1, -7.593585e-05, 0.035983007, -2.5713252e-05, -8.8275476e-05)
@@ -696,8 +757,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09765629, 0.20888187, 0.02
 [node name="model_ShoulderPointOnCurveXform2_R" parent="KEROMESH/model_Group/model_MotionSystem/model_BendSystem" parent_id_path=PackedInt32Array(790830604, 529667539) index="7" unique_id=1233962517]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.10158489, 0.18840319, 0.06485759)
 
+[node name="model_BendElbowLocator1_L" parent="KEROMESH/model_Group/model_MotionSystem/model_BendSystem/model_BendParentConstraintOffsetElbow_L/model_BendParentConstraintElbow_L" parent_id_path=PackedInt32Array(790830604, 1907284798) index="1" unique_id=1486634263]
+transform = Transform3D(-0.9980781, -7.2307885e-06, -0.06196665, 0.061966654, -7.545948e-05, -0.99807817, 2.5387853e-06, -0.99999994, 7.581711e-05, 0, 0, 0)
+
+[node name="model_BendOffsetElbow2_L" parent="KEROMESH/model_Group/model_MotionSystem/model_BendSystem/model_BendParentConstraintOffsetElbow_L/model_BendParentConstraintElbow_L" parent_id_path=PackedInt32Array(790830604, 1907284798) index="2" unique_id=397370109]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="model_BendElbowLocator3_L" parent="KEROMESH/model_Group/model_MotionSystem/model_BendSystem/model_BendParentConstraintOffsetElbow_L/model_BendParentConstraintElbow_L" parent_id_path=PackedInt32Array(790830604, 1907284798) index="4" unique_id=289881048]
+transform = Transform3D(-0.9980781, -7.2307885e-06, -0.06196665, 0.061966654, -7.545948e-05, -0.99807817, 2.5387853e-06, -0.99999994, 7.581711e-05, 0, 0, 0)
+
 [node name="model_BendElbowLocator4_L" parent="KEROMESH/model_Group/model_MotionSystem/model_BendSystem/model_BendParentConstraintOffsetElbow_L/model_BendParentConstraintElbow_L" parent_id_path=PackedInt32Array(790830604, 1907284798) index="5" unique_id=639442510]
-transform = Transform3D(0.49131912, -0.21109523, -0.8450114, -0.17843026, -0.97400296, 0.13957351, -0.852507, 0.082200475, -0.5162121, -0.19527018, 2.220446e-18, 8.881784e-16)
+transform = Transform3D(0.49131912, -0.21109523, -0.8450114, -0.17843026, -0.97400296, 0.13957351, -0.852507, 0.082200475, -0.5162121, 0, 0, 0)
 
 [node name="model_ElbowPointOnCurveXform1_L" parent="KEROMESH/model_Group/model_MotionSystem/model_BendSystem" parent_id_path=PackedInt32Array(790830604, 529667539) index="10" unique_id=1744015293]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.037584428, 0.17058276, 0.08960694)
@@ -706,7 +776,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.037584428, 0.17058276, 0.08
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.02347659, 0.19156095, 0.081349656)
 
 [node name="model_BendParentConstraintShoulder_L" parent="KEROMESH/model_Group/model_MotionSystem/model_BendSystem/model_BendParentConstraintOffsetShoulder_L" parent_id_path=PackedInt32Array(790830604, 1190729432) index="0" unique_id=1768390159]
-transform = Transform3D(0.006535776, -0.9817977, 0.18981664, 0.83126646, 0.110845685, 0.5447102, -0.5558357, 0.1542281, 0.81685996, -0.0012652832, 0.037862584, -0.0007474753)
+transform = Transform3D(0.006535776, -0.98179734, 0.18981662, 0.83126646, 0.11084565, 0.54471016, -0.5558357, 0.15422806, 0.8168599, -0.0012652832, 0.037862584, -0.0007474753)
 
 [node name="model_ShoulderBendTangent_L" parent="KEROMESH/model_Group/model_MotionSystem/model_BendSystem/model_BendParentConstraintOffsetShoulder_L/model_BendParentConstraintShoulder_L/model_BendOffsetShoulder1_L/model_BendExtraShoulder1_L/model_BendShoulder1_L" parent_id_path=PackedInt32Array(790830604, 949144462) index="2" unique_id=406219242]
 transform = Transform3D(1, -1.9692218e-15, -1.7610186e-17, 1.5503958e-15, 0.7927648, -0.60952765, 1.2142559e-15, 0.60952765, 0.7927648, 0, 0, 0)
@@ -715,10 +785,13 @@ transform = Transform3D(1, -1.9692218e-15, -1.7610186e-17, 1.5503958e-15, 0.7927
 transform = Transform3D(1, 0, 0, 0, 0.7927648, -0.60952765, 0, 0.60952765, 0.7927648, 0, 0, 0)
 
 [node name="model_BendShoulderLocator1_L" parent="KEROMESH/model_Group/model_MotionSystem/model_BendSystem/model_BendParentConstraintOffsetShoulder_L/model_BendParentConstraintShoulder_L" index="1" unique_id=975485634]
-transform = Transform3D(-0.99944216, 1.3003591e-06, 0.033398844, -0.033398844, -7.593585e-05, -0.9994421, 1.2365635e-06, -1, 7.5936914e-05, -0.035890125, 7.105427e-17, 0)
+transform = Transform3D(-0.99944216, 1.3003591e-06, 0.033398844, -0.033398844, -7.593585e-05, -0.9994421, 1.2365635e-06, -1, 7.5936914e-05, 0, 0, 0)
+
+[node name="model_BendOffsetShoulder2_L" parent="KEROMESH/model_Group/model_MotionSystem/model_BendSystem/model_BendParentConstraintOffsetShoulder_L/model_BendParentConstraintShoulder_L" index="2" unique_id=1381842285]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="model_BendShoulderLocator3_L" parent="KEROMESH/model_Group/model_MotionSystem/model_BendSystem/model_BendParentConstraintOffsetShoulder_L/model_BendParentConstraintShoulder_L" index="3" unique_id=1293588703]
-transform = Transform3D(-0.99944216, 1.3003591e-06, 0.033398844, -0.033398844, -7.593585e-05, -0.9994421, 1.2365635e-06, -1, 7.5936914e-05, -0.10767038, 9.7699626e-17, -5.3290707e-16)
+transform = Transform3D(-0.99944216, 1.3003591e-06, 0.033398844, -0.033398844, -7.593585e-05, -0.9994421, 1.2365635e-06, -1, 7.5936914e-05, 0, 0, 0)
 
 [node name="model_ShoulderPointOnCurveXform1_L" parent="KEROMESH/model_Group/model_MotionSystem/model_BendSystem" parent_id_path=PackedInt32Array(790830604, 529667539) index="14" unique_id=1618392598]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.095362976, 0.20279586, 0.018367438)
@@ -727,10 +800,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.095362976, 0.20279586, 0.01
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09700421, 0.1762002, 0.05811583)
 
 [node name="model_LegLockConstrained" parent="KEROMESH/model_Group/model_MotionSystem/model_RootSystem" parent_id_path=PackedInt32Array(790830604, 2008833538) index="1" unique_id=1292681855]
-transform = Transform3D(0, 0, 1, 0.77389306, 0.6333163, 0, -0.6333163, 0.77389306, 0, 9.582513e-18, 0.091769, -0.021131363)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.582513e-18, 0.091769, -0.021131363)
 
 [node name="model_RootX_M" parent="KEROMESH/model_Group/model_MotionSystem/model_RootSystem/model_RootCenterBtwLegsBlended_M/model_RootOffsetX_M/model_RootExtraX_M" parent_id_path=PackedInt32Array(790830604, 1465385119) index="0" unique_id=1593218666]
-transform = Transform3D(1, 0, 0, 0, 0.9777236, 0.20989648, 0, -0.20989648, 0.9777236, 0, -0.004311216, -0.0049819606)
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, -0.004311216, -0.0049819606)
 
 [node name="model_TwistFollowHead_M" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowOffsetHead_M" parent_id_path=PackedInt32Array(790830604, 480262926) index="0" unique_id=949462597]
 transform = Transform3D(0.96867824, 0.24831936, 0, -0.24831936, 0.96867824, 0, 0, 0, 1, -0.010989533, -0.04697721, 7.814021e-10)
@@ -742,16 +815,16 @@ transform = Transform3D(0.96867824, 0.24831936, 0, -0.24831936, 0.96867824, 0, 0
 bones/0/position = Vector3(0.03471799, -9.2497154e-05, 3.8116654e-10)
 
 [node name="model_TwistFollowSpine2_M" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowOffsetSpine2_M" parent_id_path=PackedInt32Array(790830604, 101150344) index="0" unique_id=1915017639]
-transform = Transform3D(0.9777236, 0.20989648, 0, -0.20989648, 0.9777236, 0, 0, 0, 1, -0.0010006516, -0.017696578, -9.823575e-18)
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, -0.0010006516, -0.017696578, -9.823575e-18)
 
 [node name="model_TwistFollowParentSpine2_M" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowParentOffsetSpine2_M" parent_id_path=PackedInt32Array(790830604, 864880459) index="0" unique_id=556939817]
-transform = Transform3D(0.9777236, 0.20989648, 5.1191135e-16, -0.20989648, 0.9777236, 6.155456e-16, -3.7130695e-16, -7.092819e-16, 1, -0.0010006516, -0.017696578, -9.823575e-18)
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, -0.0010006516, -0.017696578, -9.823575e-18)
 
 [node name="model_TwistFollowKnee_R" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowOffsetKnee_R" parent_id_path=PackedInt32Array(790830604, 1003360555) index="0" unique_id=1755045443]
 transform = Transform3D(0.99704134, 0.061727617, 0.04580634, -0.06255867, 0.9978976, 0.016935473, -0.044664647, -0.019750953, 0.99880683, 0.0013541597, -0.0016257595, 0.0017629646)
 
 [node name="model_TwistFollowParentKnee_R" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowParentOffsetKnee_R" parent_id_path=PackedInt32Array(790830604, 1227023343) index="0" unique_id=1712946962]
-transform = Transform3D(0.99862045, -0.052012395, 0.007190631, 0.05210032, 0.9985619, -0.012634854, -0.00652312, 0.012992059, 0.9998943, 0.00062911643, -0.004350489, 0.0031237295)
+transform = Transform3D(0.9986201, -0.052012395, 0.007190631, 0.0521003, 0.9985619, -0.012634854, -0.006523118, 0.012992059, 0.9998943, 0.00062911643, -0.004350489, 0.0031237295)
 
 [node name="Skeleton3D" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowParentOffsetKnee_R/model_TwistFollowParentKnee_R" index="0" unique_id=40903097]
 bones/0/rotation = Quaternion(2.4093757e-16, 7.750912e-16, -0.3424513, 0.93953556)
@@ -769,10 +842,10 @@ transform = Transform3D(0.7654542, 0.6434904, 1.2914328e-15, -0.6434904, 0.76545
 bone_idx = 0
 
 [node name="model_TwistFollowHip_R" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowOffsetHip_R" parent_id_path=PackedInt32Array(790830604, 1417281330) index="0" unique_id=1829639382]
-transform = Transform3D(0.99862045, -0.0520124, 0.0071906303, 0.052100323, 0.9985619, -0.012634853, -0.0065231198, 0.012992058, 0.9998943, 0.00062911643, -0.004350489, 0.0031237295)
+transform = Transform3D(0.9986201, -0.0520124, 0.0071906303, 0.052100305, 0.9985619, -0.012634853, -0.0065231174, 0.012992058, 0.9998943, 0.00062911643, -0.004350489, 0.0031237295)
 
 [node name="model_TwistFollowParentHip_R" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowParentOffsetHip_R" parent_id_path=PackedInt32Array(790830604, 978830875) index="0" unique_id=1727090362]
-transform = Transform3D(0.9777236, 0.20989648, 9.752625e-16, -0.20989648, 0.9777236, 5.1054704e-16, -8.4637517e-16, -7.038781e-16, 1, -0.0031191523, -0.012802225, -7.106662e-18)
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, -0.0031191523, -0.012802225, -7.106662e-18)
 
 [node name="Skeleton3D" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowParentOffsetHip_R/model_TwistFollowParentHip_R" index="0" unique_id=467541088]
 bones/0/rotation = Quaternion(-0.18092723, 0.90003914, -0.28605545, 0.2745309)
@@ -787,7 +860,7 @@ transform = Transform3D(-0.7837963, -0.16862106, 0.5976875, -0.4827453, 0.770875
 bone_idx = 0
 
 [node name="model_TwisterHip1_R" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowParentOffsetHip_R/model_TwistFollowParentHip_R/Skeleton3D/model_TwisterHip1_R" index="0" unique_id=1582979184]
-transform = Transform3D(1, 0, 0, 0, 0.9891256, 0.14707263, 0, -0.14707263, 0.9891256, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.98912525, 0.14707258, 0, -0.14707258, 0.98912525, 0, 0, 0)
 
 [node name="model_TwisterHip2_R" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowParentOffsetHip_R/model_TwistFollowParentHip_R/Skeleton3D" index="2" unique_id=957619573]
 transform = Transform3D(-0.7837963, -0.16862106, 0.5976875, -0.4827453, 0.7708752, -0.41558197, -0.39066663, -0.61426246, -0.6856103, -0.0071120122, 0.013371959, -0.07574111)
@@ -797,7 +870,7 @@ bone_idx = 0
 transform = Transform3D(-0.86900115, 0.10572001, 0.48338446, -0.3297772, -0.8520579, -0.4065029, 0.36889604, -0.5126607, 0.7753031, -0.46480843, -0.084361985, -0.151743)
 
 [node name="model_TwistFollowParentWrist_R" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowParentOffsetWrist_R" parent_id_path=PackedInt32Array(790830604, 1457158749) index="0" unique_id=30355395]
-transform = Transform3D(0.986904, -0.125169, 0.10175003, 0.14235388, 0.9724834, -0.1844209, -0.07586645, 0.19649023, 0.9775662, 0.0074888617, 0.009689532, 0.018699553)
+transform = Transform3D(0.986904, -0.12516892, 0.101749994, 0.14235388, 0.97248286, -0.18442084, -0.07586645, 0.19649012, 0.9775658, 0.0074888617, 0.009689532, 0.018699553)
 
 [node name="model_TwisterWrist0_R" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowParentOffsetWrist_R/model_TwistFollowParentWrist_R/Skeleton3D" parent_id_path=PackedInt32Array(790830604, 754750011) index="0" unique_id=1180819246]
 transform = Transform3D(0.67391926, 0.73132336, 0.10487604, 0.20079967, -0.04469955, -0.978612, -0.7109939, 0.6805646, -0.17697334, 0.17039114, 0.0025861815, -0.015516662)
@@ -812,7 +885,7 @@ transform = Transform3D(0.67391926, 0.73132336, 0.10487604, 0.20079967, -0.04469
 bone_idx = 0
 
 [node name="model_TwistFollowElbow_R" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowOffsetElbow_R" parent_id_path=PackedInt32Array(790830604, 69539197) index="0" unique_id=2046631618]
-transform = Transform3D(-0.93543106, 0.09202074, 0.341322, 0.039850846, -0.9319219, 0.3604627, 0.35125557, 0.35079002, 0.8680816, -0.12546334, 0.104260065, -0.06034902)
+transform = Transform3D(-0.93543106, 0.09202074, 0.34132195, 0.039850846, -0.9319219, 0.3604626, 0.35125557, 0.35079002, 0.86808145, -0.12546334, 0.104260065, -0.06034902)
 
 [node name="model_TwistFollowParentElbow_R" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowParentOffsetElbow_R" parent_id_path=PackedInt32Array(790830604, 760892998) index="0" unique_id=688603046]
 transform = Transform3D(-0.95979005, -0.10937199, -0.25853604, -0.066016234, -0.80720854, 0.58656305, -0.2728461, 0.580045, 0.7675302, -1.6298145e-09, 0, 1.2805685e-09)
@@ -833,7 +906,7 @@ bone_idx = 0
 transform = Transform3D(0.0520335, -0.95079195, 0.30542952, 0.90342355, 0.17515408, 0.39134002, -0.42558014, 0.25556943, 0.86808175, 0.0012652816, -0.037862584, 0.0007474766)
 
 [node name="model_TwistFollowParentShoulder_R" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowParentOffsetShoulder_R" parent_id_path=PackedInt32Array(790830604, 583383440) index="0" unique_id=921342773]
-transform = Transform3D(0.9980016, 0.007593328, 0.06273029, 0.007716669, 0.9706766, -0.24026531, -0.06271523, 0.24026927, 0.9686781, 0.009645997, -0.0369533, 0.0031710234)
+transform = Transform3D(0.9980016, 0.007593328, 0.06273027, 0.007716669, 0.9706766, -0.24026522, -0.06271523, 0.24026927, 0.96867776, 0.009645997, -0.0369533, 0.0031710234)
 
 [node name="model_TwisterShoulder0_R" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowParentOffsetShoulder_R/model_TwistFollowParentShoulder_R/Skeleton3D" parent_id_path=PackedInt32Array(790830604, 334812338) index="0" unique_id=1583140387]
 transform = Transform3D(-0.11413135, -0.84755856, 0.5182844, 0.763166, 0.25920475, 0.5919382, -0.63604414, 0.4630955, 0.61724424, 0.038617212, -1.612932e-14, 3.1619151e-15)
@@ -843,12 +916,15 @@ bone_idx = 0
 transform = Transform3D(-0.11413135, -0.84755856, 0.5182844, 0.763166, 0.25920475, 0.5919382, -0.63604414, 0.4630955, 0.61724424, 0.038617212, -1.612932e-14, 3.1619151e-15)
 bone_idx = 0
 
+[node name="model_TwisterShoulder1_R" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowParentOffsetShoulder_R/model_TwistFollowParentShoulder_R/Skeleton3D/model_TwisterShoulder1_R" index="0" unique_id=1336327033]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
 [node name="model_TwisterShoulder2_R" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowParentOffsetShoulder_R/model_TwistFollowParentShoulder_R/Skeleton3D" parent_id_path=PackedInt32Array(790830604, 334812338) index="2" unique_id=1939416037]
 transform = Transform3D(-0.11413135, -0.84755856, 0.5182844, 0.763166, 0.25920475, 0.5919382, -0.63604414, 0.4630955, 0.61724424, 0.038617212, -1.612932e-14, 3.1619151e-15)
 bone_idx = 0
 
 [node name="model_TwistFollowParentKnee_L" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowParentOffsetKnee_L" parent_id_path=PackedInt32Array(790830604, 2117332740) index="0" unique_id=400036168]
-transform = Transform3D(0.9949249, -0.09229012, 0.04008527, 0.092269056, 0.9957313, 0.0023789725, -0.04013371, 0.0013317312, 0.9991934, -0.00062911643, 0.004350489, -0.0031237295)
+transform = Transform3D(0.99492455, -0.09229012, 0.04008527, 0.092269026, 0.9957313, 0.0023789725, -0.0401337, 0.0013317312, 0.9991934, -0.00062911643, 0.004350489, -0.0031237295)
 
 [node name="Skeleton3D" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowParentOffsetKnee_L/model_TwistFollowParentKnee_L" index="0" unique_id=1662309207]
 bones/0/rotation = Quaternion(1.2051385e-16, 3.8769058e-16, -0.34922323, 0.9370397)
@@ -866,7 +942,7 @@ transform = Transform3D(0.75608635, 0.6544719, 6.4239026e-16, -0.6544719, 0.7560
 bone_idx = 0
 
 [node name="model_TwistFollowHip_L" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowOffsetHip_L" parent_id_path=PackedInt32Array(790830604, 857504047) index="0" unique_id=1405908068]
-transform = Transform3D(0.9949249, -0.09229012, 0.040085267, 0.092269056, 0.9957313, 0.002378972, -0.040133707, 0.0013317314, 0.9991934, -0.00062911643, 0.004350489, -0.0031237295)
+transform = Transform3D(0.99492455, -0.09229012, 0.040085267, 0.092269026, 0.9957313, 0.002378972, -0.040133696, 0.0013317314, 0.9991934, -0.00062911643, 0.004350489, -0.0031237295)
 
 [node name="Skeleton3D" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowParentOffsetHip_L/model_TwistFollowParentHip_L" parent_id_path=PackedInt32Array(790830604, 2069044386) index="0" unique_id=24575014]
 bones/0/rotation = Quaternion(0.9081093, 0.15868214, -0.26328903, -0.28431752)
@@ -885,7 +961,7 @@ transform = Transform3D(0.8109977, 0.13848606, -0.56842256, 0.43791676, -0.78796
 bone_idx = 0
 
 [node name="model_TwistFollowWrist_L" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowOffsetWrist_L" parent_id_path=PackedInt32Array(790830604, 1814805053) index="0" unique_id=1445522434]
-transform = Transform3D(-0.685786, 0.15564203, 0.71096617, -0.6350707, -0.605131, -0.48010564, 0.35550308, -0.7807636, 0.5138342, 0.49438956, 0.08676806, 0.13285352)
+transform = Transform3D(-0.685786, 0.15564206, 0.71096617, -0.6350707, -0.6051311, -0.48010564, 0.35550308, -0.78076375, 0.5138342, 0.49438956, 0.08676806, 0.13285352)
 
 [node name="Skeleton3D" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowParentOffsetWrist_L/model_TwistFollowParentWrist_L" parent_id_path=PackedInt32Array(790830604, 1038001932) index="0" unique_id=583053602]
 bones/0/rotation = Quaternion(0.63814086, 0.25620565, -0.4343951, 0.58175236)
@@ -907,7 +983,7 @@ transform = Transform3D(0.4913191, 0.8324113, -0.25631404, -0.17843015, -0.19184
 bone_idx = 0
 
 [node name="model_TwistFollowElbow_L" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowOffsetElbow_L" parent_id_path=PackedInt32Array(790830604, 379794743) index="0" unique_id=1712378773]
-transform = Transform3D(-0.94415635, 0.22485961, 0.2408462, -0.06846028, -0.84887004, 0.52414954, 0.3223072, 0.47839066, 0.8168601, 0.1329522, -0.09457053, 0.079048574)
+transform = Transform3D(-0.94415635, 0.22485957, 0.2408462, -0.06846028, -0.8488699, 0.52414954, 0.3223072, 0.47839057, 0.8168601, 0.1329522, -0.09457053, 0.079048574)
 
 [node name="model_TwisterElbow0_L" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowParentOffsetElbow_L/model_TwistFollowParentElbow_L/Skeleton3D" parent_id_path=PackedInt32Array(790830604, 1706116116) index="0" unique_id=1547168481]
 transform = Transform3D(-0.31666973, -0.948536, -5.6796566e-15, 0.948536, -0.31666973, -8.73394e-15, 6.485881e-15, -8.153133e-15, 1, -0.1435605, 9.7699626e-17, -7.81597e-16)
@@ -928,7 +1004,7 @@ bone_idx = 0
 transform = Transform3D(0.0065359324, -0.9817978, 0.18981661, 0.83126646, 0.11084579, 0.5447103, -0.5558358, 0.154228, 0.8168601, -0.0012652832, 0.037862584, -0.0007474753)
 
 [node name="model_TwistFollowParentShoulder_L" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowParentOffsetShoulder_L" parent_id_path=PackedInt32Array(790830604, 862611949) index="0" unique_id=803113013]
-transform = Transform3D(0.9980016, 0.0075933533, 0.062730305, 0.007716647, 0.9706766, -0.2402653, -0.062715255, 0.24026924, 0.9686781, -0.009645999, 0.0369533, -0.0031710227)
+transform = Transform3D(0.9980016, 0.0075933533, 0.06273028, 0.007716647, 0.9706766, -0.2402652, -0.062715255, 0.24026924, 0.96867776, -0.009645999, 0.0369533, -0.0031710227)
 
 [node name="Skeleton3D" parent="KEROMESH/model_Group/model_MotionSystem/model_TwistSystem/model_TwistFollowParentOffsetShoulder_L/model_TwistFollowParentShoulder_L" index="0" unique_id=1626654954]
 bones/0/rotation = Quaternion(-0.058030806, 0.520122, 0.54494774, 0.65508586)
@@ -980,10 +1056,10 @@ transform = Transform3D(-0.9994421, -0.033399004, 1.4599169e-09, 0, -4.371139e-0
 transform = Transform3D(-0.9994421, -0.033399004, 1.4599169e-09, 0, -4.371139e-08, -1, 0.033399004, -0.9994421, 4.3687002e-08, 0.18937536, 0.22864693, 0.013306301)
 
 [node name="model_Fingers_R" parent="KEROMESH/model_Group/model_MotionSystem/model_DrivingSystem" parent_id_path=PackedInt32Array(790830604, 2130166858) index="0" unique_id=105388839]
-transform = Transform3D(9.970186, 2.7452128, 0.17571059, -3.9884422, 3.5498397, -0.63205934, -5.6613154, 2.3337247, 0.75473607, 0.058536854, 0.21559192, 0.09659317)
+transform = Transform3D(9.970183, 2.7452128, 0.17571053, -3.9884408, 3.5498397, -0.63205916, -5.661314, 2.3337247, 0.7547358, 0.058536854, 0.21559192, 0.09659317)
 
 [node name="model_Fingers_L" parent="KEROMESH/model_Group/model_MotionSystem/model_DrivingSystem" parent_id_path=PackedInt32Array(790830604, 2130166858) index="1" unique_id=1641317558]
-transform = Transform3D(-8.244305, 3.6056619, -0.17493567, -7.7467046, -3.4960876, -0.3391399, -4.4025946, -0.6003325, 0.92432755, -0.0845376, 0.21253915, 0.073092386)
+transform = Transform3D(-8.244305, 3.6056619, -0.17493561, -7.7467046, -3.4960876, -0.3391398, -4.4025946, -0.6003325, 0.92432725, -0.0845376, 0.21253915, 0.073092386)
 
 [node name="Skeleton3D" parent="KEROMESH/model_Group/model_DeformationSystem" parent_id_path=PackedInt32Array(790830604, 1953093956) index="0" unique_id=1192606180]
 bones/1/position = Vector3(9.582513e-18, 0.091769, -0.021131363)
@@ -1110,14 +1186,21 @@ bones/79/position = Vector3(-0.005097431, 0.002818606, 0.014067113)
 anim_tree = NodePath("../KEROTREE")
 anim_player = NodePath("../KEROPLAYER")
 
+[node name="Victorious" type="Node" parent="StateMachine" parent_id_path=PackedInt32Array(1987695335) index="11" unique_id=689714033]
+script = ExtResource("14_56fxu")
+metadata/_custom_type_script = "uid://c3efbt2ilm3gx"
+
 [node name="Male_Ranger" parent="." index="9" unique_id=1858045697]
 visible = false
 
 [node name="AnimationPlayer" parent="." index="12" unique_id=1605240310]
-root_node = NodePath("../MeshInstance3D/KERO_MODEL")
+root_node = NodePath("..")
+autoplay = &"Fighter/Idle"
 
 [node name="AnimationTree" parent="." index="13" unique_id=570330019]
-root_node = NodePath("../MeshInstance3D/KERO_MODEL")
+root_node = NodePath("..")
+
+[connection signal="animation_finished" from="KEROTREE" to="." method="_on_kerotree_animation_finished"]
 
 [editable path="KEROMESH"]
 [editable path="Male_Ranger"]

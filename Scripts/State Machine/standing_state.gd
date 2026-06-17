@@ -1,7 +1,7 @@
 class_name StandingState
 extends MovementState
 
-var buffer_window : float = 5.0
+var buffer_window : float = 1
 
 func enter():
 	super.enter()

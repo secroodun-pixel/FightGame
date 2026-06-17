@@ -5,8 +5,8 @@ extends Panel
 @onready var health_block : Panel = $HBoxContainer/HealthBlock
 @onready var health_container : HBoxContainer = $HBoxContainer
 
-var max_health : int = 2
-var current_health : int = 2
+var max_health : int = 1
+var current_health : int = 1
 
 @onready var player_0_pos : Control = $"../Player0Pos"
 @onready var player_1_pos : Control = $"../Player1Pos"
@@ -25,7 +25,7 @@ func _ready() -> void:
 	# events
 	# connect fighter damage event to the healthbar	
 	GlobalEvents.FighterDamaged.connect(_update_health_bar)
-	
+	GlobalEvents.GoToNextRound.connect(_reset_health_bar)
 	
 func _update_health_bar (damaged_fighter : Fighter):
 	# check that it is the other fighter
@@ -46,3 +46,24 @@ func _update_health_bar (damaged_fighter : Fighter):
 			health_block.visible = false
 		else:
 			health_block.visible = false
+
+func _reset_health_bar(fighter):
+	print("reset health bars")
+	# get new max health and count how many bars we have now
+	var new_max_health = fighter.max_health
+	var current_block_count = health_container.get_child_count()
+	var desired_block_count = new_max_health
+
+	# check if we need to make more blocks
+	if (desired_block_count - current_block_count) > 0:
+		var new_blocks = desired_block_count - current_block_count
+		
+		# make new blocks
+		for i in range(new_blocks):
+			var duplicate = health_block.duplicate()
+			health_container.add_child(duplicate)
+	
+	# update visibility of health blocks
+	for i in range(health_container.get_child_count()):
+		var health_block = health_container.get_child(i)
+		health_block.visible = true

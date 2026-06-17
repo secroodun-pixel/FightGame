@@ -6,12 +6,13 @@ extends CharacterBody3D
 @export var player_id : int
 @export var opponent : Fighter
 
-var current_health : int = 2
-var max_health : int= 2
+var current_health : int = 1
+var max_health : int = 1
 
 @export var input_handler : InputHandler
 @export var input_buffer : InputBuffer
 @export var state_machine : StateMachine
+@export var game_manager : GameManager
 
 # jump vars
 var forward_direction : int
@@ -23,24 +24,35 @@ var just_entered_jump : bool = true
 var jump_start_blocker : float = 5.0
 
 # allowances
-var can_control  : bool = true
-var can_air_dash : bool = true
-
+var can_control : bool = false
 var is_invulnerable : bool = false
 
+var is_victorious : bool = false
 var is_defeated : bool = false
+
+@onready var has_selected_upgrade : bool = false
 
 func _ready():
 	for child in find_children("*", "HitReceiver", true, false):
 		child.initialize(self)
 	for child in find_children("*", "HitSender", true, false):
 		child.initialize(self)
-		
-	GlobalEvents.GameStateChanged.connect(_on_game_state_changed)
+	
+	_update_facing_direction.call_deferred()
 
 func _physics_process(delta: float) -> void:
-	# prevent movement if we shouldn't be moving
-	if not can_control:
+	# check if we are in playing mode, can control is true if so
+	if not game_manager.current_game_state == game_manager.GameState["PLAYING"]:
+		can_control = false
+	else:
+		can_control = true
+		
+	# prevent control if we cannot control and are not in a state where
+	# the player can do inputs
+	if (not can_control 
+	and not game_manager.current_game_state == game_manager.GameState["UPGRADESELECT"]
+	and not game_manager.current_game_state == game_manager.GameState["ENDOFROUND"]
+	):
 		return
 	
 	# 1. Get the input packet
@@ -80,7 +92,7 @@ func _movement(delta : float):
 func get_custom_gravity() -> float:
 	return character.jump_gravity if move_velocity.y < 0.0 else character.fall_gravity
 	
-func take_damge(hit_receiver : HitReceiver, damage_amount : float):
+func take_damage(hit_receiver : HitReceiver, damage_amount : float):
 	# make sure fighter is not already defeated
 	if is_defeated or is_invulnerable:
 		return
@@ -93,17 +105,18 @@ func take_damge(hit_receiver : HitReceiver, damage_amount : float):
 	if current_health <= 0:
 		current_health = 0
 		defeat()
+		opponent.victory()
+		
 	# get hit if still alive
 	else:
 		state_machine.change_state(hit_receiver.hit_state_name)
 		add_force(forward_direction * -10)
-	
+		
+func victory():
+	is_victorious = true
+	state_machine.change_state("Victorious")
+		
 func defeat():
 		is_defeated = true
 		state_machine.change_state("Defeated")
-		
 		GlobalEvents.FighterDefeated.emit(self)
-
-func _on_game_state_changed(game_state : GameManager.GameState):
-	if game_state == GameManager.GameState.PLAYING:
-		can_control = true

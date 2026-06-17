@@ -3,13 +3,25 @@ extends State
 
 @export var damage : int
 @export var animation_name : String
+
+@export var forward_force : float = 5.0
+
 var duration : float
 var indefinite_duration : float = 10.0
+var attack_length : float
+
+var windup_length : float
+var charge_length : float
+var active_length : float
+var recovery_length : float
+
+var attack_end_length : float
+var early_out_time : float
 
 @export var cooldown : float
 var cooldown_end_time : float
 
-@export var forward_force: float
+var is_charging : bool = false
 
 @export var hit_sender : HitSender
 @export var hit_detect_start_time : float
@@ -30,10 +42,9 @@ func can_enter () -> bool:
 func enter():
 	super.enter()
 	
-	# play animation and add forward movement
+	# play animation
 	animation.set_animation(animation_name)
-	fighter.add_force(forward_force * fighter.forward_direction)
-	# fighter.move_velocity.x += forward_force * fighter.forward_direction
+
 	has_hit = false
 	
 	# consume stamina
@@ -60,4 +71,4 @@ func exit():
 	cooldown_end_time = Time.get_unix_time_from_system() + cooldown
 
 func divekick():
-	fighter.add_force(forward_force * fighter.forward_direction )
+	fighter.add_force(forward_force * fighter.forward_direction)

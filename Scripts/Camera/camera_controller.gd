@@ -30,6 +30,7 @@ func _physics_process(delta: float) -> void:
 		v_offset = randf_range(-intensity, intensity)
 
 func _camera_follow(delta):
+	return
 	# get center between players, then distance
 	var center_pos : Vector3 = target_a.global_position.lerp(target_b.global_position, .5)
 	var distance : float = target_a.global_position.distance_to(target_b.global_position)

@@ -29,9 +29,10 @@ func move_direction() -> int:
 		
 	return dir
 	
-func was_pressed(input_string : String, buffer_window : int = 3) -> bool:
+func was_pressed(input_string : String, buffer_window : int = 1) -> bool:
 	for i in range(min(buffer_window, buffer.size())):
 		if buffer[i].is_pressed(input_string):
 			return true
 	
 	return false
+	

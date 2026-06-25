@@ -48,7 +48,7 @@ func enter():
 	has_hit = false
 	
 	# consume stamina
-	stamina_controller.constume_stamina(_stamina_cost())
+	stamina_controller.consume_stamina(_stamina_cost())
 
 func update(delta : float):
 	super.update(delta)

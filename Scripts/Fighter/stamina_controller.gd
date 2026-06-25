@@ -28,7 +28,7 @@ func _set_stamina(value : float):
 	current_stamina = value
 	StaminaUpdated.emit(current_stamina)
 
-func constume_stamina(amount : float):
+func consume_stamina(amount : float):
 	# decrease stamina and prevent immediate regen
 	_set_stamina(current_stamina - amount)
 	can_regen = false

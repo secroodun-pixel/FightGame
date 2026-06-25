@@ -16,6 +16,8 @@ extends Node
 var states : Dictionary[String, State] = { }
 var current_state : State
 
+var move_speed : float
+
 func _ready():
 	# get states list
 	for child in get_children():
@@ -41,7 +43,7 @@ func change_state(state_name : String):
 		current_state.exit()
 		
 	current_state = states[state_name]
-	print(current_state)
+	#print(current_state)
 	current_state.enter()
 	
 func update(delta: float):

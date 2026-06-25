@@ -1,7 +1,6 @@
 class_name StaminaData
 extends  Resource
 
-
 @export var max_stamina : float = 100.0
 @export var regen_delay : float = 0.5
 @export var regen_rate : float = 10.0

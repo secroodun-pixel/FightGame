@@ -7,7 +7,7 @@ extends CharacterBody3D
 @export var opponent : Fighter
 
 var current_health : int = 1
-var max_health : int = 1
+var base_health : int = 1
 
 @export var input_handler : InputHandler
 @export var input_buffer : InputBuffer
@@ -15,9 +15,8 @@ var max_health : int = 1
 @export var game_manager : GameManager
 
 # jump vars
-var forward_direction : int
 var move_velocity : Vector3
-var horizontal_force : float
+var forward_direction : int
 var drag : float = 0.8
 
 var just_entered_jump : bool = true
@@ -29,8 +28,44 @@ var is_invulnerable : bool = false
 
 var is_victorious : bool = false
 var is_defeated : bool = false
+var is_upgrading : bool = false
+
+# upgrades
+var active_upgrades : Array[UpgradeData] = []
 
 @onready var has_selected_upgrade : bool = false
+
+# variables for fighter stats and upgrades from character data
+#region character variables
+var max_health : int
+var base_move_speed : float
+var move_speed : float
+
+# jump variables
+var horizontal_force : float
+var jump_height : float
+var jump_time_to_peak : float
+var jump_time_to_descent : float
+
+# jump math
+var jump_velocity : float :
+	get :
+		return  ((2.0 * jump_height) / jump_time_to_peak) * 1.0
+var jump_gravity : float :
+	get :
+		return  ((-2.0 * jump_height) / ( jump_time_to_peak * jump_time_to_peak)) * -1.0
+var fall_gravity : float :
+	get :
+		return  ((-2.0 * jump_height) / ( jump_time_to_peak * jump_time_to_descent)) * -1.0
+
+# attack availabities
+var can_charge_heavy : bool
+var can_charge_light : bool
+
+# air movement
+var has_air_influence : bool
+var has_air_hover : bool
+#endregion
 
 func _ready():
 	for child in find_children("*", "HitReceiver", true, false):
@@ -82,10 +117,8 @@ func _update_facing_direction():
 func add_force(force : float):
 	horizontal_force += force
 
-func _movement(delta : float):
-	horizontal_force *= drag
-	
-	velocity.x = move_velocity.x + horizontal_force
+func _movement(delta : float):	
+	velocity.x = move_velocity.x
 	velocity.y = move_velocity.y
 	move_and_slide()
 
@@ -120,3 +153,30 @@ func defeat():
 		is_defeated = true
 		state_machine.change_state("Defeated")
 		GlobalEvents.FighterDefeated.emit(self)
+
+func _calculate_stats():
+	# reset stats, reusing base
+	max_health = character.max_health
+	max_health += game_manager.current_round - 1
+	current_health = max_health
+	
+	move_speed = character.base_move_speed
+	
+
+	# jump variables
+	horizontal_force = character.horizontal_force
+	jump_height = character.jump_height
+	jump_time_to_peak = character.jump_time_to_peak
+	jump_time_to_descent = character.jump_time_to_descent
+
+	# attack availabities
+	can_charge_heavy = character.can_charge_heavy
+	can_charge_light = character.can_charge_light
+	
+	# air movement
+	has_air_influence = character.has_air_influence
+	has_air_hover = character.has_air_hover
+
+	# apply upgrades
+	for upgrade in active_upgrades:
+		upgrade.apply_upgrade(self)

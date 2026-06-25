@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="UpgradeDatabase" format=3 uid="uid://dwip52j5ni4mc"]
+
+[ext_resource type="Script" uid="uid://cfsur4gws6wge" path="res://Scripts/Data/upgrade_data.gd" id="1_urk7w"]
+[ext_resource type="Resource" uid="uid://x6yuvo1pyco3" path="res://Data/UpgradeGroups/BaseStats/increase_health.tres" id="2_kp38r"]
+[ext_resource type="Script" uid="uid://b14wglp5gfhjv" path="res://Scripts/Data/upgrade_database.gd" id="2_s0cei"]
+[ext_resource type="Resource" uid="uid://bqdlewq5b126d" path="res://Data/UpgradeGroups/BaseStats/increase_move_speed.tres" id="3_88kwy"]
+[ext_resource type="Resource" uid="uid://bhqtsnyao3re5" path="res://Data/UpgradeGroups/BaseStats/increase_jump_speed.tres" id="4_1n8ag"]
+
+[resource]
+script = ExtResource("2_s0cei")
+all_upgrades = Array[ExtResource("1_urk7w")]([ExtResource("2_kp38r"), ExtResource("4_1n8ag"), ExtResource("3_88kwy")])
+metadata/_custom_type_script = "uid://b14wglp5gfhjv"

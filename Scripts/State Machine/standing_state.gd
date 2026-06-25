@@ -25,3 +25,4 @@ func update(delta : float):
 	if input_buffer.is_pressed("dash"):
 		state_machine.change_state("Dashing")
 		return
+		

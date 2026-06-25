@@ -29,16 +29,41 @@ enum GameState
 @onready var endgame_text : Label = $CountdownCanvasLayer/EndgameText
 @onready var endgame_timer : Timer = $EndgameTimer
 
+@export var upgrade_database : UpgradeDatabase
 var upgrade_not_selected : bool = true
 
 var current_game_state : GameState
 
 @onready var info_layer = $CanvasLayer/Label
 
+@export_group("Upgrade groups")
+@export var base_stat_upgrades : Array[UpgradeData]
+@export var light_attack_upgrades : Array[UpgradeData]
+@export var heavy_attack_upgrades : Array[UpgradeData]
+@export var air_mobility : Array[UpgradeData]
+
+# vars for storing upgrade groups
+var list_of_upgrade_groups : Dictionary = {}
+var selected_group
+var option_01
+var option_02
+var option_03
+
+var player_1_selection
+var player_2_selection
+
 func _ready() -> void:
 	GlobalEvents.FighterDefeated.connect(_on_fighter_defeated)
 	GlobalEvents.ReadyToSelectUpgrades.connect(_start_selecting_upgrades)
-	GlobalEvents.UpgradeSelected.connect(_go_to_next_round)
+	GlobalEvents.UpgradeSelected.connect(_lock_upgrades)
+	
+	# populate dictionary of upgrade groups
+	list_of_upgrade_groups = {
+	"Base_Stats" : base_stat_upgrades,
+	"Light_Attack":light_attack_upgrades,
+	"Heavy_Attack" :heavy_attack_upgrades
+	}
+	
 	_change_game_state(GameState.LOADING)
 		
 func _change_game_state(game_state : GameState):
@@ -49,15 +74,20 @@ func _change_game_state(game_state : GameState):
 	# loading
 	if game_state == GameState.LOADING:
 		_setup_fighters()
+		
 	# switch to countdown
 	elif game_state == GameState.COUNTDOWN:
 		# play start countdown
 		countdown_anim.play("countdown")
 		countdown_timer.start()		
+		
+	# switch to end of round	
 	elif game_state == GameState.ENDOFROUND:
 		pass
+		
 	elif game_state == GameState.UPGRADESELECT:
 		endgame_text.visible = false
+
 	# switch to game end	
 	elif game_state == GameState.ENDED:
 		# game over timer
@@ -96,17 +126,23 @@ func _setup_fighters():
 	
 	player_1 = left_fighter
 	player_2 = right_fighter
+
+	player_1.character = load("res://Data/golem_data.tres")
+	player_2.character = load("res://Data/character_data.tres")
+	
+	player_1._calculate_stats()
+	player_2._calculate_stats()
 	
 	# change state to countdown
 	_change_game_state(GameState.COUNTDOWN)
 	
 func _spawn_fighter (fighter_scene : PackedScene) -> Fighter:
+	# create fighter and add as child of the scene
 	var fighter : Fighter = fighter_scene.instantiate()
 	get_tree().root.get_node("Main").add_child.call_deferred(fighter)
 	return fighter
 	
 func _on_fighter_defeated(fighter : Fighter):
-	
 	# show player win text
 	endgame_text.visible = true
 	if fighter.player_id == 0:
@@ -122,11 +158,59 @@ func _on_countdown_timer_timeout() -> void:
 func _on_endgame_timer_timeout() -> void:
 	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
 	
+func _get_upgrade_group():
+	# get a random group from the upgrade list
+	selected_group = list_of_upgrade_groups.keys().pick_random()
+
+	option_01 = list_of_upgrade_groups[selected_group][0]
+	option_02 = list_of_upgrade_groups[selected_group][1]
+	option_03 = list_of_upgrade_groups[selected_group][2]
+	
+func _start_selecting_upgrades(fighter):
+	# get the upgrade group
+	_get_upgrade_group()
+	
+	# hide end game text
+	endgame_text.visible = false
+	_change_game_state(GameState.UPGRADESELECT)
+	GlobalEvents.BeginSelectingUpgrades.emit(option_01, option_02, option_03)
+	
+func _go_to_next_round():
+	current_round += 1
+	print("now going into round ", current_round)
+	_reset_positions(player_1)
+	_reset_positions(player_2)
+	print(player_1.max_health, "is player 1 max here")
+	player_1._calculate_stats()
+	player_2._calculate_stats()	
+	
+	GlobalEvents.GoToNextRound.emit(player_1)
+	GlobalEvents.GoToNextRound.emit(player_2)
+
+	# change the game state
+	_change_game_state(GameState.COUNTDOWN)	
+		
+func _lock_upgrades(fighter : Fighter, upgrade : UpgradeData):
+	fighter.active_upgrades.append(upgrade)
+	
+	if fighter == player_1:
+		player_1_selection = upgrade
+		#print(player_1, "chose", player_1_selection)
+	elif fighter == player_2:
+		player_2_selection = upgrade
+		#print(player_2, "chose", player_2_selection)
+	
+	if player_1.has_selected_upgrade and player_2.has_selected_upgrade:
+			_go_to_next_round()
+
 func _reset_positions(fighter):
 		if fighter == player_1:
 			player_1.global_position = fighter_0_spawn.global_position
 		elif fighter == player_2:
 			player_2.global_position = fighter_1_spawn.global_position
+		
+		fighter.move_velocity = Vector3.ZERO
+		fighter.velocity = Vector3.ZERO
 		
 		# set character states to starting states
 		fighter.is_victorious = false
@@ -134,33 +218,3 @@ func _reset_positions(fighter):
 		fighter.has_selected_upgrade = false
 		
 		fighter.state_machine.change_state("Standing")
-
-func _start_selecting_upgrades():
-	_change_game_state(GameState.UPGRADESELECT)
-	endgame_text.visible = false
-
-func _go_to_next_round(fight : Fighter):
-	if player_1.has_selected_upgrade and player_2.has_selected_upgrade:
-		print ("ready for next round")
-		current_round += 1
-	
-		_reset_positions(player_1)
-		_reset_positions(player_2)
-		# increase player healths by 1
-		player_1.max_health += 1
-		player_1.current_health = player_1.max_health
-		player_2.max_health += 1
-		player_2.current_health = player_1.max_health
-		
-		## place fighters back in starting spots
-		#player_1.global_position = fighter_0_spawn.global_position
-		#player_2.global_position = fighter_1_spawn.global_position
-		#
-		#player_1.state_machine.change_state("Standing")
-		#player_2.state_machine.change_state("Standing")
-	
-		GlobalEvents.GoToNextRound.emit(player_1)
-		GlobalEvents.GoToNextRound.emit(player_2)
-		# change the game state
-		_change_game_state(GameState.COUNTDOWN)	
-		

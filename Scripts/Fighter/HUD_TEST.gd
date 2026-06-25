@@ -47,8 +47,10 @@ func _update_health_bar (damaged_fighter : Fighter):
 		else:
 			health_block.visible = false
 
-func _reset_health_bar(fighter):
-	print("reset health bars")
+func _reset_health_bar(fighter_to_reset : Fighter):
+	if fighter_to_reset != fighter:
+		return
+		
 	# get new max health and count how many bars we have now
 	var new_max_health = fighter.max_health
 	var current_block_count = health_container.get_child_count()

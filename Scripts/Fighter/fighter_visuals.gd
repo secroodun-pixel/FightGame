@@ -17,7 +17,7 @@ func _ready():
 		models.append(child)
 		
 	GlobalEvents.FighterDamaged.connect(_hit_flash)
-	
+
 	#_set_oufit(fighter.player_id)
 		
 func _hit_flash(fighter_hit : Fighter):

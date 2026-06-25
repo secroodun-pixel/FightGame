@@ -10,4 +10,4 @@ func update(delta : float):
 	if input_buffer.is_pressed("jump"):
 		state_machine.change_state("Upgrading")
 		fighter.opponent.state_machine.change_state("Upgrading")
-		GlobalEvents.ReadyToSelectUpgrades.emit()
+		GlobalEvents.ReadyToSelectUpgrades.emit(fighter)

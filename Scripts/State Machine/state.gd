@@ -1,6 +1,7 @@
 class_name State
 extends Node
 
+@export var character_data : CharacterData
 var state_machine : StateMachine
 
 var enter_time : float

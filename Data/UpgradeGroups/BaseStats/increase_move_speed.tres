@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="UpgradeJumpSpeed" format=3 uid="uid://bqdlewq5b126d"]
+
+[ext_resource type="Script" uid="uid://8hdbvtgaoohs" path="res://Scripts/Data/Upgrades/BaseStats/increase_jump_speed.gd" id="1_63v7c"]
+
+[resource]
+script = ExtResource("1_63v7c")
+upgrade_name = "Speeeeeed!"
+upgrade_description = "Increases speed"
+metadata/_custom_type_script = "uid://8hdbvtgaoohs"

@@ -31,7 +31,7 @@ func enter():
 	animation.set_animation("Dash")
 	
 	# take stamina
-	stamina_controller.constume_stamina(stamina_data.dash_cost)
+	stamina_controller.consume_stamina(stamina_data.dash_cost)
 
 func update(delta : float):
 	super.update(delta)

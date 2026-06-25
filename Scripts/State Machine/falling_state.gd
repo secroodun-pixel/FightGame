@@ -8,7 +8,6 @@ extends MovementState
 var jump_direction : float = 0.0
 
 func enter():
-	move_speed = 4.0
 	animation.set_animation("JumpIdle")
 	# lock jump direction
 	jump_direction = input_buffer.move_direction()

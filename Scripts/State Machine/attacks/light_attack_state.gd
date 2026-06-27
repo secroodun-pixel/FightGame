@@ -2,12 +2,12 @@ class_name LightAttackState
 extends AttackingState
 
 
-
 func _stamina_cost () -> float:
 	return stamina_data.light_attack_cost
 	
 func enter():
 	super.enter()
-	var attack_length = animation.anim_player.get_animation("Fighter/LightAttack").length
+	attack_length = animation.anim_player.get_animation("Fighter/LightAttack").length
 	duration = attack_length
-	
+	hit_detect_start_time = 0.97
+	hit_detect_end_time = 1.34

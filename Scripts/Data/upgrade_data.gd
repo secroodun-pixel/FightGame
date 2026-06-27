@@ -13,5 +13,5 @@ enum Upgrade_Group{
 	Air_Movement
 }
 
-func apply_upgrade(fighter : Fighter):
+func apply_upgrade(_fighter : Fighter):
 	pass

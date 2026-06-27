@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://b10iqdhjq4wd0"]
+
+[ext_resource type="Script" uid="uid://xhvftxdn47tq" path="res://Scripts/Camera/camera_controller.gd" id="1_t64d6"]
+
+[sub_resource type="Curve" id="Curve_qxrlw"]
+_limits = [4.0, 8.0, 2.0, 8.0]
+_data = [Vector2(2, 4), 0.0, 0.38393992, 0, 0, Vector2(8, 8), 0.7798765, 0.0, 0, 0]
+point_count = 2
+
+[node name="Game_Camera" type="Camera3D" unique_id=402967847]
+fov = 50.0
+script = ExtResource("1_t64d6")
+smoothing = 5.0
+zoom_curve = SubResource("Curve_qxrlw")

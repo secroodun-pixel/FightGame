@@ -4,7 +4,13 @@ extends State
 @export var damage : int
 @export var animation_name : String
 
-@export var forward_force : float = 5.0
+@export var hit_stun : float = 5.0
+@export var knockback_on_hit : float = 5.0
+
+@export var block_stun : float = 2.0
+@export var knockback_on_block : float = 2.0
+
+@export var forward_force : float
 
 var duration : float
 var indefinite_duration : float = 10.0
@@ -22,6 +28,8 @@ var early_out_time : float
 var cooldown_end_time : float
 
 var is_charging : bool = false
+@export var min_charge_time : float
+@export var max_charge_time : float
 
 @export var hit_sender : HitSender
 @export var hit_detect_start_time : float
@@ -30,14 +38,18 @@ var is_charging : bool = false
 var has_hit : bool = false
 var is_divekicking : float
 
-func _stamina_cost () -> float:
-	return 0
+# upgrade allowances
+var move_speed_while_charging : float = 0.5
+
+#func _stamina_cost () -> float:
+	#return 0
 
 func can_enter () -> bool:
 	if Time.get_unix_time_from_system() < cooldown_end_time:
 		return false
 	
-	return stamina_controller.current_stamina >= _stamina_cost()
+	return true
+	#return stamina_controller.current_stamina >= _stamina_cost()
 
 func enter():
 	super.enter()
@@ -45,26 +57,48 @@ func enter():
 	# play animation
 	animation.set_animation(animation_name)
 
+	# set start of attack variables
 	has_hit = false
 	
 	# consume stamina
-	stamina_controller.consume_stamina(_stamina_cost())
+	#stamina_controller.consume_stamina(_stamina_cost())
 
 func update(delta : float):
 	super.update(delta)
 	
 	# active hit frames
-	if local_time >= hit_detect_start_time and local_time <= hit_detect_end_time:
+	if (local_time >= hit_detect_start_time # for being passed active start
+	and local_time <= hit_detect_end_time): # for being before active end
+		# detect a hit
 		var hit : HitReceiver = hit_sender.detect_hit()
-		
-		if hit and has_hit == false:
-			has_hit = true
-			hit.hit(damage)
+		if (hit) and has_hit == false:
+			# do not hit if opponent is blocking
+			if not fighter.opponent.is_blocking:
+				has_hit = true
+				hit.hit(damage, knockback_on_hit)
+			elif fighter.opponent.is_blocking:
+				has_hit = true
+				fighter.opponent.state_machine.change_state("Blockstun")
+	else:
+		pass
 	
 	# exit hit state when attack duration ends
 	if local_time >= duration:
 		state_machine.change_state("Standing")
 		return
+	
+	# allow movement during charge
+	if is_charging and fighter.can_move_while_charging:
+		# set movement direction
+		var move_dir : int = input_buffer.move_direction()
+		
+		# movement
+		fighter.move_velocity.x = (move_dir 
+									* fighter.move_speed
+									* move_speed_while_charging)
+		var blend_pos : float = move_dir * fighter.forward_direction
+	elif not is_charging:
+		fighter.move_velocity.x = 0.0
 
 func exit():
 	super.exit()

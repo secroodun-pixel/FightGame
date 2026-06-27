@@ -1,8 +1,6 @@
 class_name UpgradingState
 extends State
 
-@onready var game_manager : GameManager = $GameManager
-
 var selected_upgrade
 
 var upgrade_01
@@ -25,7 +23,7 @@ func update(delta : float):
 	# make sure an upgrade has not been selected yet
 	if not fighter.has_selected_upgrade:
 		if input_buffer.is_pressed(upgrade_01_button):
-			print(fighter, "left")
+			print(fighter.player_id, " pressed left")
 			# set upgrading states
 			fighter.has_selected_upgrade = true
 			fighter.is_upgrading = false
@@ -33,9 +31,8 @@ func update(delta : float):
 			# set chosen upgrade and emit
 			selected_upgrade = upgrade_01
 			GlobalEvents.UpgradeSelected.emit(fighter, selected_upgrade)
-
-		if input_buffer.is_pressed(upgrade_02_button):
-			print(fighter, "dash")
+		elif input_buffer.is_pressed(upgrade_02_button):
+			print(fighter.player_id, " pressed dash")
 			# set upgrading states
 			fighter.has_selected_upgrade = true
 			fighter.is_upgrading = false
@@ -43,8 +40,8 @@ func update(delta : float):
 			# set chosen upgrade and emit
 			selected_upgrade = upgrade_02
 			GlobalEvents.UpgradeSelected.emit(fighter, selected_upgrade)
-		if input_buffer.is_pressed(upgrade_03_button):
-			print(fighter, "right")
+		elif input_buffer.is_pressed(upgrade_03_button):
+			print(fighter.player_id, " pressed right")
 			# set upgrading states
 			fighter.has_selected_upgrade = true
 			fighter.is_upgrading = false

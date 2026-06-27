@@ -3,8 +3,8 @@ extends CharacterBody3D
 
 @export var character : CharacterData
 
-@export var player_id : int
-@export var opponent : Fighter
+@export var player_id : int ## whether player is 0 or 1
+@export var opponent : Fighter ## player's opponent
 
 var current_health : int = 1
 var base_health : int = 1
@@ -20,15 +20,16 @@ var forward_direction : int
 var drag : float = 0.8
 
 var just_entered_jump : bool = true
-var jump_start_blocker : float = 5.0
 
-# allowances
-var can_control : bool = false
-var is_invulnerable : bool = false
-
+# end round vars
 var is_victorious : bool = false
 var is_defeated : bool = false
 var is_upgrading : bool = false
+
+# basic allowances
+var can_control : bool = false 
+var is_invulnerable : bool = false
+var is_blocking : bool = false
 
 # upgrades
 var active_upgrades : Array[UpgradeData] = []
@@ -36,13 +37,13 @@ var active_upgrades : Array[UpgradeData] = []
 @onready var has_selected_upgrade : bool = false
 
 # variables for fighter stats and upgrades from character data
-#region character variables
+#region base character variables
 var max_health : int
 var base_move_speed : float
 var move_speed : float
 
 # jump variables
-var horizontal_force : float
+var horizontal_force : float = 0.0 # used in jumps
 var jump_height : float
 var jump_time_to_peak : float
 var jump_time_to_descent : float
@@ -58,14 +59,18 @@ var fall_gravity : float :
 	get :
 		return  ((-2.0 * jump_height) / ( jump_time_to_peak * jump_time_to_descent)) * -1.0
 
+#endregion
+
 # attack availabities
-var can_charge_heavy : bool
-var can_charge_light : bool
+var can_charge_heavy : bool ## if heavy attack charge is unlocked
+var can_charge_light : bool ## if light attack charge is unlocked
+var can_move_while_charging : bool = true # if charge movement is unlocked
 
 # air movement
-var has_air_influence : bool
-var has_air_hover : bool
-#endregion
+var has_air_influence : bool ## if air influence is unlocked
+var has_air_hover : bool = true ## if hover is unlocked
+
+var can_hover : bool = true ## if player is currently able to start hovering
 
 func _ready():
 	for child in find_children("*", "HitReceiver", true, false):
@@ -114,12 +119,11 @@ func _update_facing_direction():
 		forward_direction = -1
 		rotation_degrees.y = -90
 
-func add_force(force : float):
-	horizontal_force += force
-
-func _movement(delta : float):	
+func _movement(_delta : float):	
 	velocity.x = move_velocity.x
 	velocity.y = move_velocity.y
+	
+	velocity.x
 	move_and_slide()
 
 func get_custom_gravity() -> float:
@@ -143,8 +147,7 @@ func take_damage(hit_receiver : HitReceiver, damage_amount : float):
 	# get hit if still alive
 	else:
 		state_machine.change_state(hit_receiver.hit_state_name)
-		add_force(forward_direction * -10)
-		
+
 func victory():
 	is_victorious = true
 	state_machine.change_state("Victorious")
@@ -156,13 +159,12 @@ func defeat():
 
 func _calculate_stats():
 	# reset stats, reusing base
-	max_health = character.max_health
+	max_health = character.max_health + 1
 	max_health += game_manager.current_round - 1
-	current_health = max_health
 	
+	#move_speed = character.base_move_speed
 	move_speed = character.base_move_speed
 	
-
 	# jump variables
 	horizontal_force = character.horizontal_force
 	jump_height = character.jump_height
@@ -180,3 +182,7 @@ func _calculate_stats():
 	# apply upgrades
 	for upgrade in active_upgrades:
 		upgrade.apply_upgrade(self)
+		print(upgrade, " for ", player_id)
+
+	# set current health after updating
+	current_health = max_health

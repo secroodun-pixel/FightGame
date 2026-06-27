@@ -13,6 +13,7 @@ enum GameState
 
 @export var player_fighter_scene : PackedScene
 @export var ai_fighter_scene : PackedScene
+@export var camera_scene : PackedScene
 
 @onready var fighter_0_spawn : Node3D = $Fighter0SPawn
 @onready var fighter_1_spawn : Node3D = $Fighter1SPawn
@@ -60,8 +61,8 @@ func _ready() -> void:
 	# populate dictionary of upgrade groups
 	list_of_upgrade_groups = {
 	"Base_Stats" : base_stat_upgrades,
-	"Light_Attack":light_attack_upgrades,
-	"Heavy_Attack" :heavy_attack_upgrades
+	"Light_Attack": light_attack_upgrades,
+	"Heavy_Attack" : heavy_attack_upgrades
 	}
 	
 	_change_game_state(GameState.LOADING)
@@ -133,6 +134,8 @@ func _setup_fighters():
 	player_1._calculate_stats()
 	player_2._calculate_stats()
 	
+	_setup_camera(player_1, player_2)
+	
 	# change state to countdown
 	_change_game_state(GameState.COUNTDOWN)
 	
@@ -142,6 +145,19 @@ func _spawn_fighter (fighter_scene : PackedScene) -> Fighter:
 	get_tree().root.get_node("Main").add_child.call_deferred(fighter)
 	return fighter
 	
+func _setup_camera(player_1 : Fighter, player_2 : Fighter):	
+	# plug fighters into camera
+	var camera : Camera3D = _spawn_camera(camera_scene)
+	# plug in fighters
+	camera.target_a = player_1
+	camera.target_b = player_2
+
+func _spawn_camera (camera_scene : PackedScene) -> Camera3D:
+	# create camera and add as child of the scene
+	var camera : Camera3D = camera_scene.instantiate()
+	get_tree().root.get_node("Main").add_child(camera)
+	return camera
+
 func _on_fighter_defeated(fighter : Fighter):
 	# show player win text
 	endgame_text.visible = true
@@ -166,21 +182,24 @@ func _get_upgrade_group():
 	option_02 = list_of_upgrade_groups[selected_group][1]
 	option_03 = list_of_upgrade_groups[selected_group][2]
 	
-func _start_selecting_upgrades(fighter):
+func _start_selecting_upgrades(_fighter):
 	# get the upgrade group
 	_get_upgrade_group()
 	
 	# hide end game text
 	endgame_text.visible = false
-	_change_game_state(GameState.UPGRADESELECT)
+	
+	# begin selecting upgrades
 	GlobalEvents.BeginSelectingUpgrades.emit(option_01, option_02, option_03)
+	_change_game_state(GameState.UPGRADESELECT)
 	
 func _go_to_next_round():
 	current_round += 1
 	print("now going into round ", current_round)
 	_reset_positions(player_1)
 	_reset_positions(player_2)
-	print(player_1.max_health, "is player 1 max here")
+
+	# reset and recalculate stats for next round
 	player_1._calculate_stats()
 	player_2._calculate_stats()	
 	

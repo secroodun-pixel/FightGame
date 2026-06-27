@@ -43,7 +43,7 @@ func change_state(state_name : String):
 		current_state.exit()
 		
 	current_state = states[state_name]
-	#print(current_state)
+	print(current_state)
 	current_state.enter()
 	
 func update(delta: float):

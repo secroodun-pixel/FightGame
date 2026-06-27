@@ -2,11 +2,15 @@ class_name BlockingState
 extends State
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+func enter():
+	fighter.is_blocking = true
+	animation.set_animation("Standing")
+	print("blocking!")
+		
+func update(_delta : float):
+	if input_buffer.just_released("block"):
+		print("not blocking")
+		state_machine.change_state("Standing")
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func exit():
+	fighter.is_blocking = false

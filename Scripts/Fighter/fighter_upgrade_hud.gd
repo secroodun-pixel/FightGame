@@ -4,8 +4,6 @@ extends Panel
 @onready var game_manager : GameManager
 @export var upgrade_data : UpgradeData 
 
-@onready var upgrades_menu : Panel = $CanvasLayer/Upgrades
-
 @onready var player_0_pos : Control = $"../Player0UpgradePos"
 @onready var player_1_pos : Control = $"../Player1UpgradePos"
 
@@ -47,7 +45,18 @@ func _hide_upgrades(fighter : Fighter):
 func _show_upgrade_choices(option_1 : UpgradeData, 
 							option_2 : UpgradeData, 
 							option_3 : UpgradeData):
-	# label texts
-	label_01.text = option_1.upgrade_name
-	label_02.text = option_2.upgrade_name
-	label_03.text = option_3.upgrade_name
+								
+	# set variables for what to display
+	var option_1_name = option_1.upgrade_name
+	var option_1_description = option_1.upgrade_description
+	
+	var option_2_name = option_2.upgrade_name
+	var option_2_description = option_2.upgrade_description
+	
+	var option_3_name = option_3.upgrade_name
+	var option_3_description = option_3.upgrade_description
+	
+	# label textsd
+	label_01.text = option_1_name + "\n" + option_1_description
+	label_02.text = option_2_name + "\n" + option_2_description
+	label_03.text = option_3_name + "\n" + option_3_description

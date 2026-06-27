@@ -21,7 +21,6 @@ func _ready() -> void:
 		scale.x = -1
 	
 	# health bar
-	#health_bar.max_value = fighter.character.max_health
 	_update_health_bar(fighter)
 	
 	# stamina

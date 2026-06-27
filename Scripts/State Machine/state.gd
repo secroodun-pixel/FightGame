@@ -31,7 +31,7 @@ func can_enter() -> bool:
 func enter():
 	enter_time = Time.get_unix_time_from_system()
 	
-func update(delta : float):
+func update(_delta : float):
 	var time : float = Time.get_unix_time_from_system()
 	local_time = time - enter_time
 	

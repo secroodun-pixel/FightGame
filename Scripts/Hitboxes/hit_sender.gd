@@ -10,6 +10,7 @@ func detect_hit() -> HitReceiver:
 	# get which areas overlap
 	var areas : Array[Area3D] = get_overlapping_areas()
 	
+	# check that we hit a hit reciever
 	for area in areas:
 		if area is not HitReceiver:
 			continue

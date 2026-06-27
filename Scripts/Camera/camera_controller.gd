@@ -4,6 +4,8 @@ extends Camera3D
 @export var target_a : Node3D
 @export var target_b : Node3D
 
+@onready var base_height : float = 1.5
+
 # camera smoothing
 @export var smoothing : float
 @export var zoom_curve : Curve
@@ -16,8 +18,9 @@ var intensity : float = 0.0
 
 func _ready() -> void:
 	GlobalEvents.FighterDamaged.connect(_on_fighter_damaged)
+	position.y = base_height
 
-func _on_fighter_damaged(fighter : Fighter):
+func _on_fighter_damaged():
 	intensity = shake_amount
 
 func _physics_process(delta: float) -> void:
@@ -30,11 +33,11 @@ func _physics_process(delta: float) -> void:
 		v_offset = randf_range(-intensity, intensity)
 
 func _camera_follow(delta):
-	return
 	# get center between players, then distance
 	var center_pos : Vector3 = target_a.global_position.lerp(target_b.global_position, .5)
 	var distance : float = target_a.global_position.distance_to(target_b.global_position)
 	
-	# move camera
+	# move camera left/right, up/down, in/out
 	position.x = lerp(position.x,center_pos.x, smoothing * delta)
+	position.y = lerp(position.y,center_pos.y + base_height, smoothing * delta)
 	position.z = zoom_curve.sample(distance)

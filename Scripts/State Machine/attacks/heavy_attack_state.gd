@@ -5,13 +5,14 @@ var base_speed : float = 1
 var charge_speed : float = 0.3
 
 var charge_time : float = 0.0
-var max_charge_time : float = 2.5
+
 
 func _stamina_cost () -> float:
 	return stamina_data.heavy_attack_cost
 
 func enter():
 	super.enter()
+	max_charge_time  = 2.5
 	is_charging = true
 	
 	# get durations of separate attack animations
@@ -20,11 +21,16 @@ func enter():
 	active_length = animation.anim_player.get_animation("Fighter/Kero_HeavyAttackActive").length
 	recovery_length = animation.anim_player.get_animation("Fighter/Kero_HeavyAttackWindup").length
 	
-	duration = attack_length + charge_length + active_length + recovery_length
+	duration = (attack_length + 
+				charge_length + 
+				active_length + 
+				recovery_length -
+				0.5)
 	attack_end_length = active_length + recovery_length
 	
 	early_out_time = windup_length + active_length + recovery_length
 	charge_time = 0.0
+
 
 func update(delta : float):
 	super.update(delta)
@@ -44,8 +50,11 @@ func update(delta : float):
 				early_out_time = charge_time + attack_end_length
 				finish_charging()
 		# finish the attack if not charging
-		else:
+		elif local_time >= min_charge_time:
 			finish_charging()
+	# finish the attack if not charging
+	#elif local_time >= min_charge_time:
+		#finish_charging()
 
 func finish_charging():
 	is_charging = false

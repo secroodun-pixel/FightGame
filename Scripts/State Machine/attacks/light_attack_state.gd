@@ -7,7 +7,7 @@ func _stamina_cost () -> float:
 	
 func enter():
 	super.enter()
-	attack_length = animation.anim_player.get_animation("Fighter/LightAttack").length
+	attack_length = animation.anim_player.get_animation("LightAttack").length
 	duration = attack_length
 	hit_detect_start_time = 0.97
 	hit_detect_end_time = 1.34

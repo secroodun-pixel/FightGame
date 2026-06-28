@@ -16,10 +16,10 @@ func enter():
 	is_charging = true
 	
 	# get durations of separate attack animations
-	windup_length = animation.anim_player.get_animation("Fighter/Kero_HeavyAttackWindup").length
-	charge_length = animation.anim_player.get_animation("Fighter/Kero_HeavyAttackCharge").length
-	active_length = animation.anim_player.get_animation("Fighter/Kero_HeavyAttackActive").length
-	recovery_length = animation.anim_player.get_animation("Fighter/Kero_HeavyAttackWindup").length
+	windup_length = animation.anim_player.get_animation("HeavyAttackWindup").length
+	charge_length = animation.anim_player.get_animation("HeavyAttackCharge").length
+	active_length = animation.anim_player.get_animation("HeavyAttackActive").length
+	recovery_length = animation.anim_player.get_animation("HeavyAttackWindup").length
 	
 	duration = (attack_length + 
 				charge_length + 

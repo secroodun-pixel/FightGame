@@ -67,5 +67,5 @@ func _reset_health_bar(fighter_to_reset : Fighter):
 	
 	# update visibility of health blocks
 	for i in range(health_container.get_child_count()):
-		var health_block = health_container.get_child(i)
-		health_block.visible = true
+		var visible_health_block = health_container.get_child(i)
+		visible_health_block.visible = true

@@ -6,6 +6,8 @@ extends CharacterBody3D
 @export var player_id : int ## whether player is 0 or 1
 @export var opponent : Fighter ## player's opponent
 
+@onready var collision_capsule : CollisionShape3D = $Collision_Capsule
+
 var current_health : int = 1
 var base_health : int = 1
 
@@ -105,12 +107,13 @@ func _physics_process(delta: float) -> void:
 	state_machine.update(delta)
 	
 	# 4. Update facing direction
-	if is_on_floor():
+	if (state_machine.current_state == state_machine.states["Standing"]
+		or state_machine.current_state == state_machine.states["Hovering"]):
 		_update_facing_direction()
-	
+		
 	# 5. Process movement
 	_movement(delta)
-
+	
 func _update_facing_direction():
 	if global_position.x < opponent.global_position.x:
 		forward_direction = 1
@@ -124,8 +127,9 @@ func _movement(_delta : float):
 	velocity.x = move_velocity.x
 	velocity.y = move_velocity.y
 	
-	move_and_slide()
+	_root_motion(_delta)
 	
+	move_and_slide()
 
 func get_custom_gravity() -> float:
 	return character.jump_gravity if move_velocity.y < 0.0 else character.fall_gravity
@@ -194,8 +198,7 @@ func _root_motion(_delta):
 	# get root joint info
 	var root_position : Vector3 = anim_tree.get_root_motion_position()
 
-	velocity.x = (root_position.z / _delta) * forward_direction
+	velocity.x += (root_position.z / _delta) * forward_direction
 	#var root_rotation : Quaternion = global_transform.basis.get_rotation_quaternion()
 	#var root_velocity : Vector3 = (root_rotation * root_position) / _delta
-	
 	

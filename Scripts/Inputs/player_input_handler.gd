@@ -17,5 +17,6 @@ func get_input_packet() -> InputPacket:
 	packet.inputs["light_attack"] = Input.is_action_pressed(_full_action_name("light_attack"))
 	packet.inputs["heavy_attack"] = Input.is_action_pressed(_full_action_name("heavy_attack"))
 	packet.inputs["block"] = Input.is_action_pressed(_full_action_name("block"))
-	
+	packet.inputs["crouch"] = Input.is_action_pressed(_full_action_name("crouch"))
+		
 	return packet

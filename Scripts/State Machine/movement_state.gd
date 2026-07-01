@@ -3,6 +3,10 @@ extends State
 
 @export var blend_position_parameter : String
 
+func enter():
+	animation.set_animation("Standing")
+	print("oioioiow")
+
 func update(delta : float):
 	super.update(delta)
 	

@@ -36,7 +36,11 @@ var is_charging : bool = false
 @export var hit_detect_end_time : float
 
 var has_hit : bool = false
+
+# divekick vars
 var is_divekicking : float
+@export var vertical_divekick : float
+@export var horizontal_divekick : float
 
 # upgrade allowances
 var move_speed_while_charging : float = 0.5
@@ -45,9 +49,9 @@ var move_speed_while_charging : float = 0.5
 	#return 0
 
 func can_enter () -> bool:
-	if Time.get_unix_time_from_system() < cooldown_end_time:
-		return false
-	
+	#if Time.get_unix_time_from_system() < cooldown_end_time:
+		#return false
+	#
 	return true
 	#return stamina_controller.current_stamina >= _stamina_cost()
 
@@ -97,12 +101,22 @@ func update(delta : float):
 									* fighter.move_speed
 									* move_speed_while_charging)
 		var blend_pos : float = move_dir * fighter.forward_direction
-	elif not is_charging:
+	elif not is_charging and fighter.is_on_floor():
 		fighter.move_velocity.x = 0.0
 
+	# apply jump gravity
+	if not fighter.is_on_floor():
+		apply_jump_gravity(delta)
+		
 func exit():
 	super.exit()
 	cooldown_end_time = Time.get_unix_time_from_system() + cooldown
+
+func apply_jump_gravity(delta):
+	# gravity
+	var gravity = (fighter.jump_gravity if fighter.move_velocity.y > 0 
+				else fighter.fall_gravity)
+	fighter.move_velocity.y -= gravity * delta
 
 func divekick():
 	fighter.add_force(forward_force * fighter.forward_direction)

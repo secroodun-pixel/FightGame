@@ -1,82 +1,148 @@
 [gd_scene format=3 uid="uid://v1xd37pbsw8f"]
 
 [ext_resource type="PackedScene" uid="uid://dxmkxspv10em0" path="res://Scenes/Fighters/Fighter.tscn" id="1_jwabf"]
-[ext_resource type="Animation" uid="uid://bvncomta3blmw" path="res://Animations/BaseFighterAnims/Attacks/HeavyAttack.tres" id="2_6j04c"]
-[ext_resource type="PackedScene" uid="uid://nm8d0gklrj87" path="res://Models/TESTMODELS/BaseFighter_RIG.glb" id="2_br165"]
-[ext_resource type="Animation" uid="uid://cg4arngiu80ea" path="res://Animations/BaseFighterAnims/Idle.tres" id="3_br165"]
-[ext_resource type="Animation" uid="uid://c65dc8obl4cqy" path="res://Animations/BaseFighterAnims/Hover.tres" id="3_m8cwr"]
-[ext_resource type="Animation" uid="uid://t2xbwgtbukoh" path="res://Animations/BaseFighterAnims/Jump.tres" id="5_kt833"]
-[ext_resource type="Animation" uid="uid://cwggcum81qlk7" path="res://Animations/BaseFighterAnims/Attacks/LightAttack.tres" id="6_05tog"]
+[ext_resource type="PackedScene" uid="uid://d0kv2mcnk2nyr" path="res://Models/TESTMODELS/BaseFighter_RIG.glb" id="2_br165"]
+[ext_resource type="Animation" uid="uid://c3oi438at1v23" path="res://Animations/BaseFighterAnims/Attacks/HeavyAttackActive.tres" id="3_br165"]
+[ext_resource type="Script" uid="uid://xu07h40bp65t" path="res://Scripts/Hitboxes/hit_sender.gd" id="3_m8cwr"]
+[ext_resource type="Animation" uid="uid://c7vx3srgppj6i" path="res://Animations/BaseFighterAnims/Attacks/HeavyAttackCharge.tres" id="4_0p14t"]
+[ext_resource type="Script" uid="uid://c52qtphg0yuyv" path="res://Scripts/Hitboxes/hit_receiver.gd" id="4_kt833"]
+[ext_resource type="Animation" uid="uid://dmxu1v6pcpy0a" path="res://Animations/BaseFighterAnims/Attacks/HeavyAttackRecovery.tres" id="5_6j04c"]
+[ext_resource type="Animation" uid="uid://jbt8paqc7xc3" path="res://Animations/BaseFighterAnims/Block.tres" id="5_qdljr"]
+[ext_resource type="Animation" uid="uid://csdjyddye3hep" path="res://Animations/BaseFighterAnims/Attacks/LightAttack.tres" id="6_05tog"]
+[ext_resource type="Animation" uid="uid://cm1x0c0pwfts4" path="res://Animations/BaseFighterAnims/Attacks/HeavyAttackWindup.tres" id="6_m8cwr"]
+[ext_resource type="Animation" uid="uid://cg4arngiu80ea" path="res://Animations/BaseFighterAnims/Idle.tres" id="7_kt833"]
 [ext_resource type="Animation" uid="uid://dtvmn7pnnupnt" path="res://Animations/BaseFighterAnims/Walk.tres" id="7_s550a"]
+[ext_resource type="Animation" uid="uid://c65dc8obl4cqy" path="res://Animations/BaseFighterAnims/Hover.tres" id="10_h3ji4"]
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_qdljr"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_05tog"]
+radius = 0.12660941
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s550a"]
+size = Vector3(1, 1.7822266, 0.5631256)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qdljr"]
+radius = 0.21958992
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_58tb4"]
 _data = {
-&"HeavyAttack": ExtResource("2_6j04c"),
-&"HeavyAttackActive": ExtResource("2_6j04c"),
-&"HeavyAttackCharge": ExtResource("2_6j04c"),
-&"HeavyAttackRecovery": ExtResource("2_6j04c"),
-&"HeavyAttackWindup": ExtResource("2_6j04c"),
-&"Hover": ExtResource("3_m8cwr"),
-&"Idle": ExtResource("3_br165"),
-&"Jump": ExtResource("5_kt833"),
+&"AirLightAttack": ExtResource("6_05tog"),
+&"Block": ExtResource("5_qdljr"),
+&"HeavyAttackActive": ExtResource("3_br165"),
+&"HeavyAttackCharge": ExtResource("4_0p14t"),
+&"HeavyAttackRecovery": ExtResource("5_6j04c"),
+&"HeavyAttackWindup": ExtResource("6_m8cwr"),
+&"Hover": ExtResource("10_h3ji4"),
+&"Idle": ExtResource("7_kt833"),
 &"LightAttack": ExtResource("6_05tog"),
 &"Walk": ExtResource("7_s550a")
 }
 
 [node name="Fighter" unique_id=202072913 instance=ExtResource("1_jwabf")]
 
-[node name="BaseFighter_RIG" parent="." index="7" unique_id=1299749070 instance=ExtResource("2_br165")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16898906, 0, -0.5014632)
+[node name="AirLightAttack" parent="StateMachine" parent_id_path=PackedInt32Array(1987695335) index="1" unique_id=1160104217 node_paths=PackedStringArray("hit_sender")]
+animation_name = "AirLightAttack"
+hit_sender = NodePath("../../BaseFighter_RIG/rig_deform/Skeleton3D/BoneAttachment3D/HitSender")
 
-[node name="Skeleton3D" parent="BaseFighter_RIG/Game_Rig" parent_id_path=PackedInt32Array(1299749070, 1237568039) index="0" unique_id=2086748585]
-bones/0/position = Vector3(0, 0.75127727, -0.042408273)
-bones/0/rotation = Quaternion(0.31574443, 0, 0, 0.9488443)
-bones/2/rotation = Quaternion(-0.060164552, -0.0002819568, -0.011105814, 0.99812675)
-bones/3/rotation = Quaternion(0.018962251, 0.0017192534, -0.011097138, 0.99975723)
-bones/4/rotation = Quaternion(0.1676036, 0.0022750606, 0.022168063, 0.98560256)
-bones/6/rotation = Quaternion(-0.09371195, 8.16076e-20, -3.9708144e-19, 0.9955994)
-bones/7/rotation = Quaternion(-0.5076842, -0.31403157, -0.47553828, 0.64614576)
-bones/8/rotation = Quaternion(0.047663398, 0.56899476, -0.7101011, 0.41198263)
-bones/9/rotation = Quaternion(4.7581292e-08, -0.12460642, 2.5704257e-08, 0.99220634)
-bones/10/rotation = Quaternion(0.73079497, -0.124606445, 0.13867764, 0.65664333)
-bones/11/rotation = Quaternion(2.3408384e-07, -0.0034944592, -4.2933255e-08, 0.9999939)
-bones/12/rotation = Quaternion(0.19195625, -0.0040926617, -0.032796428, 0.9808468)
-bones/14/rotation = Quaternion(0.13899198, -0.6343942, 0.5878505, 0.4823454)
-bones/15/rotation = Quaternion(-5.1678754e-08, 0.101614065, -3.0377214e-07, 0.9948239)
-bones/16/rotation = Quaternion(0.7642886, 0.10161419, -0.124347575, 0.62455994)
-bones/17/rotation = Quaternion(-5.8944828e-08, 0.01594116, -3.2811887e-08, 0.99987304)
-bones/18/rotation = Quaternion(0.18208544, 0.016539862, 0.021051643, 0.98291826)
-bones/19/rotation = Quaternion(1.3248922e-08, 0.69693637, 0.71713305, -2.340625e-08)
-bones/20/rotation = Quaternion(1.3248922e-08, 0.69693637, 0.71713305, -2.340625e-08)
-bones/22/rotation = Quaternion(-0.49915025, -0.6447371, 0.57752424, -0.040360138)
-bones/23/position = Vector3(1.4706676e-08, 0.26034287, -3.6276525e-08)
-bones/23/rotation = Quaternion(-2.4478679e-08, 0.013118482, 2.2870422e-08, 0.999914)
-bones/24/position = Vector3(-2.1862231e-08, 0.26034266, -4.2844317e-08)
-bones/24/rotation = Quaternion(0.61656964, 0.012797934, -0.009999403, 0.78713286)
-bones/25/position = Vector3(-5.4526392e-09, 0.21912943, -2.4800206e-08)
-bones/25/rotation = Quaternion(-1.9250088e-08, -0.25338736, 5.4556937e-09, 0.9673649)
-bones/26/position = Vector3(-8.9279535e-09, 0.21912934, 5.7124645e-08)
-bones/26/rotation = Quaternion(-0.7260917, -0.25379837, 0.27479365, 0.5769452)
-bones/27/position = Vector3(-1.875356e-08, 0.1292404, -1.7271534e-08)
-bones/27/rotation = Quaternion(-0.0001376804, 0.96126336, -0.27563095, -0.0005695438)
-bones/29/rotation = Quaternion(0.44565353, -0.7954692, 0.34641004, 0.22050318)
-bones/30/position = Vector3(1.00224415e-08, 0.26048002, 7.8240605e-09)
-bones/30/rotation = Quaternion(5.656376e-09, -0.014335766, 5.5235847e-11, 0.9998973)
-bones/31/position = Vector3(8.386239e-09, 0.26048, 4.4678295e-08)
-bones/31/rotation = Quaternion(0.60236067, -0.013967095, 0.0104868235, 0.798033)
-bones/32/position = Vector3(-2.0112209e-08, 0.21927653, 3.9374324e-08)
-bones/32/rotation = Quaternion(-9.533414e-08, 0.11121123, -6.9274524e-09, 0.9937968)
-bones/33/position = Vector3(5.162601e-09, 0.21927655, 2.5087454e-09)
-bones/33/rotation = Quaternion(-0.59889257, 0.1108675, -0.08017497, 0.7890553)
-bones/34/position = Vector3(-3.367719e-08, 0.12923394, 5.2080877e-09)
-bones/34/rotation = Quaternion(-0.00016399182, 0.9612592, -0.27564555, -0.0005620412)
+[node name="HeavyAttack" parent="StateMachine" parent_id_path=PackedInt32Array(1987695335) index="7" unique_id=1900766403 node_paths=PackedStringArray("hit_sender")]
+hit_sender = NodePath("../../BaseFighter_RIG/rig_deform/Skeleton3D/BoneAttachment3D/HitSender")
+
+[node name="LightAttack" parent="StateMachine" parent_id_path=PackedInt32Array(1987695335) index="11" unique_id=503519583 node_paths=PackedStringArray("hit_sender")]
+hit_sender = NodePath("../../BaseFighter_RIG/rig_deform/Skeleton3D/BoneAttachment3D3/HitSender")
+
+[node name="BaseFighter_RIG" parent="." index="7" unique_id=186108597 instance=ExtResource("2_br165")]
+
+[node name="Skeleton3D" parent="BaseFighter_RIG/rig_deform" parent_id_path=PackedInt32Array(186108597, 1213930253) index="0" unique_id=519334339]
+bones/0/position = Vector3(-2.5136826e-18, -0.01132062, -0.0075470796)
+bones/1/position = Vector3(-0.08855404, 0.8346894, -0.09119243)
+bones/1/rotation = Quaternion(0.25976005, 0.23355177, -0.010631045, 0.9369446)
+bones/3/rotation = Quaternion(-0.077434786, 0.027399179, -0.0021288074, 0.9966186)
+bones/4/rotation = Quaternion(0.0016264027, 0.027481787, -4.48141e-05, 0.99962103)
+bones/5/rotation = Quaternion(0.14769948, -0.04850144, -0.028037887, 0.98744434)
+bones/7/rotation = Quaternion(-0.2087109, -4.370094e-08, 5.8275223e-08, 0.97797745)
+bones/8/rotation = Quaternion(-0.6276081, -0.2904503, -0.32695517, 0.64408624)
+bones/9/rotation = Quaternion(-0.10860338, 0.7003407, -0.5517822, 0.43961883)
+bones/10/rotation = Quaternion(-2.4162363e-08, -0.024393681, 1.31508395e-08, 0.99970245)
+bones/11/rotation = Quaternion(0.81522167, -0.024403745, 0.034416474, 0.5776102)
+bones/12/rotation = Quaternion(-4.1183947e-07, -0.06015284, -2.4235507e-07, 0.9981893)
+bones/13/rotation = Quaternion(0.28522453, -0.060741697, -0.086240515, 0.9526385)
+bones/14/rotation = Quaternion(-0.5604268, 0.4310095, 0.48377725, 0.5158606)
+bones/15/position = Vector3(-0.007791679, 0.20079096, -0.02038493)
+bones/15/rotation = Quaternion(-0.124343395, -0.73170614, 0.4939012, 0.45299727)
+bones/16/rotation = Quaternion(-9.982337e-09, 0.15809202, 8.069669e-08, 0.9874245)
+bones/17/rotation = Quaternion(0.8195935, 0.15807773, -0.2699561, 0.48000175)
+bones/18/position = Vector3(-3.7171986e-08, 0.13141775, 8.943585e-08)
+bones/18/rotation = Quaternion(-4.1953186e-07, 0.08468036, 1.065408e-07, 0.9964083)
+bones/19/position = Vector3(-8.1970455e-08, 0.13141772, 1.0348971e-08)
+bones/19/rotation = Quaternion(0.40784946, 0.08525171, 0.15572286, 0.8956234)
+bones/20/rotation = Quaternion(-6.313309e-08, 0.6969362, 0.71713316, -4.1850754e-08)
+bones/21/rotation = Quaternion(-6.313309e-08, 0.6969362, 0.71713316, -4.1850754e-08)
+bones/23/rotation = Quaternion(-0.5104775, -0.58816886, 0.62725097, -0.0051491573)
+bones/24/position = Vector3(-3.6678112e-09, 0.26228753, -3.4884824e-08)
+bones/24/rotation = Quaternion(-6.1505254e-08, 0.00799921, -1.6103057e-08, 0.999968)
+bones/25/position = Vector3(4.5878066e-09, 0.2622876, 1.5982371e-08)
+bones/25/rotation = Quaternion(0.4779709, 0.008106396, -0.0044232393, 0.87832713)
+bones/26/position = Vector3(7.4099042e-09, 0.22115095, -5.2762744e-08)
+bones/26/rotation = Quaternion(-4.209802e-09, -0.12968124, -2.681803e-08, 0.9915558)
+bones/27/position = Vector3(-5.540662e-08, 0.22115086, 1.3871045e-08)
+bones/27/rotation = Quaternion(-0.7235749, -0.1302548, 0.18113276, 0.65319526)
+bones/28/rotation = Quaternion(-0.00014449084, 0.9612628, -0.27563316, -0.0005676113)
+bones/30/rotation = Quaternion(0.3058996, -0.83105546, 0.46448573, -0.005053128)
+bones/31/position = Vector3(-1.6796017e-08, 0.28014508, -2.8746852e-08)
+bones/31/rotation = Quaternion(3.4259884e-08, -0.075621836, 1.16351494e-07, 0.9971366)
+bones/32/position = Vector3(7.515697e-09, 0.2801451, 7.8145284e-08)
+bones/32/rotation = Quaternion(0.5131833, 0.035714317, -0.34365073, 0.7856663)
+bones/33/position = Vector3(-1.4910182e-08, 0.24218418, -6.706352e-08)
+bones/33/rotation = Quaternion(2.824184e-08, 0.13927029, -1.8730483e-07, 0.99025446)
+bones/34/position = Vector3(-4.9685905e-08, 0.24218404, 3.7003513e-08)
+bones/34/rotation = Quaternion(-0.65709186, 0.13551807, 0.074446574, 0.7377824)
+bones/35/position = Vector3(2.974246e-08, 0.12923586, 2.1426342e-08)
+bones/35/rotation = Quaternion(-0.00016536588, 0.9612587, -0.27564707, -0.00056163134)
+
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="BaseFighter_RIG/rig_deform/Skeleton3D" index="1" unique_id=351147526]
+transform = Transform3D(-0.7824659, 0.3766725, -0.4958476, 0.32630464, 0.92623806, 0.18869984, 0.5303511, -0.014146358, -0.84765923, -0.19956885, 1.17564, 0.5011437)
+bone_name = "DEF-hand.R"
+bone_idx = 19
+
+[node name="HitSender" type="Area3D" parent="BaseFighter_RIG/rig_deform/Skeleton3D/BoneAttachment3D" index="0" unique_id=1684253736]
+script = ExtResource("3_m8cwr")
+metadata/_custom_type_script = "uid://xu07h40bp65t"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BaseFighter_RIG/rig_deform/Skeleton3D/BoneAttachment3D/HitSender" index="0" unique_id=1548254521]
+transform = Transform3D(1, -6.61239e-08, 0, 4.9825758e-08, 1.0000002, 2.3283064e-08, 0, -2.142042e-08, 1, -0.0019711852, 0.094302654, -0.002805233)
+shape = SubResource("SphereShape3D_05tog")
+
+[node name="BoneAttachment3D2" type="BoneAttachment3D" parent="BaseFighter_RIG/rig_deform/Skeleton3D" index="2" unique_id=1589388271]
+transform = Transform3D(0.8354472, 0.016247464, 0.5493304, 0.12599128, 0.9672786, -0.22022247, -0.5349338, 0.25319496, 0.8060632, -0.053009965, 1.2481955, 0.069911495)
+bone_name = "DEF-spine.003"
+bone_idx = 4
+
+[node name="HitReceiver" type="Area3D" parent="BaseFighter_RIG/rig_deform/Skeleton3D/BoneAttachment3D2" index="0" unique_id=2041157349]
+script = ExtResource("4_kt833")
+metadata/_custom_type_script = "uid://c52qtphg0yuyv"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BaseFighter_RIG/rig_deform/Skeleton3D/BoneAttachment3D2/HitReceiver" index="0" unique_id=1647270714]
+transform = Transform3D(1.0000027, 0, 0, 0, 1.0000105, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_s550a")
+
+[node name="BoneAttachment3D3" type="BoneAttachment3D" parent="BaseFighter_RIG/rig_deform/Skeleton3D" index="3" unique_id=89164816]
+transform = Transform3D(0.6681134, 0.63058305, -0.39495486, -0.0011847578, -0.5299083, -0.84805363, -0.7440583, 0.5670638, -0.3532917, 0.111723304, 0.07356931, -0.33572963)
+bone_name = "DEF-foot.L"
+bone_idx = 27
+
+[node name="HitSender" type="Area3D" parent="BaseFighter_RIG/rig_deform/Skeleton3D/BoneAttachment3D3" index="0" unique_id=1877374183]
+script = ExtResource("3_m8cwr")
+metadata/_custom_type_script = "uid://xu07h40bp65t"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BaseFighter_RIG/rig_deform/Skeleton3D/BoneAttachment3D3/HitSender" index="0" unique_id=1650866596]
+shape = SubResource("SphereShape3D_qdljr")
 
 [node name="AnimationPlayer" parent="." index="9" unique_id=1605240310]
 root_node = NodePath("../BaseFighter_RIG")
-libraries/ = SubResource("AnimationLibrary_qdljr")
+libraries/ = SubResource("AnimationLibrary_58tb4")
 autoplay = &"Idle"
 
 [node name="AnimationTree" parent="." index="10" unique_id=570330019]
 root_node = NodePath("../BaseFighter_RIG")
+root_motion_track = NodePath("rig_deform/Skeleton3D:DEF-Root")
 
 [editable path="BaseFighter_RIG"]

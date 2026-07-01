@@ -9,14 +9,14 @@ func enter():
 	super.enter()
 	fighter.move_velocity.x = 0
 	fighter.move_velocity.y = 0
+	animation.set_animation("Hover")
 	
 	# mark that we cannot hover again yet
 	fighter.can_hover = false
 
 func update(delta : float):
-	animation.set_animation("Standing")
 	super.update(delta)
-	
+
 	# allow movement during hover
 	var move_dir : int = input_buffer.move_direction()
 	fighter.move_velocity.x = move_dir * fighter.move_speed * hover_speed
@@ -27,9 +27,8 @@ func update(delta : float):
 	if local_time >= max_hover_time:
 		state_machine.change_state("Falling")
 		return
-		
+	
 	# early fall exit
 	if input_buffer.is_pressed("crouch"):
-		print("oioioi")
 		state_machine.change_state("Falling")
 		return

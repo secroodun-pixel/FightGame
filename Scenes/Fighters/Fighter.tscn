@@ -132,6 +132,19 @@ func _physics_process(delta: float) -> void:
 radius = 0.28125
 height = 1.5759697
 
+[sub_resource type="Animation" id="Animation_8mssw"]
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_01lk1"]
+_data = {
+&"Idle": SubResource("Animation_8mssw")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_v417l"]
+animation = &"AirLightAttack"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mmuvl"]
+animation = &"Block"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4hbrg"]
 animation = &"\\Dash"
 
@@ -153,7 +166,7 @@ animation = &"HeavyAttackCharge"
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_su52t"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_dbrw3"]
-graph_offset = Vector2(-18.807959, 72.647995)
+graph_offset = Vector2(86.4, 24)
 nodes/output/position = Vector2(544, 80)
 nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_su52t")
 nodes/TimeScale/position = Vector2(368, 64)
@@ -167,11 +180,14 @@ animation = &"HeavyAttackRecovery"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rn0e0"]
 animation = &"new_animation"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xc2a8"]
+animation = &"Hover"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0bjwg"]
 animation = &"Dash"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8mssw"]
-animation = &"Fighter/JumpLand"
+animation = &"Idle"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_01lk1"]
 animation = &"Dash"
@@ -238,10 +254,14 @@ switch_mode = 2
 advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_01lk1"]
+states/AirLightAttack/node = SubResource("AnimationNodeAnimation_v417l")
+states/AirLightAttack/position = Vector2(336.42242, -120.6)
+states/Block/node = SubResource("AnimationNodeAnimation_mmuvl")
+states/Block/position = Vector2(-26.199997, 17.800003)
 states/Dash/node = SubResource("AnimationNodeAnimation_4hbrg")
-states/Dash/position = Vector2(193, -45)
+states/Dash/position = Vector2(223.4, -45)
 states/Defeated/node = SubResource("AnimationNodeAnimation_wqojl")
-states/Defeated/position = Vector2(697, 259)
+states/Defeated/position = Vector2(647.4, 208.6)
 states/End/position = Vector2(922, 94)
 states/Fighter_Dash/node = SubResource("AnimationNodeAnimation_uxauc")
 states/Fighter_Dash/position = Vector2(747, 108)
@@ -255,10 +275,12 @@ states/HeavyAttackRecovery/node = SubResource("AnimationNodeAnimation_su52t")
 states/HeavyAttackRecovery/position = Vector2(140.2, 201.52)
 "states/Hit Chest/node" = SubResource("AnimationNodeAnimation_rn0e0")
 "states/Hit Chest/position" = Vector2(515.6, 245.20001)
+states/Hover/node = SubResource("AnimationNodeAnimation_xc2a8")
+states/Hover/position = Vector2(83.600006, 18.2)
 states/JumpIdle/node = SubResource("AnimationNodeAnimation_0bjwg")
 states/JumpIdle/position = Vector2(605, 32)
 states/JumpLand/node = SubResource("AnimationNodeAnimation_8mssw")
-states/JumpLand/position = Vector2(410.2, -45)
+states/JumpLand/position = Vector2(413.40002, -13)
 states/JumpStart/node = SubResource("AnimationNodeAnimation_01lk1")
 states/JumpStart/position = Vector2(515, 154)
 states/LightAttack/node = SubResource("AnimationNodeAnimation_lbuyy")
@@ -267,10 +289,11 @@ states/Standing/node = SubResource("AnimationNodeBlendSpace1D_0bjwg")
 states/Standing/position = Vector2(317.6, 93.840004)
 states/Start/position = Vector2(62, 99.2)
 transitions = ["Start", "Standing", SubResource("AnimationNodeStateMachineTransition_8mssw"), "JumpStart", "JumpIdle", SubResource("AnimationNodeStateMachineTransition_4hbrg"), "JumpLand", "Standing", SubResource("AnimationNodeStateMachineTransition_wqojl"), "Dash", "Standing", SubResource("AnimationNodeStateMachineTransition_rn0e0"), "LightAttack", "Standing", SubResource("AnimationNodeStateMachineTransition_3nd8k"), "Fighter_Dash", "JumpIdle", SubResource("AnimationNodeStateMachineTransition_ivhui"), "HeavyAttackActive", "HeavyAttackRecovery", SubResource("AnimationNodeStateMachineTransition_35p1i"), "HeavyAttackRecovery", "Standing", SubResource("AnimationNodeStateMachineTransition_qh0yp"), "HeavyAttack", "HeavyAttackCharge", SubResource("AnimationNodeStateMachineTransition_27ji7"), "Hit Chest", "Standing", SubResource("AnimationNodeStateMachineTransition_xc2a8")]
-graph_offset = Vector2(-247, 212)
+graph_offset = Vector2(-109, -97)
 
 [node name="Fighter" type="CharacterBody3D" unique_id=202072913 node_paths=PackedStringArray("input_handler", "input_buffer", "state_machine")]
 collision_layer = 2
+axis_lock_linear_z = true
 script = SubResource("GDScript_uxauc")
 character = ExtResource("1_pb8fl")
 input_handler = NodePath("PlayerInputHandler")
@@ -527,7 +550,7 @@ metadata/_custom_type_script = "uid://bquv8v5epdgop"
 [node name="AirLightAttack" type="Node" parent="StateMachine" unique_id=1160104217]
 script = ExtResource("7_mrrik")
 damage = 1
-animation_name = "Heavy Attack"
+animation_name = "LightAttack"
 cooldown = 2.0
 hit_detect_end_time = 3.0
 metadata/_custom_type_script = "uid://dkm6adnnljd4o"
@@ -614,6 +637,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.78798485, -0.020837493)
 shape = SubResource("CapsuleShape3D_lbuyy")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1605240310]
+libraries/ = SubResource("AnimationLibrary_01lk1")
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=570330019]
 tree_root = SubResource("AnimationNodeStateMachine_01lk1")

@@ -19,8 +19,8 @@ func _ready() -> void:
 		position = player_1_pos.position
 	
 	for i in range(max_health - 1):
-		var duplicate = health_block.duplicate()
-		health_container.add_child(duplicate)
+		var dup_container = health_block.duplicate()
+		health_container.add_child(dup_container)
 		
 	# events
 	# connect fighter damage event to the healthbar	
@@ -33,7 +33,7 @@ func _update_health_bar (damaged_fighter : Fighter):
 		return
 			
 	# get current health
-	var current_health = fighter.current_health
+	#var current_health = fighter.current_health
 
 	# go through each container
 	for i in range(health_container.get_child_count()):
@@ -62,8 +62,8 @@ func _reset_health_bar(fighter_to_reset : Fighter):
 		
 		# make new blocks
 		for i in range(new_blocks):
-			var duplicate = health_block.duplicate()
-			health_container.add_child(duplicate)
+			var dup_container = health_block.duplicate()
+			health_container.add_child(dup_container)
 	
 	# update visibility of health blocks
 	for i in range(health_container.get_child_count()):

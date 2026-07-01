@@ -29,17 +29,11 @@ func update(delta : float):
 	# gravity
 	fighter.move_velocity.y -= fighter.jump_gravity * delta
 	
-	#print(fighter.move_velocity.y, fighter.is_on_floor(), fighter.just_entered_jump, local_time)
-	## fall state if we are at the peak of the jump
+	# fall state if we are at the peak of the jump
 	if (not fighter.is_on_floor() 
 		and fighter.move_velocity.y <= 0
 		and not fighter.just_entered_jump):
 		state_machine.change_state("Falling")	
-	
-	# standing state if landed
-	#if fighter.is_on_floor() and (local_time >= fighter.jump_start_blocker):
-		#state_machine.change_state("Standing")
-		#return
 		
 	# dash	
 	if input_buffer.is_pressed("dash"):
@@ -52,7 +46,7 @@ func update(delta : float):
 		return
 
 	# hover state, if allowed
-	if (input_buffer.is_pressed("block") 
+	if (input_buffer.just_pressed("jump") 
 	and fighter.has_air_hover
 	and fighter.can_hover):
 		state_machine.change_state("Hovering")

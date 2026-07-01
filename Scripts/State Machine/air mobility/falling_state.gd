@@ -26,7 +26,7 @@ func update(delta : float):
 		return
 		
 	# hover state, if allowed
-	if (input_buffer.is_pressed("block") 
+	if (input_buffer.just_pressed("jump") 
 	and fighter.has_air_hover
 	and fighter.can_hover):
 		state_machine.change_state("Hovering")
@@ -38,5 +38,5 @@ func update(delta : float):
 		return
 		
 func exit():
-	fighter.move_velocity.y = 0
+	#awfighter.move_velocity.y = 0
 	animation.set_animation("JumpLand")

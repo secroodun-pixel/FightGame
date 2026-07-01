@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://v1xd37pbsw8f"]
+
+[ext_resource type="PackedScene" uid="uid://dxmkxspv10em0" path="res://Scenes/Fighters/Fighter.tscn" id="1_jwabf"]
+[ext_resource type="Animation" uid="uid://bvncomta3blmw" path="res://Animations/BaseFighterAnims/Attacks/HeavyAttack.tres" id="2_6j04c"]
+[ext_resource type="PackedScene" uid="uid://nm8d0gklrj87" path="res://Models/TESTMODELS/BaseFighter_RIG.glb" id="2_br165"]
+[ext_resource type="Animation" uid="uid://cg4arngiu80ea" path="res://Animations/BaseFighterAnims/Idle.tres" id="3_br165"]
+[ext_resource type="Animation" uid="uid://c65dc8obl4cqy" path="res://Animations/BaseFighterAnims/Hover.tres" id="3_m8cwr"]
+[ext_resource type="Animation" uid="uid://t2xbwgtbukoh" path="res://Animations/BaseFighterAnims/Jump.tres" id="5_kt833"]
+[ext_resource type="Animation" uid="uid://cwggcum81qlk7" path="res://Animations/BaseFighterAnims/Attacks/LightAttack.tres" id="6_05tog"]
+[ext_resource type="Animation" uid="uid://dtvmn7pnnupnt" path="res://Animations/BaseFighterAnims/Walk.tres" id="7_s550a"]
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qdljr"]
+_data = {
+&"HeavyAttack": ExtResource("2_6j04c"),
+&"HeavyAttackActive": ExtResource("2_6j04c"),
+&"HeavyAttackCharge": ExtResource("2_6j04c"),
+&"HeavyAttackRecovery": ExtResource("2_6j04c"),
+&"HeavyAttackWindup": ExtResource("2_6j04c"),
+&"Hover": ExtResource("3_m8cwr"),
+&"Idle": ExtResource("3_br165"),
+&"Jump": ExtResource("5_kt833"),
+&"LightAttack": ExtResource("6_05tog"),
+&"Walk": ExtResource("7_s550a")
+}
+
+[node name="Fighter" unique_id=202072913 instance=ExtResource("1_jwabf")]
+
+[node name="BaseFighter_RIG" parent="." index="7" unique_id=1299749070 instance=ExtResource("2_br165")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16898906, 0, -0.5014632)
+
+[node name="Skeleton3D" parent="BaseFighter_RIG/Game_Rig" parent_id_path=PackedInt32Array(1299749070, 1237568039) index="0" unique_id=2086748585]
+bones/0/position = Vector3(0, 0.75127727, -0.042408273)
+bones/0/rotation = Quaternion(0.31574443, 0, 0, 0.9488443)
+bones/2/rotation = Quaternion(-0.060164552, -0.0002819568, -0.011105814, 0.99812675)
+bones/3/rotation = Quaternion(0.018962251, 0.0017192534, -0.011097138, 0.99975723)
+bones/4/rotation = Quaternion(0.1676036, 0.0022750606, 0.022168063, 0.98560256)
+bones/6/rotation = Quaternion(-0.09371195, 8.16076e-20, -3.9708144e-19, 0.9955994)
+bones/7/rotation = Quaternion(-0.5076842, -0.31403157, -0.47553828, 0.64614576)
+bones/8/rotation = Quaternion(0.047663398, 0.56899476, -0.7101011, 0.41198263)
+bones/9/rotation = Quaternion(4.7581292e-08, -0.12460642, 2.5704257e-08, 0.99220634)
+bones/10/rotation = Quaternion(0.73079497, -0.124606445, 0.13867764, 0.65664333)
+bones/11/rotation = Quaternion(2.3408384e-07, -0.0034944592, -4.2933255e-08, 0.9999939)
+bones/12/rotation = Quaternion(0.19195625, -0.0040926617, -0.032796428, 0.9808468)
+bones/14/rotation = Quaternion(0.13899198, -0.6343942, 0.5878505, 0.4823454)
+bones/15/rotation = Quaternion(-5.1678754e-08, 0.101614065, -3.0377214e-07, 0.9948239)
+bones/16/rotation = Quaternion(0.7642886, 0.10161419, -0.124347575, 0.62455994)
+bones/17/rotation = Quaternion(-5.8944828e-08, 0.01594116, -3.2811887e-08, 0.99987304)
+bones/18/rotation = Quaternion(0.18208544, 0.016539862, 0.021051643, 0.98291826)
+bones/19/rotation = Quaternion(1.3248922e-08, 0.69693637, 0.71713305, -2.340625e-08)
+bones/20/rotation = Quaternion(1.3248922e-08, 0.69693637, 0.71713305, -2.340625e-08)
+bones/22/rotation = Quaternion(-0.49915025, -0.6447371, 0.57752424, -0.040360138)
+bones/23/position = Vector3(1.4706676e-08, 0.26034287, -3.6276525e-08)
+bones/23/rotation = Quaternion(-2.4478679e-08, 0.013118482, 2.2870422e-08, 0.999914)
+bones/24/position = Vector3(-2.1862231e-08, 0.26034266, -4.2844317e-08)
+bones/24/rotation = Quaternion(0.61656964, 0.012797934, -0.009999403, 0.78713286)
+bones/25/position = Vector3(-5.4526392e-09, 0.21912943, -2.4800206e-08)
+bones/25/rotation = Quaternion(-1.9250088e-08, -0.25338736, 5.4556937e-09, 0.9673649)
+bones/26/position = Vector3(-8.9279535e-09, 0.21912934, 5.7124645e-08)
+bones/26/rotation = Quaternion(-0.7260917, -0.25379837, 0.27479365, 0.5769452)
+bones/27/position = Vector3(-1.875356e-08, 0.1292404, -1.7271534e-08)
+bones/27/rotation = Quaternion(-0.0001376804, 0.96126336, -0.27563095, -0.0005695438)
+bones/29/rotation = Quaternion(0.44565353, -0.7954692, 0.34641004, 0.22050318)
+bones/30/position = Vector3(1.00224415e-08, 0.26048002, 7.8240605e-09)
+bones/30/rotation = Quaternion(5.656376e-09, -0.014335766, 5.5235847e-11, 0.9998973)
+bones/31/position = Vector3(8.386239e-09, 0.26048, 4.4678295e-08)
+bones/31/rotation = Quaternion(0.60236067, -0.013967095, 0.0104868235, 0.798033)
+bones/32/position = Vector3(-2.0112209e-08, 0.21927653, 3.9374324e-08)
+bones/32/rotation = Quaternion(-9.533414e-08, 0.11121123, -6.9274524e-09, 0.9937968)
+bones/33/position = Vector3(5.162601e-09, 0.21927655, 2.5087454e-09)
+bones/33/rotation = Quaternion(-0.59889257, 0.1108675, -0.08017497, 0.7890553)
+bones/34/position = Vector3(-3.367719e-08, 0.12923394, 5.2080877e-09)
+bones/34/rotation = Quaternion(-0.00016399182, 0.9612592, -0.27564555, -0.0005620412)
+
+[node name="AnimationPlayer" parent="." index="9" unique_id=1605240310]
+root_node = NodePath("../BaseFighter_RIG")
+libraries/ = SubResource("AnimationLibrary_qdljr")
+autoplay = &"Idle"
+
+[node name="AnimationTree" parent="." index="10" unique_id=570330019]
+root_node = NodePath("../BaseFighter_RIG")
+
+[editable path="BaseFighter_RIG"]

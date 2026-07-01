@@ -79,7 +79,7 @@ func _ready():
 		child.initialize(self)
 	
 	_update_facing_direction.call_deferred()
-
+	
 func _physics_process(delta: float) -> void:
 	# check if we are in playing mode, can control is true if so
 	if not game_manager.current_game_state == game_manager.GameState["PLAYING"]:
@@ -120,11 +120,12 @@ func _update_facing_direction():
 		rotation_degrees.y = -90
 
 func _movement(_delta : float):	
+	
 	velocity.x = move_velocity.x
 	velocity.y = move_velocity.y
 	
-	velocity.x
 	move_and_slide()
+	
 
 func get_custom_gravity() -> float:
 	return character.jump_gravity if move_velocity.y < 0.0 else character.fall_gravity
@@ -186,3 +187,15 @@ func _calculate_stats():
 
 	# set current health after updating
 	current_health = max_health
+
+func _root_motion(_delta):
+	var anim_tree = state_machine.animation.anim_tree
+	
+	# get root joint info
+	var root_position : Vector3 = anim_tree.get_root_motion_position()
+
+	velocity.x = (root_position.z / _delta) * forward_direction
+	#var root_rotation : Quaternion = global_transform.basis.get_rotation_quaternion()
+	#var root_velocity : Vector3 = (root_rotation * root_position) / _delta
+	
+	

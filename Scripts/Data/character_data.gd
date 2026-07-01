@@ -7,8 +7,8 @@ extends Resource
 # jump variables
 @export_group("Jump Settings")
 @export var horizontal_force : float = 7.0
-@export var jump_height : float = 1.0
-@export var jump_time_to_peak : float = 0.3
+@export var jump_height : float = 1.5
+@export var jump_time_to_peak : float = 0.35
 @export var jump_time_to_descent : float = 0.2
 
 # jump math

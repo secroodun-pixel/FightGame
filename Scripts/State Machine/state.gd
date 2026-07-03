@@ -38,5 +38,10 @@ func update(_delta : float):
 func exit():
 	pass
 	
+func apply_jump_gravity(delta):
+	# gravity
+	var gravity = (fighter.jump_gravity if fighter.move_velocity.y > 0 
+				else fighter.fall_gravity)
+	fighter.move_velocity.y -= gravity * delta
 
 	

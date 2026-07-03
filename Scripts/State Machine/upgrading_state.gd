@@ -19,7 +19,7 @@ func enter():
 	# Connect globals
 	GlobalEvents.BeginSelectingUpgrades.connect(_connect_upgrades_to_buttons)
 	
-func update(delta : float):
+func update(_delta : float):
 	# make sure an upgrade has not been selected yet
 	if not fighter.has_selected_upgrade:
 		if input_buffer.is_pressed(upgrade_01_button):

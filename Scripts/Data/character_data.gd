@@ -1,7 +1,7 @@
 class_name CharacterData
 extends Resource
 
-@export var max_health : int = 1
+@export var max_health : int = 0
 @export var base_move_speed : float = 4.5
 
 # jump variables
@@ -28,4 +28,4 @@ var can_charge_light : bool = false
 
 # air movement
 var has_air_influence : bool = false
-var has_air_hover : bool = true
+var has_air_hover : bool

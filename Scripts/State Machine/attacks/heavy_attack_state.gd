@@ -1,11 +1,6 @@
 class_name HeavyAttackState
 extends AttackingState
 
-var base_speed : float = 1
-var charge_speed : float = 0.3
-
-var charge_time : float = 0.0
-
 
 func _stamina_cost () -> float:
 	return stamina_data.heavy_attack_cost
@@ -15,8 +10,9 @@ func enter():
 	max_charge_time  = 2.5
 	is_charging = true
 	
+	if not fighter.can_charge_heavy:
+		fighter.move_velocity.x = 0
 	calculate_timings()
-
 
 func update(delta : float):
 	super.update(delta)
@@ -44,9 +40,10 @@ func finish_charging():
 	is_charging = false
 	animation.anim_tree.set("parameters/HeavyAttackCharge/TimeScale/Scale", base_speed)
 	animation.set_animation("HeavyAttackActive")
+	fighter.move_velocity.x = 0.0
 
 func calculate_timings():
-		# get durations of separate attack animations
+	# get durations of separate attack animations
 	windup_length = animation.anim_player.get_animation("HeavyAttackWindup").length
 	charge_length = animation.anim_player.get_animation("HeavyAttackCharge").length
 	active_length = animation.anim_player.get_animation("HeavyAttackActive").length

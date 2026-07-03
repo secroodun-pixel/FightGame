@@ -65,7 +65,7 @@ func just_released(input_string : String) -> bool:
 	## if none of the above, it was not pressed
 	#return false
 	
-func was_pressed(input_string : String, buffer_window : int = BUFFER_SIZE) -> bool:
+func was_pressed(input_string : String, buffer_window : float = BUFFER_SIZE) -> bool:
 	# look through buffer size, checking current and last inputs
 	for i in range(min(buffer_window, buffer.size() - 1)):
 		var new_packet : InputPacket = buffer[i]
@@ -103,4 +103,11 @@ func is_being_held(input_string : String) -> void:
 	held_inputs[input_string] = true
 	
 	
+func vertical_direction() -> int:	
+	var vertical_dir : int = 0
 	
+	if is_pressed("jump"):
+		vertical_dir += 1
+	elif is_pressed("crouch"):
+		vertical_dir -= 1
+	return vertical_dir

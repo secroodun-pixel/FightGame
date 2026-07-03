@@ -20,7 +20,7 @@ func _ready() -> void:
 	GlobalEvents.FighterDamaged.connect(_on_fighter_damaged)
 	position.y = base_height
 
-func _on_fighter_damaged(fighter : Fighter):
+func _on_fighter_damaged(_fighter : Fighter):
 	intensity = shake_amount
 
 func _physics_process(delta: float) -> void:

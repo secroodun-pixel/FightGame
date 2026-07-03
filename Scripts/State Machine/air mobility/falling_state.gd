@@ -4,12 +4,8 @@ extends MovementState
 @export var jump_force : float = 5.0
 @export var air_influence : float = .7
 
-var jump_direction : float = 0.0
-
 func enter():
 	animation.set_animation("JumpIdle")
-	# lock jump direction
-	jump_direction = input_buffer.move_direction()
 
 func update(delta : float):
 	# gravity
@@ -20,7 +16,7 @@ func update(delta : float):
 		state_machine.change_state("AirDashing")
 		return
 		
-	# air dash
+	# air light attack
 	if input_buffer.is_pressed("light_attack"):
 		state_machine.change_state("AirLightAttack")
 		return
@@ -32,11 +28,19 @@ func update(delta : float):
 		state_machine.change_state("Hovering")
 		return
 	
+	# air influence, if allowed
+	if fighter.has_air_influence and not fighter.has_used_air_influence:
+		if input_buffer.just_pressed("move_left"):
+			fighter.move_velocity.x -= fighter.air_influence_amount
+		if input_buffer.just_pressed("move_right"):
+			fighter.move_velocity.x += fighter.air_influence_amount
+		
+	# early exit with block, if allowed
+	if input_buffer.is_pressed("block") and fighter.has_air_block:
+		state_machine.change_state("AirBlocking")
+		return
+	
 	# land if we've landed
 	if fighter.is_on_floor():
 		state_machine.change_state("Standing")
 		return
-		
-func exit():
-	#awfighter.move_velocity.y = 0
-	animation.set_animation("JumpLand")

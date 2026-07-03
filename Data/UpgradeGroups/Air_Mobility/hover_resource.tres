@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="UpgradeHover" format=3 uid="uid://dx3o2kryae2r0"]
+
+[ext_resource type="Script" uid="uid://pcer0bxekoj1" path="res://Scripts/Data/Upgrades/AirMobility/upgrade_hover.gd" id="1_q5y05"]
+
+[resource]
+script = ExtResource("1_q5y05")
+upgrade_name = "Hover"
+upgrade_description = "Press up in jump to hover"
+metadata/_custom_type_script = "uid://pcer0bxekoj1"

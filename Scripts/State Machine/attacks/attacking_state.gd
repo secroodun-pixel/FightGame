@@ -9,10 +9,10 @@ extends State
 
 @export var block_stun : float = 2.0
 @export var knockback_on_block : float = 2.0
+@export var duration : float
 
 @export var forward_force : float
 
-var duration : float
 var indefinite_duration : float = 10.0
 var attack_length : float
 
@@ -37,13 +37,16 @@ var is_charging : bool = false
 
 var has_hit : bool = false
 
+# charge variables
+@export var base_speed : float = 1
+@export var charge_speed : float = 0.3
+@export var charge_time : float = 0.0
+var move_speed_while_charging : float = 0.5
+
 # divekick vars
 var is_divekicking : float
 @export var vertical_divekick : float
 @export var horizontal_divekick : float
-
-# upgrade allowances
-var move_speed_while_charging : float = 0.5
 
 #func _stamina_cost () -> float:
 	#return 0
@@ -57,7 +60,7 @@ func can_enter () -> bool:
 
 func enter():
 	super.enter()
-	
+
 	# play animation
 	animation.set_animation(animation_name)
 
@@ -91,18 +94,12 @@ func update(delta : float):
 		state_machine.change_state("Standing")
 		return
 	
-	# allow movement during charge
-	if is_charging and fighter.can_move_while_charging:
-		# set movement direction
-		var move_dir : int = input_buffer.move_direction()
-		
-		# movement
-		fighter.move_velocity.x = (move_dir 
-									* fighter.move_speed
-									* move_speed_while_charging)
-		var blend_pos : float = move_dir * fighter.forward_direction
-	elif not is_charging and fighter.is_on_floor():
-		fighter.move_velocity.x = 0.0
+	# upgrade related behavior
+	charge_movement()
+	
+	if input_buffer.is_pressed("block") and fighter.is_on_floor():
+		if is_charging and fighter.can_block_cancel_charge:
+			state_machine.change_state("Blocking")
 
 	# apply jump gravity
 	if not fighter.is_on_floor():
@@ -112,11 +109,19 @@ func exit():
 	super.exit()
 	cooldown_end_time = Time.get_unix_time_from_system() + cooldown
 
-func apply_jump_gravity(delta):
-	# gravity
-	var gravity = (fighter.jump_gravity if fighter.move_velocity.y > 0 
-				else fighter.fall_gravity)
-	fighter.move_velocity.y -= gravity * delta
-
 func divekick():
 	fighter.add_force(forward_force * fighter.forward_direction)
+	
+func charge_movement():
+	# allow movement during charge
+	if is_charging and fighter.can_move_while_charging:
+		# set movement direction
+		var move_dir : int = input_buffer.move_direction()
+		
+		# movement
+		fighter.move_velocity.x = (move_dir 
+									* fighter.move_speed
+									* move_speed_while_charging)
+
+	elif is_charging and fighter.is_on_floor():
+		fighter.move_velocity.x = 0.0

@@ -7,9 +7,7 @@ var fighter : Fighter
 func initialize(fighter_init : Fighter):
 	self.fighter = fighter_init
 
-func hit(damage : int, knockback : int):
-	print(fighter.player_id)
+func hit(damage : int, _knockback : float):
 	if fighter.is_blocking:
-		print("should be blockstun")
 		fighter.state_machine.change_state("Blockstun")
 	fighter.take_damage(self, damage)

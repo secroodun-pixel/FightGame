@@ -3,7 +3,7 @@
 [ext_resource type="Resource" uid="uid://do2f58vtpp1r2" path="res://Data/character_data.tres" id="1_pb8fl"]
 [ext_resource type="Script" uid="uid://cs7f7e8qevmtg" path="res://Scripts/Inputs/player_input_handler.gd" id="2_875ig"]
 [ext_resource type="Script" uid="uid://cfk65mmekmwvs" path="res://Scripts/Inputs/input_buffer.gd" id="3_rlrpx"]
-[ext_resource type="Script" uid="uid://ff6bhf8i2v0v" path="res://Scripts/Fighter/HUD_TEST.gd" id="4_pyo11"]
+[ext_resource type="Script" uid="uid://ff6bhf8i2v0v" path="res://Scripts/Fighter/fighter_hud.gd" id="4_pyo11"]
 [ext_resource type="Script" uid="uid://0v7fh8q6lmt7" path="res://Scripts/State Machine/state_machine.gd" id="4_qe18t"]
 [ext_resource type="Script" uid="uid://dclsaggetg5sj" path="res://Scripts/Fighter/fighter_upgrade_hud.gd" id="5_4lkng"]
 [ext_resource type="Script" uid="uid://domwaw8mpbskj" path="res://Scripts/State Machine/standing_state.gd" id="5_qe18t"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://dkm6adnnljd4o" path="res://Scripts/State Machine/attacks/air_light_attack_state.gd" id="7_mrrik"]
 [ext_resource type="Script" uid="uid://dvstj8jxprswt" path="res://Scripts/State Machine/attacks/light_attack_state.gd" id="8_rnj0f"]
 [ext_resource type="Script" uid="uid://dc8lt3cxh8xod" path="res://Scripts/State Machine/attacks/heavy_attack_state.gd" id="9_0bjwg"]
+[ext_resource type="Script" uid="uid://bsxolj51hnw4v" path="res://Scripts/State Machine/air_blocking_state.gd" id="10_01lk1"]
 [ext_resource type="Script" uid="uid://c6igunbuhyrfs" path="res://Scripts/State Machine/hit_state.gd" id="10_4hbrg"]
 [ext_resource type="Script" uid="uid://corc8x2grf6ea" path="res://Scripts/State Machine/defeated_state.gd" id="11_wqojl"]
 [ext_resource type="Script" uid="uid://tf5rjfojspmj" path="res://Scripts/State Machine/dashing_state.gd" id="12_3nd8k"]
@@ -24,7 +25,6 @@
 [ext_resource type="Script" uid="uid://vdi5ixej01di" path="res://Scripts/State Machine/air mobility/hovering_state.gd" id="19_s1rar"]
 [ext_resource type="Script" uid="uid://cnwomlaechaw3" path="res://Scripts/Fighter/fighter_animation.gd" id="23_2t77m"]
 [ext_resource type="Script" uid="uid://c3efbt2ilm3gx" path="res://Scripts/State Machine/victorious_state.gd" id="24_27ji7"]
-[ext_resource type="Script" uid="uid://2evk0ylauums" path="res://Scripts/Fighter/fighter_hud.gd" id="37_ivhui"]
 [ext_resource type="FontFile" uid="uid://crjsroau7ki57" path="res://Fonts/MetalMania-Regular.ttf" id="37_mrrik"]
 
 [sub_resource type="GDScript" id="GDScript_uxauc"]
@@ -41,6 +41,56 @@ corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
+
+[sub_resource type="GDScript" id="GDScript_8mssw"]
+script/source = "extends Panel
+
+@onready var fighter : Fighter = $\"../..\"
+
+@onready var health_bar : ProgressBar = $HUDElements/HealthBar
+@onready var health_text : Label = $HUDElements/HealthBar/HealthText
+
+@onready var stamina_bar : ProgressBar = $HUDElements/StaminaBar
+
+@onready var player_0_pos : Control = $\"../Player0Pos\"
+@onready var player_1_pos : Control = $\"../Player1Pos\"
+
+@onready var stamina_controller : StaminaController = $\"../../StaminaController\"
+
+func _ready() -> void:
+	# position health bars
+	if fighter.player_id == 0:
+		position = player_0_pos.position
+	elif fighter.player_id == 1:
+		position = player_1_pos.position
+		scale.x = -1
+	
+	# health bar
+	_update_health_bar(fighter)
+	
+	# stamina
+	# set stamina max value
+	stamina_bar.max_value = stamina_controller.data.max_stamina
+	
+	# connect to stamina update signal
+	stamina_controller.StaminaUpdated.connect(_update_stamina_bar)
+	
+	# events
+	# connect fighter damage event to the healthbar	
+	GlobalEvents.FighterDamaged.connect(_update_health_bar)
+	
+func _update_stamina_bar(stamina : float):
+	stamina_bar.value = stamina
+
+func _update_health_bar (damaged_fighter : Fighter):
+	# check that it is the other fighter
+	if damaged_fighter != fighter:
+		return
+	
+	# update health visuals
+	health_bar.value = fighter.current_health
+	health_text.text = str(int(fighter.current_health))
+"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uxauc"]
 bg_color = Color(0.22094142, 0.22094142, 0.2209414, 1)
@@ -116,7 +166,7 @@ expand_margin_bottom = 2.0
 script/source = "class_name UpgradeController
 extends Node
 
-signal StaminaUpdated(value : float)
+
 
 #@onready var fighter : Fighter = $\".\"
 #@export var data : UpgradeData
@@ -124,7 +174,7 @@ signal StaminaUpdated(value : float)
 func _ready() -> void:
 	pass
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	pass
 "
 
@@ -273,8 +323,8 @@ states/HeavyAttackCharge/node = SubResource("AnimationNodeBlendTree_dbrw3")
 states/HeavyAttackCharge/position = Vector2(120.80001, 280.19998)
 states/HeavyAttackRecovery/node = SubResource("AnimationNodeAnimation_su52t")
 states/HeavyAttackRecovery/position = Vector2(140.2, 201.52)
-"states/Hit Chest/node" = SubResource("AnimationNodeAnimation_rn0e0")
-"states/Hit Chest/position" = Vector2(515.6, 245.20001)
+states/HitChest/node = SubResource("AnimationNodeAnimation_rn0e0")
+states/HitChest/position = Vector2(515.6, 245.20001)
 states/Hover/node = SubResource("AnimationNodeAnimation_xc2a8")
 states/Hover/position = Vector2(83.600006, 18.2)
 states/JumpIdle/node = SubResource("AnimationNodeAnimation_0bjwg")
@@ -288,8 +338,8 @@ states/LightAttack/position = Vector2(323.2, 272.464)
 states/Standing/node = SubResource("AnimationNodeBlendSpace1D_0bjwg")
 states/Standing/position = Vector2(317.6, 93.840004)
 states/Start/position = Vector2(62, 99.2)
-transitions = ["Start", "Standing", SubResource("AnimationNodeStateMachineTransition_8mssw"), "JumpStart", "JumpIdle", SubResource("AnimationNodeStateMachineTransition_4hbrg"), "JumpLand", "Standing", SubResource("AnimationNodeStateMachineTransition_wqojl"), "Dash", "Standing", SubResource("AnimationNodeStateMachineTransition_rn0e0"), "LightAttack", "Standing", SubResource("AnimationNodeStateMachineTransition_3nd8k"), "Fighter_Dash", "JumpIdle", SubResource("AnimationNodeStateMachineTransition_ivhui"), "HeavyAttackActive", "HeavyAttackRecovery", SubResource("AnimationNodeStateMachineTransition_35p1i"), "HeavyAttackRecovery", "Standing", SubResource("AnimationNodeStateMachineTransition_qh0yp"), "HeavyAttack", "HeavyAttackCharge", SubResource("AnimationNodeStateMachineTransition_27ji7"), "Hit Chest", "Standing", SubResource("AnimationNodeStateMachineTransition_xc2a8")]
-graph_offset = Vector2(-109, -97)
+transitions = ["Start", "Standing", SubResource("AnimationNodeStateMachineTransition_8mssw"), "JumpStart", "JumpIdle", SubResource("AnimationNodeStateMachineTransition_4hbrg"), "JumpLand", "Standing", SubResource("AnimationNodeStateMachineTransition_wqojl"), "Dash", "Standing", SubResource("AnimationNodeStateMachineTransition_rn0e0"), "LightAttack", "Standing", SubResource("AnimationNodeStateMachineTransition_3nd8k"), "Fighter_Dash", "JumpIdle", SubResource("AnimationNodeStateMachineTransition_ivhui"), "HeavyAttackActive", "HeavyAttackRecovery", SubResource("AnimationNodeStateMachineTransition_35p1i"), "HeavyAttackRecovery", "Standing", SubResource("AnimationNodeStateMachineTransition_qh0yp"), "HeavyAttack", "HeavyAttackCharge", SubResource("AnimationNodeStateMachineTransition_27ji7"), "HitChest", "Standing", SubResource("AnimationNodeStateMachineTransition_xc2a8")]
+graph_offset = Vector2(16, -47)
 
 [node name="Fighter" type="CharacterBody3D" unique_id=202072913 node_paths=PackedStringArray("input_handler", "input_buffer", "state_machine")]
 collision_layer = 2
@@ -310,7 +360,7 @@ offset_top = 42.0
 offset_right = 494.0
 offset_bottom = 149.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_ivhui")
-script = ExtResource("37_ivhui")
+script = SubResource("GDScript_8mssw")
 
 [node name="HUDElements" type="VBoxContainer" parent="CanvasLayer/HUD" unique_id=844107517]
 layout_mode = 1
@@ -541,6 +591,10 @@ animation = NodePath("../FighterAnimation")
 stamina_controller = NodePath("../StaminaController")
 metadata/_custom_type_script = "uid://0v7fh8q6lmt7"
 
+[node name="AirBlocking" type="Node" parent="StateMachine" unique_id=1100474321]
+script = ExtResource("10_01lk1")
+metadata/_custom_type_script = "uid://bsxolj51hnw4v"
+
 [node name="AirDashing" type="Node" parent="StateMachine" unique_id=1561329849]
 script = ExtResource("6_v417l")
 distance = 1.5
@@ -632,9 +686,11 @@ metadata/_custom_type_script = "uid://d2nmgdq81jesx"
 [node name="UpgradeController" type="Node" parent="." unique_id=1865069248]
 script = SubResource("GDScript_4lkng")
 
-[node name="Collision_Capsule" type="CollisionShape3D" parent="." unique_id=1309558085]
+[node name="Stage_Collision" type="CollisionShape3D" parent="." unique_id=1309558085]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.78798485, -0.020837493)
 shape = SubResource("CapsuleShape3D_lbuyy")
+
+[node name="Push_Box" type="CollisionShape3D" parent="." unique_id=1921189992]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1605240310]
 libraries/ = SubResource("AnimationLibrary_01lk1")

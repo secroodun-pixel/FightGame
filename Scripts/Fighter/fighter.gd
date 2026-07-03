@@ -6,8 +6,6 @@ extends CharacterBody3D
 @export var player_id : int ## whether player is 0 or 1
 @export var opponent : Fighter ## player's opponent
 
-@onready var collision_capsule : CollisionShape3D = $Collision_Capsule
-
 var current_health : int = 1
 var base_health : int = 1
 
@@ -43,7 +41,9 @@ var active_upgrades : Array[UpgradeData] = []
 var max_health : int
 var base_move_speed : float
 var move_speed : float
+#endregion
 
+#region jump vars and math
 # jump variables
 var horizontal_force : float = 0.0 # used in jumps
 var jump_height : float
@@ -66,13 +66,22 @@ var fall_gravity : float :
 # attack availabities
 var can_charge_heavy : bool ## if heavy attack charge is unlocked
 var can_charge_light : bool ## if light attack charge is unlocked
-var can_move_while_charging : bool = true # if charge movement is unlocked
+var can_move_while_charging : bool = true ## if charge movement is unlocked
+var can_block_cancel_charge : bool = true ## if charge block cancel is unlocked
+var strong_first_hit : bool # extra damage on first attack
 
-# air movement
-var has_air_influence : bool ## if air influence is unlocked
-var has_air_hover : bool = true ## if hover is unlocked
+# air movement and abilities
+var has_air_influence : bool = true ## if air influence is unlocked
+var air_influence_amount : float = 2.5 ## how much to affect air movement
+var has_used_air_influence : bool = false ## if it has been used already
 
+var has_air_block : bool = true ## if air block is unlocked
+
+var has_air_hover : bool = false ## if hover is unlocked
 var can_hover : bool = true ## if player is currently able to start hovering
+
+var has_air_dash : bool = true ## if air dash is unlocked
+var can_air_dash : bool = true ## if player can currently air dash
 
 func _ready():
 	for child in find_children("*", "HitReceiver", true, false):
@@ -123,10 +132,8 @@ func _update_facing_direction():
 		rotation_degrees.y = -90
 
 func _movement(_delta : float):	
-	
 	velocity.x = move_velocity.x
 	velocity.y = move_velocity.y
-	
 	_root_motion(_delta)
 	
 	move_and_slide()
@@ -140,8 +147,13 @@ func take_damage(hit_receiver : HitReceiver, damage_amount : float):
 		return
 	
 	# deal damage and emit that we were hit
-	current_health -= damage_amount
-	GlobalEvents.FighterDamaged.emit(self)
+	# check for strong hit
+	if opponent.strong_first_hit and current_health == max_health:
+		current_health -= damage_amount + 1
+		GlobalEvents.FighterDamaged.emit(self)
+	else:
+		current_health -= damage_amount
+		GlobalEvents.FighterDamaged.emit(self)
 	
 	# check for health being depleted
 	if current_health <= 0:
@@ -199,6 +211,3 @@ func _root_motion(_delta):
 	var root_position : Vector3 = anim_tree.get_root_motion_position()
 
 	velocity.x += (root_position.z / _delta) * forward_direction
-	#var root_rotation : Quaternion = global_transform.basis.get_rotation_quaternion()
-	#var root_velocity : Vector3 = (root_rotation * root_position) / _delta
-	

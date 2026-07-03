@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="UpgradeDatabase" format=3 uid="uid://dwip52j5ni4mc"]
 
 [ext_resource type="Script" uid="uid://cfsur4gws6wge" path="res://Scripts/Data/Upgrades/upgrade_data.gd" id="1_urk7w"]
-[ext_resource type="Resource" uid="uid://86ww85eeud3g" path="res://Data/UpgradeGroups/BaseStats/upgrade_health_resource.tres" id="2_kp38r"]
+[ext_resource type="Resource" uid="uid://86ww85eeud3g" path="res://Data/UpgradeGroups/BaseStats/health_resource.tres" id="2_kp38r"]
 [ext_resource type="Script" uid="uid://b14wglp5gfhjv" path="res://Scripts/Data/Upgrades/upgrade_database.gd" id="2_s0cei"]
-[ext_resource type="Resource" uid="uid://gyurlfncrda8" path="res://Data/UpgradeGroups/BaseStats/upgrade_movespeed_resource.tres.tres" id="3_88kwy"]
-[ext_resource type="Resource" uid="uid://b6n18bfvmjrys" path="res://Data/UpgradeGroups/BaseStats/upgrade_jumpspeed_resource.tres.tres" id="4_1n8ag"]
+[ext_resource type="Resource" uid="uid://gyurlfncrda8" path="res://Data/UpgradeGroups/BaseStats/_movespeed_resource.tres.tres" id="3_88kwy"]
+[ext_resource type="Resource" uid="uid://b6n18bfvmjrys" path="res://Data/UpgradeGroups/BaseStats/jumpspeed_resource.tres.tres" id="4_1n8ag"]
 
 [resource]
 script = ExtResource("2_s0cei")

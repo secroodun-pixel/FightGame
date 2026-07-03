@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="UpgradeStrongHit" format=3 uid="uid://c6dlknns3stpf"]
+
+[ext_resource type="Script" uid="uid://kjdweokkjmxl" path="res://Scripts/Data/Upgrades/upgrade_strong_hit.gd" id="1_gre3u"]
+
+[resource]
+script = ExtResource("1_gre3u")
+upgrade_name = "Strong first hit"
+upgrade_description = "First hit deals an extra damage"
+metadata/_custom_type_script = "uid://kjdweokkjmxl"

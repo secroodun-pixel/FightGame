@@ -41,7 +41,7 @@ var current_game_state : GameState
 @export var base_stat_upgrades : Array[UpgradeData]
 @export var light_attack_upgrades : Array[UpgradeData]
 @export var heavy_attack_upgrades : Array[UpgradeData]
-@export var air_mobility : Array[UpgradeData]
+@export var air_mobility_upgrades : Array[UpgradeData]
 
 # vars for storing upgrade groups
 var list_of_upgrade_groups : Dictionary = {}
@@ -62,7 +62,8 @@ func _ready() -> void:
 	list_of_upgrade_groups = {
 	"Base_Stats" : base_stat_upgrades,
 	"Light_Attack": light_attack_upgrades,
-	"Heavy_Attack" : heavy_attack_upgrades
+	"Heavy_Attack" : heavy_attack_upgrades,
+	"Air_Mobility" : air_mobility_upgrades,
 	}
 	
 	_change_game_state(GameState.LOADING)
@@ -145,16 +146,16 @@ func _spawn_fighter (fighter_scene : PackedScene) -> Fighter:
 	get_tree().root.get_node("Main").add_child.call_deferred(fighter)
 	return fighter
 	
-func _setup_camera(player_1 : Fighter, player_2 : Fighter):	
+func _setup_camera(player_1_pos : Fighter, player_2_pos : Fighter):	
 	# plug fighters into camera
 	var camera : Camera3D = _spawn_camera(camera_scene)
 	# plug in fighters
-	camera.target_a = player_1
-	camera.target_b = player_2
+	camera.target_a = player_1_pos
+	camera.target_b = player_2_pos
 
-func _spawn_camera (camera_scene : PackedScene) -> Camera3D:
+func _spawn_camera(game_cam : PackedScene) -> Camera3D:
 	# create camera and add as child of the scene
-	var camera : Camera3D = camera_scene.instantiate()
+	var camera : Camera3D = game_cam.instantiate()
 	get_tree().root.get_node("Main").add_child(camera)
 	return camera
 
@@ -177,7 +178,7 @@ func _on_endgame_timer_timeout() -> void:
 func _get_upgrade_group():
 	# get a random group from the upgrade list
 	selected_group = list_of_upgrade_groups.keys().pick_random()
-
+	print(light_attack_upgrades)
 	option_01 = list_of_upgrade_groups[selected_group][0]
 	option_02 = list_of_upgrade_groups[selected_group][1]
 	option_03 = list_of_upgrade_groups[selected_group][2]

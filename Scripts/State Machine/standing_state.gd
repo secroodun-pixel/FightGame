@@ -9,6 +9,8 @@ func enter():
 	
 	# reset air variables because we must have landed
 	fighter.can_hover = true
+	fighter.can_air_dash = true
+	fighter.has_used_air_influence = true
 	
 func update(delta : float):
 	super.update(delta)

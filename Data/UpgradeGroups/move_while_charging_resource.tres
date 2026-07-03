@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="UpgradeMoveWhileCharging" format=3 uid="uid://dr7xkof3jdsmi"]
+
+[ext_resource type="Script" uid="uid://01feglu187vr" path="res://Scripts/Data/Upgrades/upgrade_move_while_charging.gd" id="1_bxdlt"]
+
+[resource]
+script = ExtResource("1_bxdlt")
+upgrade_name = "Move during charges"
+upgrade_description = "Allow moving during charges"
+metadata/_custom_type_script = "uid://01feglu187vr"

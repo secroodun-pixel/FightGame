@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="UpgradeAirInfluence" format=3 uid="uid://orclry4ts544"]
+
+[ext_resource type="Script" uid="uid://bm7kwhrl8yb6h" path="res://Scripts/Data/Upgrades/upgrade_air_influence.gd" id="1_4qrmk"]
+
+[resource]
+script = ExtResource("1_4qrmk")
+upgrade_name = "Air Influence"
+upgrade_description = "Adjust jump arc midair"
+metadata/_custom_type_script = "uid://bm7kwhrl8yb6h"

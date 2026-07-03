@@ -8,9 +8,12 @@
 [ext_resource type="PackedScene" uid="uid://v1xd37pbsw8f" path="res://Scenes/Fighters/BaseFighter.tscn" id="3_o5yvi"]
 [ext_resource type="Script" uid="uid://cfsur4gws6wge" path="res://Scripts/Data/Upgrades/upgrade_data.gd" id="5_o5yvi"]
 [ext_resource type="PackedScene" uid="uid://b10iqdhjq4wd0" path="res://Scenes/game_camera.tscn" id="5_rku1e"]
-[ext_resource type="Resource" uid="uid://86ww85eeud3g" path="res://Data/UpgradeGroups/BaseStats/upgrade_health_resource.tres" id="6_o5yvi"]
-[ext_resource type="Resource" uid="uid://b6n18bfvmjrys" path="res://Data/UpgradeGroups/BaseStats/upgrade_jumpspeed_resource.tres.tres" id="7_rku1e"]
-[ext_resource type="Resource" uid="uid://gyurlfncrda8" path="res://Data/UpgradeGroups/BaseStats/upgrade_movespeed_resource.tres.tres" id="8_rfjv2"]
+[ext_resource type="Resource" uid="uid://86ww85eeud3g" path="res://Data/UpgradeGroups/BaseStats/health_resource.tres" id="6_o5yvi"]
+[ext_resource type="Resource" uid="uid://b6n18bfvmjrys" path="res://Data/UpgradeGroups/BaseStats/jumpspeed_resource.tres.tres" id="7_rku1e"]
+[ext_resource type="Resource" uid="uid://gyurlfncrda8" path="res://Data/UpgradeGroups/BaseStats/_movespeed_resource.tres.tres" id="8_rfjv2"]
+[ext_resource type="Resource" uid="uid://orclry4ts544" path="res://Data/UpgradeGroups/Air_Mobility/air_influence_resource.tres" id="10_1phco"]
+[ext_resource type="Resource" uid="uid://cm8vmqm4gj142" path="res://Data/UpgradeGroups/Air_Mobility/air_block_resource.tres" id="11_nb51f"]
+[ext_resource type="Resource" uid="uid://dx3o2kryae2r0" path="res://Data/UpgradeGroups/Air_Mobility/hover_resource.tres" id="12_nnt18"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_i6g32"]
 font = ExtResource("2_wowpa")
@@ -127,7 +130,7 @@ camera_scene = ExtResource("5_rku1e")
 base_stat_upgrades = Array[ExtResource("5_o5yvi")]([ExtResource("6_o5yvi"), ExtResource("7_rku1e"), ExtResource("8_rfjv2")])
 light_attack_upgrades = Array[ExtResource("5_o5yvi")]([ExtResource("6_o5yvi"), ExtResource("7_rku1e"), ExtResource("8_rfjv2")])
 heavy_attack_upgrades = Array[ExtResource("5_o5yvi")]([ExtResource("6_o5yvi"), ExtResource("7_rku1e"), ExtResource("8_rfjv2")])
-air_mobility = Array[ExtResource("5_o5yvi")]([ExtResource("6_o5yvi"), ExtResource("7_rku1e"), ExtResource("8_rfjv2")])
+air_mobility_upgrades = Array[ExtResource("5_o5yvi")]([ExtResource("11_nb51f"), ExtResource("10_1phco"), ExtResource("12_nnt18")])
 metadata/_custom_type_script = "uid://qyu7lh1a8b33"
 
 [node name="CountdownCanvasLayer" type="CanvasLayer" parent="GameManager" unique_id=1897505072]

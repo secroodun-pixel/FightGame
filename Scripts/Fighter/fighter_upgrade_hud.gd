@@ -38,7 +38,7 @@ func _upgrade_visibility(game_mode : GameManager.GameState):
 	else:
 		visible = false
 	
-func _hide_upgrades(fighter : Fighter):
+func _hide_upgrades(_fighter : Fighter):
 	if fighter.has_selected_upgrade and fighter.opponent.has_selected_upgrade:
 		visible = false
 

@@ -6,4 +6,6 @@
 script = ExtResource("1_gre3u")
 upgrade_name = "Strong first hit"
 upgrade_description = "First hit deals an extra damage"
+icon_x_index = 2
+icon_y_index = 1
 metadata/_custom_type_script = "uid://kjdweokkjmxl"

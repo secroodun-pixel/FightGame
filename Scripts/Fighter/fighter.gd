@@ -14,6 +14,10 @@ var base_health : int = 1
 @export var state_machine : StateMachine
 @export var game_manager : GameManager
 
+# pushing
+@export var pushbox_width : float = 0.8
+@export var pushbox_height : float = 0.8
+
 # jump vars
 var move_velocity : Vector3
 var forward_direction : int
@@ -68,7 +72,7 @@ var can_charge_heavy : bool ## if heavy attack charge is unlocked
 var can_charge_light : bool ## if light attack charge is unlocked
 var can_move_while_charging : bool = true ## if charge movement is unlocked
 var can_block_cancel_charge : bool = true ## if charge block cancel is unlocked
-var strong_first_hit : bool # extra damage on first attack
+var strong_first_hit : bool = false # extra damage on first attack
 
 # air movement and abilities
 var has_air_influence : bool = true ## if air influence is unlocked
@@ -120,8 +124,9 @@ func _physics_process(delta: float) -> void:
 		or state_machine.current_state == state_machine.states["Hovering"]):
 		_update_facing_direction()
 		
-	# 5. Process movement
+	# 5. Process movement and pushback
 	_movement(delta)
+	_pushbox_calculation()
 	
 func _update_facing_direction():
 	if global_position.x < opponent.global_position.x:
@@ -211,3 +216,25 @@ func _root_motion(_delta):
 	var root_position : Vector3 = anim_tree.get_root_motion_position()
 
 	velocity.x += (root_position.z / _delta) * forward_direction
+
+func _pushbox_calculation():
+	# get distance between fighters
+	var distance_x = opponent.global_position.x - global_position.x
+	var distance_y = opponent.global_position.y - global_position.y
+	var true_distance_x = abs(distance_x)
+	var true_distance_y = abs(distance_y)
+	
+	# get overlapping area
+	var overlap_x = (pushbox_width + opponent.pushbox_width) * 0.5 - true_distance_x
+	var overlap_y = (pushbox_height + opponent.pushbox_height) * 0.5 - true_distance_y
+
+	
+	# if there is overlap, do these
+	if overlap_x > 0 and overlap_y > 0:
+		# how much to push and which direction
+		var direction = sign(distance_x)
+		var push_amount = overlap_x
+		
+		# fighters push each other back
+		global_position.x -= direction * push_amount
+		opponent.global_position.x += direction * push_amount

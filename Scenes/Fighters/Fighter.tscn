@@ -52,8 +52,8 @@ script/source = "extends Panel
 
 @onready var stamina_bar : ProgressBar = $HUDElements/StaminaBar
 
-@onready var player_0_pos : Control = $\"../Player0Pos\"
-@onready var player_1_pos : Control = $\"../Player1Pos\"
+@onready var player_0_pos : Control = $\"../Player0Pos_Health\"
+@onready var player_1_pos : Control = $\"../Player1Pos_Health\"
 
 @onready var stamina_controller : StaminaController = $\"../../StaminaController\"
 
@@ -186,8 +186,11 @@ height = 1.5759697
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_01lk1"]
 _data = {
-&"Idle": SubResource("Animation_8mssw")
+&"AirHeavyAttack": SubResource("Animation_8mssw")
 }
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mrrik"]
+animation = &"AirHeavyAttack"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_v417l"]
 animation = &"AirLightAttack"
@@ -304,8 +307,10 @@ switch_mode = 2
 advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_01lk1"]
+states/AirHeavyAttack/node = SubResource("AnimationNodeAnimation_mrrik")
+states/AirHeavyAttack/position = Vector2(563.4, -89.624)
 states/AirLightAttack/node = SubResource("AnimationNodeAnimation_v417l")
-states/AirLightAttack/position = Vector2(336.42242, -120.6)
+states/AirLightAttack/position = Vector2(414.32452, -89.08)
 states/Block/node = SubResource("AnimationNodeAnimation_mmuvl")
 states/Block/position = Vector2(-26.199997, 17.800003)
 states/Dash/node = SubResource("AnimationNodeAnimation_4hbrg")
@@ -316,13 +321,13 @@ states/End/position = Vector2(922, 94)
 states/Fighter_Dash/node = SubResource("AnimationNodeAnimation_uxauc")
 states/Fighter_Dash/position = Vector2(747, 108)
 states/HeavyAttack/node = SubResource("AnimationNodeAnimation_35p1i")
-states/HeavyAttack/position = Vector2(-88, 280.46622)
+states/HeavyAttack/position = Vector2(-144.48, 310.06622)
 states/HeavyAttackActive/node = SubResource("AnimationNodeAnimation_dbrw3")
-states/HeavyAttackActive/position = Vector2(-104.6, 201.5392)
+states/HeavyAttackActive/position = Vector2(-161.07999, 231.1392)
 states/HeavyAttackCharge/node = SubResource("AnimationNodeBlendTree_dbrw3")
-states/HeavyAttackCharge/position = Vector2(120.80001, 280.19998)
+states/HeavyAttackCharge/position = Vector2(64.32002, 309.8)
 states/HeavyAttackRecovery/node = SubResource("AnimationNodeAnimation_su52t")
-states/HeavyAttackRecovery/position = Vector2(140.2, 201.52)
+states/HeavyAttackRecovery/position = Vector2(83.72, 231.12001)
 states/HitChest/node = SubResource("AnimationNodeAnimation_rn0e0")
 states/HitChest/position = Vector2(515.6, 245.20001)
 states/Hover/node = SubResource("AnimationNodeAnimation_xc2a8")
@@ -339,7 +344,9 @@ states/Standing/node = SubResource("AnimationNodeBlendSpace1D_0bjwg")
 states/Standing/position = Vector2(317.6, 93.840004)
 states/Start/position = Vector2(62, 99.2)
 transitions = ["Start", "Standing", SubResource("AnimationNodeStateMachineTransition_8mssw"), "JumpStart", "JumpIdle", SubResource("AnimationNodeStateMachineTransition_4hbrg"), "JumpLand", "Standing", SubResource("AnimationNodeStateMachineTransition_wqojl"), "Dash", "Standing", SubResource("AnimationNodeStateMachineTransition_rn0e0"), "LightAttack", "Standing", SubResource("AnimationNodeStateMachineTransition_3nd8k"), "Fighter_Dash", "JumpIdle", SubResource("AnimationNodeStateMachineTransition_ivhui"), "HeavyAttackActive", "HeavyAttackRecovery", SubResource("AnimationNodeStateMachineTransition_35p1i"), "HeavyAttackRecovery", "Standing", SubResource("AnimationNodeStateMachineTransition_qh0yp"), "HeavyAttack", "HeavyAttackCharge", SubResource("AnimationNodeStateMachineTransition_27ji7"), "HitChest", "Standing", SubResource("AnimationNodeStateMachineTransition_xc2a8")]
-graph_offset = Vector2(16, -47)
+graph_offset = Vector2(55, -163)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8mssw"]
 
 [node name="Fighter" type="CharacterBody3D" unique_id=202072913 node_paths=PackedStringArray("input_handler", "input_buffer", "state_machine")]
 collision_layer = 2
@@ -403,30 +410,16 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_dqs41")
 value = 38.12
 show_percentage = false
 
-[node name="Player0Pos" type="Control" parent="CanvasLayer" unique_id=1563269709]
-layout_mode = 3
-anchors_preset = 0
-offset_left = 27.0
-offset_top = 25.0
-offset_right = 67.0
-offset_bottom = 65.0
-
-[node name="Player1Pos" type="Control" parent="CanvasLayer" unique_id=779206375]
-layout_mode = 3
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -480.0
-offset_top = 25.0
-offset_right = -440.0
-offset_bottom = 65.0
-grow_horizontal = 0
-
 [node name="Health" type="Panel" parent="CanvasLayer" unique_id=342016489]
-offset_left = 49.99997
-offset_top = 29.0
-offset_right = 482.0
-offset_bottom = 223.39583
+anchors_preset = -1
+anchor_left = 0.039
+anchor_top = 0.040000003
+anchor_right = 0.039
+anchor_bottom = 0.040000003
+offset_left = 0.0799675
+offset_top = 0.19999886
+offset_right = 432.08
+offset_bottom = 194.59583
 scale = Vector2(1, 0.571)
 theme_override_styles/panel = SubResource("StyleBoxFlat_pb8fl")
 script = ExtResource("4_pyo11")
@@ -445,7 +438,24 @@ custom_minimum_size = Vector2(94.8, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_pyo11")
 
-[node name="Upgrades" type="Panel" parent="CanvasLayer" unique_id=1816542037]
+[node name="ActiveUpgrades" type="Panel" parent="CanvasLayer/Health" unique_id=1721216858]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 2.0000305
+offset_top = 206.655
+offset_right = 427.0
+offset_bottom = 246.655
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UpgradeBar" type="HBoxContainer" parent="CanvasLayer/Health" unique_id=1126277678]
+layout_mode = 0
+offset_left = 2.0000305
+offset_top = 206.655
+offset_right = 42.00003
+offset_bottom = 246.655
+
+[node name="UpgradeOptions" type="Panel" parent="CanvasLayer" unique_id=1816542037]
 visible = false
 offset_left = 90.0
 offset_top = 160.0
@@ -454,7 +464,7 @@ offset_bottom = 690.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_4lkng")
 script = ExtResource("5_4lkng")
 
-[node name="Upgrade1" type="Panel" parent="CanvasLayer/Upgrades" unique_id=883906673]
+[node name="Upgrade1" type="Panel" parent="CanvasLayer/UpgradeOptions" unique_id=883906673]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -468,7 +478,7 @@ offset_bottom = -133.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Upgrade1_Text" type="Label" parent="CanvasLayer/Upgrades/Upgrade1" unique_id=1184012437]
+[node name="Upgrade1_Text" type="Label" parent="CanvasLayer/UpgradeOptions/Upgrade1" unique_id=1184012437]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -487,7 +497,7 @@ Option 1, press left"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Upgrade2" type="Panel" parent="CanvasLayer/Upgrades" unique_id=1109630808]
+[node name="Upgrade2" type="Panel" parent="CanvasLayer/UpgradeOptions" unique_id=1109630808]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -501,7 +511,7 @@ offset_bottom = 19.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Upgrade2_Text" type="Label" parent="CanvasLayer/Upgrades/Upgrade2" unique_id=2106190660]
+[node name="Upgrade2_Text" type="Label" parent="CanvasLayer/UpgradeOptions/Upgrade2" unique_id=2106190660]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -519,7 +529,7 @@ text = "Option 2, press up"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Upgrade3" type="Panel" parent="CanvasLayer/Upgrades" unique_id=1492438832]
+[node name="Upgrade3" type="Panel" parent="CanvasLayer/UpgradeOptions" unique_id=1492438832]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -533,7 +543,7 @@ offset_bottom = 173.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Upgrade3_Text" type="Label" parent="CanvasLayer/Upgrades/Upgrade3" unique_id=1044777109]
+[node name="Upgrade3_Text" type="Label" parent="CanvasLayer/UpgradeOptions/Upgrade3" unique_id=1044777109]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -550,6 +560,44 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_b6uw4")
 text = "Option 3, press right"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Player0Pos_Health" type="Control" parent="CanvasLayer" unique_id=1563269709]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 27.0
+offset_top = 25.0
+offset_right = 67.00001
+offset_bottom = 65.0
+
+[node name="Player1Pos_Health" type="Control" parent="CanvasLayer" unique_id=779206375]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -480.0
+offset_top = 25.0
+offset_right = -440.0
+offset_bottom = 65.0
+grow_horizontal = 0
+
+[node name="Player0Pos_ActiveUpgrades" type="Control" parent="CanvasLayer" unique_id=775605370]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 827.0
+offset_top = 50.0
+offset_right = 867.0
+offset_bottom = 90.0
+
+[node name="Player1Pos_ActiveUpgrades" type="Control" parent="CanvasLayer" unique_id=868577884]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -920.0
+offset_top = 50.0
+offset_right = -880.0
+offset_bottom = 90.0
+grow_horizontal = 0
 
 [node name="Player0UpgradePos" type="Control" parent="CanvasLayer" unique_id=791709999]
 layout_mode = 3
@@ -690,8 +738,6 @@ script = SubResource("GDScript_4lkng")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.78798485, -0.020837493)
 shape = SubResource("CapsuleShape3D_lbuyy")
 
-[node name="Push_Box" type="CollisionShape3D" parent="." unique_id=1921189992]
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1605240310]
 libraries/ = SubResource("AnimationLibrary_01lk1")
 
@@ -700,5 +746,9 @@ tree_root = SubResource("AnimationNodeStateMachine_01lk1")
 anim_player = NodePath("../AnimationPlayer")
 parameters/HeavyAttackCharge/TimeScale/scale = 1.0
 parameters/Standing/blend_position = -0.0015519857
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1245533115]
+shape = SubResource("BoxShape3D_8mssw")
+disabled = true
 
 [connection signal="timeout" from="StaminaController/StaminaRegenTimer" to="StaminaController" method="_on_stamina_regen_timer_timeout"]

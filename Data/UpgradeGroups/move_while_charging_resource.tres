@@ -6,4 +6,6 @@
 script = ExtResource("1_bxdlt")
 upgrade_name = "Move during charges"
 upgrade_description = "Allow moving during charges"
+icon_x_index = 2
+icon_y_index = 2
 metadata/_custom_type_script = "uid://01feglu187vr"

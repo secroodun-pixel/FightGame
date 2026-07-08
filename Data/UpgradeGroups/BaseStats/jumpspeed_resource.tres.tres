@@ -6,4 +6,5 @@
 script = ExtResource("1_k5jma")
 upgrade_name = "Jump Speed Up"
 upgrade_description = "Increase speed of jump"
+icon_y_index = 2
 metadata/_custom_type_script = "uid://8hdbvtgaoohs"

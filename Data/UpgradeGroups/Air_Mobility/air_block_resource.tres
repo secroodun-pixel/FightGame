@@ -6,4 +6,5 @@
 script = ExtResource("1_ninnl")
 upgrade_name = "Air Block"
 upgrade_description = "Block while airborne"
+icon_y_index = 1
 metadata/_custom_type_script = "uid://8ppqyto3c4in"

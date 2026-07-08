@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://qyu7lh1a8b33" path="res://Scripts/Managers/game_manager.gd" id="1_3dryh"]
 [ext_resource type="Script" uid="uid://b14wglp5gfhjv" path="res://Scripts/Data/Upgrades/upgrade_database.gd" id="1_v158k"]
-[ext_resource type="PackedScene" uid="uid://dxmkxspv10em0" path="res://Scenes/Fighters/Fighter.tscn" id="2_i6g32"]
 [ext_resource type="FontFile" uid="uid://crjsroau7ki57" path="res://Fonts/MetalMania-Regular.ttf" id="2_wowpa"]
 [ext_resource type="PackedScene" uid="uid://cyavxik670v52" path="res://Scenes/ground_temp.tscn" id="3_1l0tm"]
+[ext_resource type="PackedScene" uid="uid://drqcdomurbpda" path="res://Scenes/Fighters/KEROTEST.tscn" id="3_1phco"]
 [ext_resource type="PackedScene" uid="uid://v1xd37pbsw8f" path="res://Scenes/Fighters/BaseFighter.tscn" id="3_o5yvi"]
 [ext_resource type="Script" uid="uid://cfsur4gws6wge" path="res://Scripts/Data/Upgrades/upgrade_data.gd" id="5_o5yvi"]
 [ext_resource type="PackedScene" uid="uid://b10iqdhjq4wd0" path="res://Scenes/game_camera.tscn" id="5_rku1e"]
@@ -125,7 +125,7 @@ script = ExtResource("1_v158k")
 [node name="GameManager" type="Node" parent="." unique_id=923713225]
 script = ExtResource("1_3dryh")
 player_fighter_scene = ExtResource("3_o5yvi")
-ai_fighter_scene = ExtResource("2_i6g32")
+ai_fighter_scene = ExtResource("3_1phco")
 camera_scene = ExtResource("5_rku1e")
 base_stat_upgrades = Array[ExtResource("5_o5yvi")]([ExtResource("6_o5yvi"), ExtResource("7_rku1e"), ExtResource("8_rfjv2")])
 light_attack_upgrades = Array[ExtResource("5_o5yvi")]([ExtResource("6_o5yvi"), ExtResource("7_rku1e"), ExtResource("8_rfjv2")])

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d3kfms4evheex"
-path="res://.godot/imported/SkyboxTexture.png-9671780a23da98dc9f81c4fc395092ab.ctex"
+uid="uid://dwjbx0m3oindu"
+path="res://.godot/imported/UpgradeIcons.png-e0344f81ef075da547b3ef5b95d0af69.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/Skybox/SkyboxTexture.png"
-dest_files=["res://.godot/imported/SkyboxTexture.png-9671780a23da98dc9f81c4fc395092ab.ctex"]
+source_file="res://Materials/UpgradeIcons.png"
+dest_files=["res://.godot/imported/UpgradeIcons.png-e0344f81ef075da547b3ef5b95d0af69.ctex"]
 
 [params]
 

@@ -1,7 +1,6 @@
 class_name FighterVisual
 extends Node
 
-
 var models : Array[MeshInstance3D]
 
 @export var hit_material : StandardMaterial3D
@@ -18,7 +17,6 @@ func _ready():
 		
 	GlobalEvents.FighterDamaged.connect(_hit_flash)
 
-	#_set_oufit(fighter.player_id)
 		
 func _hit_flash(fighter_hit : Fighter):
 	# return if the damaged fighter is not this one

@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dllsq5jtwtm6n"]
+
+[ext_resource type="Texture2D" uid="uid://dwjbx0m3oindu" path="res://Materials/UpgradeIcons.png" id="1_j2su6"]
+[ext_resource type="Script" uid="uid://c0se7lvwb4yw" path="res://Scenes/Fighters/upgrade_icon.gd" id="1_u8sfy"]
+
+[node name="UpgradeIcon" type="TextureRect" unique_id=1053846028]
+script = ExtResource("1_u8sfy")
+atlas_texture = ExtResource("1_j2su6")
+x_index = 1
+y_index = 1

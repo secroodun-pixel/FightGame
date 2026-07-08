@@ -7,8 +7,10 @@
 [ext_resource type="Animation" uid="uid://c7vx3srgppj6i" path="res://Animations/BaseFighterAnims/Attacks/HeavyAttackCharge.tres" id="4_0p14t"]
 [ext_resource type="Script" uid="uid://c52qtphg0yuyv" path="res://Scripts/Hitboxes/hit_receiver.gd" id="4_kt833"]
 [ext_resource type="Animation" uid="uid://dmxu1v6pcpy0a" path="res://Animations/BaseFighterAnims/Attacks/HeavyAttackRecovery.tres" id="5_6j04c"]
+[ext_resource type="Animation" uid="uid://b2hkmhialh56m" path="res://Animations/BaseFighterAnims/Attacks/AirHeavyAttack.tres" id="5_iiuqh"]
 [ext_resource type="Animation" uid="uid://6masmn848524" path="res://Animations/BaseFighterAnims/Block.tres" id="5_qdljr"]
 [ext_resource type="Animation" uid="uid://csdjyddye3hep" path="res://Animations/BaseFighterAnims/Attacks/LightAttack.tres" id="6_05tog"]
+[ext_resource type="Animation" uid="uid://bxe5hpuaqk5k7" path="res://Animations/BaseFighterAnims/Attacks/AirLightAttack.tres" id="6_jfksm"]
 [ext_resource type="Animation" uid="uid://cm1x0c0pwfts4" path="res://Animations/BaseFighterAnims/Attacks/HeavyAttackWindup.tres" id="6_m8cwr"]
 [ext_resource type="Animation" uid="uid://cg4arngiu80ea" path="res://Animations/BaseFighterAnims/Idle.tres" id="7_kt833"]
 [ext_resource type="Animation" uid="uid://dtvmn7pnnupnt" path="res://Animations/BaseFighterAnims/Walk.tres" id="7_s550a"]
@@ -23,12 +25,10 @@ size = Vector3(1, 1.7822266, 0.5631256)
 [sub_resource type="SphereShape3D" id="SphereShape3D_qdljr"]
 radius = 0.21958992
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_qdljr"]
-size = Vector3(1, 1.6237793, 0.61239624)
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_58tb4"]
 _data = {
-&"AirLightAttack": ExtResource("6_05tog"),
+&"AirHeavyAttack": ExtResource("5_iiuqh"),
+&"AirLightAttack": ExtResource("6_jfksm"),
 &"Block": ExtResource("5_qdljr"),
 &"HeavyAttackActive": ExtResource("3_br165"),
 &"HeavyAttackCharge": ExtResource("4_0p14t"),
@@ -57,53 +57,52 @@ hit_sender = NodePath("../../BaseFighter_RIG/rig_deform/Skeleton3D/BoneAttachmen
 [node name="BaseFighter_RIG" parent="." index="7" unique_id=186108597 instance=ExtResource("2_br165")]
 
 [node name="Skeleton3D" parent="BaseFighter_RIG/rig_deform" parent_id_path=PackedInt32Array(186108597, 1213930253) index="0" unique_id=519334339]
-bones/1/position = Vector3(-0.088567376, 0.836583, -0.091192156)
-bones/1/rotation = Quaternion(0.25975943, 0.23356813, -0.010630271, 0.9369407)
+bones/1/position = Vector3(-0.0885076, 0.83055305, -0.09119352)
+bones/1/rotation = Quaternion(0.2597626, 0.23347752, -0.010634517, 0.9369624)
 bones/3/rotation = Quaternion(-0.077434786, 0.027399179, -0.0021288074, 0.9966186)
 bones/4/rotation = Quaternion(0.0016264027, 0.027481787, -4.48141e-05, 0.99962103)
 bones/5/rotation = Quaternion(0.14769948, -0.04850144, -0.028037887, 0.98744434)
 bones/7/rotation = Quaternion(-0.2087109, -4.370094e-08, 5.8275223e-08, 0.97797745)
 bones/8/rotation = Quaternion(-0.6276081, -0.2904503, -0.32695517, 0.64408624)
-bones/9/rotation = Quaternion(-0.10859775, 0.7003363, -0.551787, 0.4396212)
-bones/10/rotation = Quaternion(-2.4118744e-08, -0.024389321, 1.32167814e-08, 0.9997026)
-bones/11/rotation = Quaternion(0.81522197, -0.024395553, 0.034414914, 0.5776104)
+bones/9/rotation = Quaternion(-0.10862981, 0.7003606, -0.551761, 0.43960717)
+bones/10/rotation = Quaternion(-2.4037876e-08, -0.024413409, 1.3251612e-08, 0.999702)
+bones/11/rotation = Quaternion(0.8152206, -0.02444085, 0.03442351, 0.5776097)
 bones/12/rotation = Quaternion(-4.1183947e-07, -0.06015284, -2.4235507e-07, 0.9981893)
 bones/13/rotation = Quaternion(0.28522453, -0.060741697, -0.086240515, 0.9526385)
 bones/14/rotation = Quaternion(-0.5604268, 0.4310095, 0.48377725, 0.5158606)
 bones/15/position = Vector3(-0.007791679, 0.20079096, -0.02038493)
-bones/15/rotation = Quaternion(-0.12434772, -0.7317094, 0.49389678, 0.45299563)
-bones/16/rotation = Quaternion(-1.004323e-08, 0.1580964, 8.078651e-08, 0.9874237)
-bones/17/rotation = Quaternion(0.8195921, 0.15808775, -0.26995766, 0.48000008)
+bones/15/rotation = Quaternion(-0.124324754, -0.73169106, 0.4939221, 0.45300397)
+bones/16/rotation = Quaternion(-9.907113e-09, 0.15807194, 8.051882e-08, 0.9874276)
+bones/17/rotation = Quaternion(0.8195999, 0.1580322, -0.26994905, 0.48000982)
 bones/18/position = Vector3(-3.7171986e-08, 0.13141775, 8.943585e-08)
 bones/18/rotation = Quaternion(-4.1953186e-07, 0.08468036, 1.065408e-07, 0.9964083)
 bones/19/position = Vector3(-8.1970455e-08, 0.13141772, 1.0348971e-08)
 bones/19/rotation = Quaternion(0.40784946, 0.08525171, 0.15572286, 0.8956234)
 bones/20/rotation = Quaternion(-6.313309e-08, 0.6969362, 0.71713316, -4.1850754e-08)
 bones/21/rotation = Quaternion(-6.313309e-08, 0.6969362, 0.71713316, -4.1850754e-08)
-bones/23/rotation = Quaternion(-0.5105975, -0.5873469, 0.62792706, -0.004624107)
-bones/24/position = Vector3(-3.7402867e-09, 0.26228997, -3.496649e-08)
-bones/24/rotation = Quaternion(-6.1353134e-08, 0.0080061825, -1.6090679e-08, 0.99996793)
-bones/25/position = Vector3(4.5852544e-09, 0.26229003, 1.600103e-08)
-bones/25/rotation = Quaternion(0.47461236, 0.008040331, -0.004344687, 0.8801476)
-bones/26/position = Vector3(7.3435253e-09, 0.22115318, -5.286534e-08)
-bones/26/rotation = Quaternion(-4.0664894e-09, -0.12969315, -2.6819885e-08, 0.99155414)
-bones/27/position = Vector3(-5.5342408e-08, 0.2211531, 1.3843942e-08)
-bones/27/rotation = Quaternion(-0.72232074, -0.13018078, 0.18022317, 0.65484756)
+bones/23/rotation = Quaternion(-0.51016134, -0.59022176, 0.6255656, -0.0064400523)
+bones/24/position = Vector3(-3.7308947e-09, 0.26228613, -3.4859823e-08)
+bones/24/rotation = Quaternion(-6.153457e-08, 0.00795723, -1.621529e-08, 0.9999684)
+bones/25/position = Vector3(4.626518e-09, 0.2622862, 1.6004298e-08)
+bones/25/rotation = Quaternion(0.4847194, 0.008206651, -0.0045748265, 0.8746193)
+bones/26/position = Vector3(7.4087043e-09, 0.22114947, -5.276896e-08)
+bones/26/rotation = Quaternion(-4.1270036e-09, -0.12961864, -2.678339e-08, 0.991564)
+bones/27/position = Vector3(-5.5417583e-08, 0.22114938, 1.3864275e-08)
+bones/27/rotation = Quaternion(-0.726213, -0.13038072, 0.18302737, 0.64970505)
 bones/28/rotation = Quaternion(-0.00014449084, 0.9612628, -0.27563316, -0.0005676113)
-bones/30/rotation = Quaternion(0.3063349, -0.8303006, 0.46553347, -0.0061949324)
-bones/31/position = Vector3(-1.669721e-08, 0.2801437, -2.8715318e-08)
-bones/31/rotation = Quaternion(1.7168938e-09, -0.075338446, 1.9072733e-07, 0.9971581)
-bones/32/position = Vector3(7.448144e-09, 0.28014374, 7.801528e-08)
-bones/32/rotation = Quaternion(0.51031774, 0.035519995, -0.34414348, 0.78732425)
-bones/33/position = Vector3(-1.4809817e-08, 0.2421828, -6.710926e-08)
-bones/33/rotation = Quaternion(2.8294432e-08, 0.13925318, -1.8713683e-07, 0.99025685)
-bones/34/position = Vector3(-4.9741995e-08, 0.24218267, 3.6964124e-08)
-bones/34/rotation = Quaternion(-0.65611166, 0.13556418, 0.07549395, 0.7385395)
-bones/35/position = Vector3(2.974246e-08, 0.12923586, 2.1426342e-08)
+bones/30/rotation = Quaternion(0.30498758, -0.8327065, 0.4621431, -0.0025244227)
+bones/31/position = Vector3(-1.676676e-08, 0.28014576, -2.8792066e-08)
+bones/31/rotation = Quaternion(4.9363763e-08, -0.07662628, 7.862674e-08, 0.9970599)
+bones/32/position = Vector3(7.4388486e-09, 0.2801458, 7.805503e-08)
+bones/32/rotation = Quaternion(0.51924, 0.036023613, -0.34260467, 0.78212154)
+bones/33/position = Vector3(-1.4901033e-08, 0.24218486, -6.70072e-08)
+bones/33/rotation = Quaternion(2.8337087e-08, 0.13930795, -1.8744925e-07, 0.9902492)
+bones/34/position = Vector3(-4.9683038e-08, 0.24218473, 3.699638e-08)
+bones/34/rotation = Quaternion(-0.6592212, 0.13540705, 0.07210863, 0.73613364)
 bones/35/rotation = Quaternion(-0.00016536588, 0.9612587, -0.27564707, -0.00056163134)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="BaseFighter_RIG/rig_deform/Skeleton3D" index="1" unique_id=351147526]
-transform = Transform3D(-0.78246737, 0.37665662, -0.49585718, 0.326286, 0.9262442, 0.18869993, 0.5303603, -0.01413995, -0.84765375, -0.19957572, 1.1888511, 0.5086959)
+transform = Transform3D(-0.7824584, 0.37674317, -0.4958053, 0.32638627, 0.9262086, 0.18870169, 0.5303117, -0.01417309, -0.84768355, -0.19955128, 1.1828357, 0.50866747)
 bone_name = "DEF-hand.R"
 bone_idx = 19
 
@@ -116,7 +115,7 @@ transform = Transform3D(1, -6.61239e-08, 0, 4.9825758e-08, 1.0000002, 2.3283064e
 shape = SubResource("SphereShape3D_05tog")
 
 [node name="BoneAttachment3D2" type="BoneAttachment3D" parent="BaseFighter_RIG/rig_deform/Skeleton3D" index="2" unique_id=1589388271]
-transform = Transform3D(0.8354288, 0.016245775, 0.5493585, 0.1260006, 0.96727836, -0.22021817, -0.53496045, 0.25319603, 0.8060452, -0.053022202, 1.2614098, 0.0774584)
+transform = Transform3D(0.8355309, 0.016254969, 0.5492028, 0.1259488, 0.9672798, -0.22024144, -0.53481305, 0.25318992, 0.8061449, -0.052968606, 1.2553793, 0.077459395)
 bone_name = "DEF-spine.003"
 bone_idx = 4
 
@@ -129,7 +128,7 @@ transform = Transform3D(1.0000027, 0, 0, 0, 1.0000105, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("BoxShape3D_s550a")
 
 [node name="BoneAttachment3D3" type="BoneAttachment3D" parent="BaseFighter_RIG/rig_deform/Skeleton3D" index="3" unique_id=89164816]
-transform = Transform3D(0.6682368, 0.6307309, -0.39450955, -0.0013520941, -0.52926064, -0.8484579, -0.7439473, 0.5675041, -0.35281858, 0.11199784, 0.08485137, -0.32778555)
+transform = Transform3D(0.6680951, 0.63050014, -0.39511758, -0.0013250858, -0.5300087, -0.8479905, -0.74407417, 0.5670619, -0.3532607, 0.11172483, 0.08449189, -0.32817984)
 bone_name = "DEF-foot.L"
 bone_idx = 27
 
@@ -140,16 +139,12 @@ metadata/_custom_type_script = "uid://xu07h40bp65t"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BaseFighter_RIG/rig_deform/Skeleton3D/BoneAttachment3D3/HitSender" index="0" unique_id=1650866596]
 shape = SubResource("SphereShape3D_qdljr")
 
-[node name="Push_Box" parent="." index="9" unique_id=1921189992]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85375977, 0.07054138)
-shape = SubResource("BoxShape3D_qdljr")
-
-[node name="AnimationPlayer" parent="." index="10" unique_id=1605240310]
+[node name="AnimationPlayer" parent="." index="9" unique_id=1605240310]
 root_node = NodePath("../BaseFighter_RIG")
 libraries/ = SubResource("AnimationLibrary_58tb4")
 autoplay = &"Idle"
 
-[node name="AnimationTree" parent="." index="11" unique_id=570330019]
+[node name="AnimationTree" parent="." index="10" unique_id=570330019]
 root_node = NodePath("../BaseFighter_RIG")
 root_motion_track = NodePath("rig_deform/Skeleton3D:DEF-Root")
 

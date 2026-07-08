@@ -102,9 +102,10 @@ func _setup_fighters():
 
 	# determine if we need player or vs ai setup
 	if GameConfig.game_mode == GameConfig.GameMode.PLAYER_VS_PLAYER:
-		right_fighter_scene = player_fighter_scene
+		right_fighter_scene = ai_fighter_scene
+		# right_fighter_scene = player_fighter_scene
 	elif GameConfig.game_mode == GameConfig.GameMode.PLAYER_VS_AI:
-		right_fighter_scene = player_fighter_scene
+		right_fighter_scene = ai_fighter_scene
 	
 	# set up fighters	
 	var left_fighter : Fighter = _spawn_fighter(player_fighter_scene)

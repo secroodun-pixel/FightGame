@@ -6,4 +6,5 @@
 script = ExtResource("1_soqgo")
 upgrade_name = "Health up"
 upgrade_description = "Increase health by 1"
+icon_x_index = 1
 metadata/_custom_type_script = "uid://c3jpfc3gk80mj"

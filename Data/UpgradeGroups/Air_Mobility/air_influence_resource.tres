@@ -6,4 +6,5 @@
 script = ExtResource("1_4qrmk")
 upgrade_name = "Air Influence"
 upgrade_description = "Adjust jump arc midair"
+icon_x_index = 3
 metadata/_custom_type_script = "uid://bm7kwhrl8yb6h"

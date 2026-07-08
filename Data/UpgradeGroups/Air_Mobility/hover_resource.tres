@@ -6,4 +6,5 @@
 script = ExtResource("1_q5y05")
 upgrade_name = "Hover"
 upgrade_description = "Press up in jump to hover"
+icon_x_index = 2
 metadata/_custom_type_script = "uid://pcer0bxekoj1"

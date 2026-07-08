@@ -28,4 +28,4 @@ var can_charge_light : bool = false
 
 # air movement
 var has_air_influence : bool = false
-var has_air_hover : bool
+var has_air_hover : bool = false

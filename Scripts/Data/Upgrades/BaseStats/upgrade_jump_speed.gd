@@ -1,7 +1,7 @@
 class_name  UpgradeJumpSpeed
 extends UpgradeData
 
-var increase_amount : float= 4.0
+var increase_amount : float= 1.5
 var jump_height_increase_amount : float = 4.5
 
 #var horizontal_force : float = 7.0

@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://dxmkxspv10em0"]
 
-[ext_resource type="Resource" uid="uid://do2f58vtpp1r2" path="res://Data/character_data.tres" id="1_pb8fl"]
 [ext_resource type="Script" uid="uid://cs7f7e8qevmtg" path="res://Scripts/Inputs/player_input_handler.gd" id="2_875ig"]
 [ext_resource type="Script" uid="uid://cfk65mmekmwvs" path="res://Scripts/Inputs/input_buffer.gd" id="3_rlrpx"]
 [ext_resource type="Script" uid="uid://ff6bhf8i2v0v" path="res://Scripts/Fighter/fighter_hud.gd" id="4_pyo11"]
@@ -25,6 +24,7 @@
 [ext_resource type="Script" uid="uid://vdi5ixej01di" path="res://Scripts/State Machine/air mobility/hovering_state.gd" id="19_s1rar"]
 [ext_resource type="Script" uid="uid://cnwomlaechaw3" path="res://Scripts/Fighter/fighter_animation.gd" id="23_2t77m"]
 [ext_resource type="Script" uid="uid://c3efbt2ilm3gx" path="res://Scripts/State Machine/victorious_state.gd" id="24_27ji7"]
+[ext_resource type="Script" uid="uid://b5ies7h72h1ki" path="res://Scripts/State Machine/attacks/air_heavy_attack_state.gd" id="25_01lk1"]
 [ext_resource type="FontFile" uid="uid://crjsroau7ki57" path="res://Fonts/MetalMania-Regular.ttf" id="37_mrrik"]
 
 [sub_resource type="GDScript" id="GDScript_uxauc"]
@@ -344,7 +344,7 @@ states/Standing/node = SubResource("AnimationNodeBlendSpace1D_0bjwg")
 states/Standing/position = Vector2(317.6, 93.840004)
 states/Start/position = Vector2(62, 99.2)
 transitions = ["Start", "Standing", SubResource("AnimationNodeStateMachineTransition_8mssw"), "JumpStart", "JumpIdle", SubResource("AnimationNodeStateMachineTransition_4hbrg"), "JumpLand", "Standing", SubResource("AnimationNodeStateMachineTransition_wqojl"), "Dash", "Standing", SubResource("AnimationNodeStateMachineTransition_rn0e0"), "LightAttack", "Standing", SubResource("AnimationNodeStateMachineTransition_3nd8k"), "Fighter_Dash", "JumpIdle", SubResource("AnimationNodeStateMachineTransition_ivhui"), "HeavyAttackActive", "HeavyAttackRecovery", SubResource("AnimationNodeStateMachineTransition_35p1i"), "HeavyAttackRecovery", "Standing", SubResource("AnimationNodeStateMachineTransition_qh0yp"), "HeavyAttack", "HeavyAttackCharge", SubResource("AnimationNodeStateMachineTransition_27ji7"), "HitChest", "Standing", SubResource("AnimationNodeStateMachineTransition_xc2a8")]
-graph_offset = Vector2(55, -163)
+graph_offset = Vector2(-312, -141)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8mssw"]
 
@@ -352,7 +352,6 @@ graph_offset = Vector2(55, -163)
 collision_layer = 2
 axis_lock_linear_z = true
 script = SubResource("GDScript_uxauc")
-character = ExtResource("1_pb8fl")
 input_handler = NodePath("PlayerInputHandler")
 input_buffer = NodePath("InputBuffer")
 state_machine = NodePath("StateMachine")
@@ -648,6 +647,10 @@ script = ExtResource("6_v417l")
 distance = 1.5
 duration = 0.15
 metadata/_custom_type_script = "uid://bquv8v5epdgop"
+
+[node name="AirHeavyAttack" type="Node" parent="StateMachine" unique_id=842909154]
+script = ExtResource("25_01lk1")
+metadata/_custom_type_script = "uid://b5ies7h72h1ki"
 
 [node name="AirLightAttack" type="Node" parent="StateMachine" unique_id=1160104217]
 script = ExtResource("7_mrrik")

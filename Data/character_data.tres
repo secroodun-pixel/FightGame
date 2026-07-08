@@ -5,4 +5,7 @@
 [resource]
 script = ExtResource("1_0c8ai")
 horizontal_force = 8.0
+jump_height = 1.8
+jump_time_to_peak = 0.7
+jump_time_to_descent = 0.8
 metadata/_custom_type_script = "uid://buth750evfh02"

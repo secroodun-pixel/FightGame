@@ -109,7 +109,7 @@ func _setup_fighters():
 	
 	# set up fighters	
 	var left_fighter : Fighter = _spawn_fighter(player_fighter_scene)
-	var right_fighter : Fighter = _spawn_fighter(right_fighter_scene)
+	var right_fighter : Fighter = _spawn_fighter(player_fighter_scene)
 	
 	# wait for the fighters to be spawned before setting their info
 	await right_fighter.tree_entered
@@ -130,8 +130,8 @@ func _setup_fighters():
 	player_1 = left_fighter
 	player_2 = right_fighter
 
-	player_1.character = load("res://Data/golem_data.tres")
-	player_2.character = load("res://Data/character_data.tres")
+	player_1.character = load("res://Data/base_character_data.tres")
+	player_2.character = load("res://Data/golem_data.tres")
 	
 	player_1._calculate_stats()
 	player_2._calculate_stats()

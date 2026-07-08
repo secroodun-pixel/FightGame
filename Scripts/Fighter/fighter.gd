@@ -49,7 +49,7 @@ var move_speed : float
 
 #region jump vars and math
 # jump variables
-var horizontal_force : float = 0.0 # used in jumps
+var horizontal_force : float # used in jumps
 var jump_height : float
 var jump_time_to_peak : float
 var jump_time_to_descent : float
@@ -180,6 +180,10 @@ func defeat():
 		GlobalEvents.FighterDefeated.emit(self)
 
 func _calculate_stats():
+	print("Player:", player_id)
+	print("Character resource:", character.resource_path)
+	print("Max health in resource:", character.max_health)
+	print("Move speed in resource:", character.base_move_speed)	
 	# reset stats, reusing base
 	max_health = character.max_health + 1
 	max_health += game_manager.current_round - 1

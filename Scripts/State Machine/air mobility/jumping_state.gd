@@ -16,6 +16,7 @@ func enter():
 	fighter.move_velocity.y = fighter.jump_velocity
 	fighter.move_velocity.x = fighter.horizontal_force * jump_direction
 	animation.set_animation("JumpStart")
+	print(fighter.jump_height)
 	
 func update(delta : float):
 	# get local time because not using super
@@ -42,6 +43,11 @@ func update(delta : float):
 	# air light attack
 	if input_buffer.is_pressed("light_attack"):
 		state_machine.change_state("AirLightAttack")
+		return
+		
+	# air heavy attack
+	if input_buffer.is_pressed("heavy_attack"):
+		state_machine.change_state("AirHeavyAttack")
 		return
 
 	# early exit with block

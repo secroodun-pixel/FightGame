@@ -146,7 +146,7 @@ func _movement(_delta : float):
 func get_custom_gravity() -> float:
 	return character.jump_gravity if move_velocity.y < 0.0 else character.fall_gravity
 	
-func take_damage(hit_receiver : HitReceiver, damage_amount : float):
+func take_damage(hit_receiver : HitReceiver, damage_amount : int):
 	# make sure fighter is not already defeated
 	if is_defeated or is_invulnerable:
 		return
@@ -168,7 +168,7 @@ func take_damage(hit_receiver : HitReceiver, damage_amount : float):
 		
 	# get hit if still alive
 	else:
-		state_machine.change_state(hit_receiver.hit_state_name)
+		state_machine.change_state("HitState")
 
 func victory():
 	is_victorious = true

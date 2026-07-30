@@ -31,7 +31,7 @@ func _ready():
 		change_state(starting_state.name)
 			
 func change_state(state_name : String):
-	
+	# make sure the target state exists
 	if not states.has(state_name):
 		printerr("Cannot change state to ", state_name, " as it doesn't exist")
 		return

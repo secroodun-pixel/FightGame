@@ -60,7 +60,7 @@ func can_enter () -> bool:
 
 func enter():
 	super.enter()
-
+	
 	# play animation
 	animation.set_animation(animation_name)
 

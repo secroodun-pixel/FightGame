@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 GlobalEvents="*uid://c60qeh7yumyfh"
 GameConfig="*uid://dmjku83mvphf"
+HitstopManager="*uid://c6g3lo7dn2jhx"
 
 [display]
 

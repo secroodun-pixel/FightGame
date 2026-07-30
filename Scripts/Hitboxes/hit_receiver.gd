@@ -10,4 +10,8 @@ func initialize(fighter_init : Fighter):
 func hit(damage : int, _knockback : float):
 	if fighter.is_blocking:
 		fighter.state_machine.change_state("Blockstun")
-	fighter.take_damage(self, damage)
+		return
+	else:
+		fighter.take_damage(self, damage)
+		fighter.state_machine.change_state("HitState")
+		return
